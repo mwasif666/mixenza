@@ -1,49 +1,82 @@
 import React from 'react'
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuMarketplace from '@/components/Header/Menu/MenuMarketplace'
-import SliderMarketplace from '@/components/Slider/SliderMarketplace'
-import BannerAbove from '@/components/Marketplace/BannerAbove'
-import productData from '@/data/Product.json'
-import Benefit from '@/components/Home1/Benefit'
-import blogData from '@/data/Blog.json'
-import Brand from '@/components/Home1/Brand'
-import Footer from '@/components/Footer/Footer'
-import ModalNewsletter from '@/components/Modal/ModalNewsletter'
-import Deal from '@/components/Marketplace/Deal'
-import Collection from '@/components/Marketplace/Collection'
-import BestSeller from '@/components/Marketplace/BestSeller'
-import BannerBelow from '@/components/Marketplace/BannerBelow'
-import TopProduct from '@/components/Marketplace/TopProduct'
-import Recommend from '@/components/Marketplace/Recommend'
-import NewsInsight from '@/components/Home3/NewsInsight'
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { BRAND } from '@/constants/brand'
+import NotifyForm from '@/components/ComingSoon/NotifyForm'
 
 /**
- * Mixenza main homepage — the marketplace layout.
- * `/homepages/marketplace` re-exports this same component.
+ * Holding page served at `/` until launch.
+ *
+ * The finished storefront still lives at `/homepages/marketplace` — swapping
+ * this file back to `export { default } from '@/app/homepages/marketplace/page'`
+ * puts the shop live again.
  */
-export default function Home() {
+export const metadata: Metadata = {
+    title: `${BRAND.name} — Coming Soon`,
+    description: `${BRAND.name} is almost here. ${BRAND.description}`,
+}
+
+const socialLinks = [
+    { href: 'https://www.facebook.com/', icon: 'icon-facebook', label: 'Facebook' },
+    { href: 'https://www.instagram.com/', icon: 'icon-instagram', label: 'Instagram' },
+    { href: 'https://www.youtube.com/', icon: 'icon-youtube', label: 'YouTube' },
+    { href: 'https://www.twitter.com/', icon: 'icon-twitter', label: 'Twitter' },
+]
+
+export default function ComingSoonPage() {
     return (
-        <>
-            <TopNavOne
-                props="style-marketplace bg-brand-dark border-b border-surface1"
-                slogan="New customers save 10% with the code GET10"
+        <main className='coming-soon relative w-full min-h-screen bg-brand-dark overflow-hidden'>
+            {/* Soft brand glow behind the content — pure CSS, no asset to load. */}
+            <div
+                aria-hidden
+                className='absolute inset-0 pointer-events-none'
+                style={{
+                    background:
+                        'radial-gradient(60% 60% at 50% 30%, rgba(252,89,1,0.22) 0%, rgba(252,89,1,0) 70%)',
+                }}
             />
-            <div id="header" className='relative w-full'>
-                <MenuMarketplace />
-                <SliderMarketplace />
+
+            <div className='container relative z-[1] min-h-screen flex flex-col items-center justify-center text-center py-16'>
+                <Link href={'/homepages/marketplace'} aria-label={BRAND.name}>
+                    <Image
+                        src={BRAND.logos.light}
+                        width={BRAND.logoSize.light.width}
+                        height={BRAND.logoSize.light.height}
+                        alt={BRAND.name}
+                        priority
+                        className='h-9 sm:h-12 w-auto'
+                    />
+                </Link>
+
+                <h1 className='text-white heading1 mt-10'>Coming Soon</h1>
+
+                <p className='text-secondary2 body1 mt-4 max-w-[520px]'>
+                    {BRAND.tagline}. We&apos;re putting the finishing touches on the
+                    store — leave your email and we&apos;ll tell you the day we open.
+                </p>
+
+                <NotifyForm />
+
+                <div className='list-social flex items-center gap-6 justify-center mt-10'>
+                    {socialLinks.map((item) => (
+                        <Link
+                            key={item.icon}
+                            href={item.href}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            aria-label={item.label}
+                            className='text-white hover:text-primary duration-300'
+                        >
+                            <div className={`${item.icon} text-xl`}></div>
+                        </Link>
+                    ))}
+                </div>
+
+                <div className='caption1 text-secondary mt-10'>
+                    Questions? <a href={`mailto:${BRAND.email}`} className='text-white hover:text-primary duration-300'>{BRAND.email}</a>
+                </div>
             </div>
-            <BannerAbove />
-            <Deal />
-            <Collection />
-            <BestSeller data={productData} start={0} limit={5} />
-            <BannerBelow />
-            <TopProduct />
-            <Recommend />
-            <NewsInsight data={blogData} start={18} limit={21} />
-            <Benefit props='md:py-[60px] py-10 border-b border-line' />
-            <Brand />
-            <Footer />
-            <ModalNewsletter />
-        </>
+        </main>
     )
 }
