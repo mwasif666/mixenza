@@ -53,7 +53,8 @@ export default function ComingSoonPage() {
 
                 <p className='text-secondary2 body1 mt-4 max-w-[520px]'>
                     {BRAND.tagline}. We&apos;re putting the finishing touches on the
-                    store — leave your email and we&apos;ll tell you the day we open.
+                    store. Leave your email and a message — we&apos;ll get back to you,
+                    and let you know the day we open.
                 </p>
 
                 <NotifyForm />
@@ -71,10 +72,6 @@ export default function ComingSoonPage() {
                             <div className={`${item.icon} text-xl`}></div>
                         </Link>
                     ))}
-                </div>
-
-                <div className='caption1 text-secondary mt-10'>
-                    Questions? <a href={`mailto:${BRAND.email}`} className='text-white hover:text-primary duration-300'>{BRAND.email}</a>
                 </div>
             </div>
         </main>
