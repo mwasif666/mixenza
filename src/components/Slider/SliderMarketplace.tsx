@@ -1,35 +1,27 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const SliderMarketplace = () => {
     return (
-        <>
-            <div className="slider-block style-marketplace lg:h-[500px] md:h-[400px] sm:h-[320px] h-[280px] w-full">
-                <div className="container pt-10 flex justify-end h-full w-full">
-                    <div className="slider-main lg:pl-5 h-full w-full">
-                        <div className="h-full relative rounded-2xl overflow-hidden">
-                            <div className="slider-item h-full w-full flex items-center bg-surface relative">
-                                <div className="text-content md:pl-16 pl-5 basis-1/2 relative z-[1]">
-                                    <div className="text-sub-display text-white">BEST SELLING</div>
-                                    <div className="heading2 text-white md:mt-5 mt-2">Step Into New Worlds</div>
-                                    <a href='/shop/breadcrumb-img'
-                                        className="button-main bg-white text-black hover:bg-green md:mt-8 mt-3">Shop Now
-                                    </a>
-                                </div>
-                                <div className="sub-img absolute top-0 left-0 w-full h-full">
-                                    <Image
-                                        src='/images/slider/marketplace.png'
-                                        width={5000}
-                                        height={4000}
-                                        alt='marketplace'
-                                        className='w-full h-full object-cover' />
-                                </div>
-                            </div>
+        <section className="slider-block style-marketplace w-full py-3 md:py-5">
+            <div className="container">
+                <div className="relative min-h-[420px] overflow-hidden rounded-[28px] bg-[#171717] sm:min-h-[480px] lg:min-h-[540px]">
+                    <Image src="/images/slider/marketplace.png" width={2400} height={1500} priority alt="Mixenza marketplace" className="absolute inset-0 h-full w-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-transparent" />
+                    <div className="relative z-[1] flex min-h-[420px] max-w-2xl flex-col justify-center px-7 py-12 sm:min-h-[480px] sm:px-12 lg:min-h-[540px] lg:px-16">
+                        <span className="caption2 w-fit rounded-full border border-white/30 bg-white/10 px-4 py-2 uppercase tracking-[0.2em] text-white backdrop-blur">MIXENZA MARKETPLACE</span>
+                        <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-7xl">Your everyday essentials. Curated better.</h1>
+                        <p className="mt-5 max-w-xl text-sm leading-6 text-white/75 sm:text-base">Discover a growing collection of products, fresh arrivals and standout deals — all in one smooth shopping experience.</p>
+                        <div className="mt-8 flex flex-wrap gap-3">
+                            <Link href="#products" className="button-main bg-white text-black hover:bg-white/90">Shop Collection</Link>
+                            <Link href="#deals" className="button-main border border-white/30 bg-white/10 text-white backdrop-blur hover:bg-white/20">View Deals</Link>
                         </div>
                     </div>
+                    <div className="absolute bottom-6 right-6 z-[1] hidden rounded-full border border-white/20 bg-black/25 px-4 py-2 text-xs uppercase tracking-widest text-white/70 backdrop-blur sm:block">New season · Live catalog</div>
                 </div>
             </div>
-        </>
+        </section>
     )
 }
 
