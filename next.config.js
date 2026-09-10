@@ -4,6 +4,20 @@ const nextConfig = {
     // Set NEXT_DIST_DIR to build into a separate folder, so running
     // `next build` never invalidates a running dev server's .next cache.
     distDir: process.env.NEXT_DIST_DIR || '.next',
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'theonlinestore.com.pk',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.shopify.com',
+                pathname: '/**',
+            },
+        ],
+    },
 }
 
 module.exports = nextConfig
