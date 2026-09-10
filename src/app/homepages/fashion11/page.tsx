@@ -16,7 +16,11 @@ import ModalNewsletter from '@/components/Modal/ModalNewsletter'
 import { getBackendCatalogProducts } from '@/lib/backendCatalog'
 import { getSourceProducts } from '@/lib/theOnlineStore'
 
-export const revalidate = 300
+// Never fetch the external supplier catalog during `next build`.
+// The catalog is remote and must be resolved when the storefront request runs.
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+export const fetchCache = 'force-no-store'
 
 export default async function HomeEleven() {
     let products = []
