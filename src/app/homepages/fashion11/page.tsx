@@ -3,9 +3,7 @@ import TopNavOne from '@/components/Header/TopNav/TopNavOne'
 import MenuEleven from '@/components/Header/Menu/MenuEleven'
 import SliderEleven from '@/components/Slider/SliderEleven'
 import TrendingNow from '@/components/Home11/TrendingNow'
-import MenFashion from '@/components/Home11/MenFashion'
 import Banner from '@/components/Home9/Banner'
-import WomenFashion from '@/components/Home11/WomenFashion'
 import Benefit from '@/components/Home1/Benefit'
 import blogData from '@/data/Blog.json'
 import NewsInsight from '@/components/Home3/NewsInsight'
@@ -13,29 +11,9 @@ import Brand from '@/components/Home1/Brand'
 import Newsletter from '@/components/Home10/Newsletter'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
-import { getBackendCatalogProducts } from '@/lib/backendCatalog'
-import { getSourceProducts } from '@/lib/theOnlineStore'
+import LiveCatalog from '@/components/Home11/LiveCatalog'
 
-// Never fetch the external supplier catalog during `next build`.
-// The catalog is remote and must be resolved when the storefront request runs.
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-export const fetchCache = 'force-no-store'
-
-export default async function HomeEleven() {
-    let products = []
-
-    try {
-        products = await getBackendCatalogProducts()
-    } catch (error) {
-        console.error('Mixenza backend catalog unavailable on fashion11', error)
-        try {
-            products = await getSourceProducts()
-        } catch (sourceError) {
-            console.error('TheOnlineStore catalog unavailable on fashion11', sourceError)
-        }
-    }
-
+export default function HomeEleven() {
     return (
         <>
             <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
@@ -44,9 +22,8 @@ export default async function HomeEleven() {
                 <SliderEleven />
             </div>
             <TrendingNow />
-            <MenFashion data={products} start={0} limit={6} />
+            <LiveCatalog />
             <Banner />
-            <WomenFashion data={products} start={6} limit={6} />
             <Benefit props="md:mt-20 mt-10 py-10 px-2.5 bg-surface rounded-[32px]" />
             <NewsInsight data={blogData} start={0} limit={3} />
             <Brand />
