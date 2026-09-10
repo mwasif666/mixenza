@@ -49,7 +49,7 @@ const SourceCatalog: React.FC<Props> = ({ products }) => {
     }
 
     return (
-        <section className="container py-14 md:py-20">
+        <section id="products" className="container py-14 md:py-20">
             <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p className="caption2 uppercase tracking-[0.18em] text-secondary">Mixenza Collection</p>
@@ -63,66 +63,33 @@ const SourceCatalog: React.FC<Props> = ({ products }) => {
                         <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-secondary">⌕</span>
                     </label>
                     <select value={sort} onChange={event => { setSort(event.target.value); setPage(1) }} className="h-12 rounded-full border border-line bg-white px-5 outline-none focus:border-black">
-                        <option value="featured">Featured</option>
-                        <option value="newest">Newest</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
+                        <option value="featured">Featured</option><option value="newest">Newest</option><option value="price-low">Price: Low to High</option><option value="price-high">Price: High to Low</option>
                     </select>
                 </div>
             </div>
 
             <div className="-mx-1 mb-9 flex gap-2 overflow-x-auto px-1 pb-2 [scrollbar-width:none]">
-                {categories.map(item => (
-                    <button key={item} type="button" onClick={() => { setCategory(item); setPage(1) }} className={`shrink-0 rounded-full border px-5 py-2.5 text-button-uppercase transition-all duration-300 ${category === item ? 'border-black bg-black text-white' : 'border-line bg-white hover:border-black'}`}>
-                        {item}
-                    </button>
-                ))}
+                {categories.map(item => <button key={item} type="button" onClick={() => { setCategory(item); setPage(1) }} className={`shrink-0 rounded-full border px-5 py-2.5 text-button-uppercase transition-all duration-300 ${category === item ? 'border-black bg-black text-white' : 'border-line bg-white hover:border-black'}`}>{item}</button>)}
             </div>
 
-            {visible.length ? (
-                <div className="grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 md:gap-x-6 md:gap-y-12 lg:grid-cols-4">
-                    {visible.map(product => {
-                        const salePercent = product.originPrice > product.price ? Math.round((1 - product.price / product.originPrice) * 100) : 0
-                        const image = product.thumbImage[0]
-                        return (
-                            <article key={product.id} className="group min-w-0">
-                                <Link href={`/product/default?id=${product.id}`} className="block">
-                                    <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface">
-                                        {image ? <Image src={image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-105" /> : <div className="absolute inset-0 flex items-center justify-center text-secondary">No image</div>}
-                                        <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-                                            {product.new && <span className="rounded-full bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-wide shadow-sm">New</span>}
-                                            {salePercent > 0 && <span className="rounded-full bg-black px-3 py-1 text-[11px] font-medium text-white">-{salePercent}%</span>}
-                                        </div>
-                                        {product.quantity === 0 && <div className="absolute inset-x-0 bottom-0 bg-black/75 px-3 py-2 text-center text-xs font-medium uppercase tracking-wide text-white">Out of stock</div>}
-                                    </div>
-                                </Link>
-                                <div className="mt-4">
-                                    <p className="caption2 truncate uppercase tracking-wide text-secondary">{product.categories[0] || 'General'}</p>
-                                    <Link href={`/product/default?id=${product.id}`} className="text-title mt-1 block line-clamp-2 min-h-[48px] leading-6 transition hover:opacity-60">{product.name}</Link>
-                                    <div className="mt-2 flex items-baseline gap-2">
-                                        <strong className="text-title">Rs. {product.price.toLocaleString('en-PK')}</strong>
-                                        {product.originPrice > product.price && <del className="caption1 text-secondary2">Rs. {product.originPrice.toLocaleString('en-PK')}</del>}
-                                    </div>
-                                    <button type="button" onClick={() => handleAddToCart(product)} disabled={product.quantity === 0} className="button-main mt-3 w-full text-center transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50">
-                                        {product.quantity === 0 ? 'Out of Stock' : 'Add To Cart'}
-                                    </button>
-                                </div>
-                            </article>
-                        )
-                    })}
-                </div>
-            ) : (
-                <div className="rounded-2xl border border-line px-6 py-20 text-center">
-                    <h3 className="heading6">No products found</h3>
-                    <p className="mt-2 text-secondary">Try another search or category.</p>
-                </div>
-            )}
+            {visible.length ? <div className="grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-3 md:gap-x-6 md:gap-y-12 lg:grid-cols-4">
+                {visible.map(product => {
+                    const salePercent = product.originPrice > product.price ? Math.round((1 - product.price / product.originPrice) * 100) : 0
+                    const image = product.thumbImage[0]
+                    return <article key={product.id} className="group min-w-0">
+                        <Link href={`/product/default?id=${product.id}`} className="block">
+                            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface">
+                                {image ? <Image src={image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-700 group-hover:scale-105" /> : <div className="absolute inset-0 flex items-center justify-center text-secondary">No image</div>}
+                                <div className="absolute left-3 top-3 flex flex-wrap gap-2">{product.new && <span className="rounded-full bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-wide shadow-sm">New</span>}{salePercent > 0 && <span className="rounded-full bg-black px-3 py-1 text-[11px] font-medium text-white">-{salePercent}%</span>}</div>
+                                {product.quantity === 0 && <div className="absolute inset-x-0 bottom-0 bg-black/75 px-3 py-2 text-center text-xs font-medium uppercase tracking-wide text-white">Out of stock</div>}
+                            </div>
+                        </Link>
+                        <div className="mt-4"><p className="caption2 truncate uppercase tracking-wide text-secondary">{product.categories[0] || 'General'}</p><Link href={`/product/default?id=${product.id}`} className="text-title mt-1 block line-clamp-2 min-h-[48px] leading-6 transition hover:opacity-60">{product.name}</Link><div className="mt-2 flex items-baseline gap-2"><strong className="text-title">Rs. {product.price.toLocaleString('en-PK')}</strong>{product.originPrice > product.price && <del className="caption1 text-secondary2">Rs. {product.originPrice.toLocaleString('en-PK')}</del>}</div><button type="button" onClick={() => handleAddToCart(product)} disabled={product.quantity === 0} className="button-main mt-3 w-full text-center transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50">{product.quantity === 0 ? 'Out of Stock' : 'Add To Cart'}</button></div>
+                    </article>
+                })}
+            </div> : <div className="rounded-2xl border border-line px-6 py-20 text-center"><h3 className="heading6">No products found</h3><p className="mt-2 text-secondary">Try another search or category.</p></div>}
 
-            {pageCount > 1 && <div className="mt-12 flex items-center justify-center gap-3">
-                <button type="button" disabled={page === 1} onClick={() => setPage(value => value - 1)} className="rounded-full border border-line px-5 py-2.5 transition hover:border-black disabled:opacity-40">Previous</button>
-                <span className="px-2 text-sm text-secondary">Page {page} of {pageCount}</span>
-                <button type="button" disabled={page === pageCount} onClick={() => setPage(value => value + 1)} className="rounded-full border border-line px-5 py-2.5 transition hover:border-black disabled:opacity-40">Next</button>
-            </div>}
+            {pageCount > 1 && <div className="mt-12 flex items-center justify-center gap-3"><button type="button" disabled={page === 1} onClick={() => setPage(value => value - 1)} className="rounded-full border border-line px-5 py-2.5 transition hover:border-black disabled:opacity-40">Previous</button><span className="px-2 text-sm text-secondary">Page {page} of {pageCount}</span><button type="button" disabled={page === pageCount} onClick={() => setPage(value => value + 1)} className="rounded-full border border-line px-5 py-2.5 transition hover:border-black disabled:opacity-40">Next</button></div>}
         </section>
     )
 }
