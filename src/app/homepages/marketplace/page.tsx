@@ -10,16 +10,23 @@ import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
 import NewsInsight from '@/components/Home3/NewsInsight'
 import SourceCatalog from '@/components/TheOnlineStore/SourceCatalog'
+import { getBackendCatalogProducts } from '@/lib/backendCatalog'
 import { getSourceProducts } from '@/lib/theOnlineStore'
 
-export const revalidate = 900
+export const revalidate = 300
 
 export default async function Marketplace() {
     let products = []
     try {
-        products = await getSourceProducts()
+        // The database is the canonical Mixenza catalogue after an admin import.
+        products = await getBackendCatalogProducts()
     } catch (error) {
-        console.error('TheOnlineStore catalog unavailable', error)
+        console.error('Mixenza backend catalog unavailable; using source fallback', error)
+        try {
+            products = await getSourceProducts()
+        } catch (sourceError) {
+            console.error('TheOnlineStore catalog unavailable', sourceError)
+        }
     }
 
     return (
