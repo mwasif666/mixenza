@@ -1,47 +1,45 @@
 import Image from 'next/image'
 import React from 'react'
+import type { ProductType } from '@/type/ProductType'
 
-const BannerAbove = () => {
+type BannerAboveProps = {
+    products?: ProductType[]
+}
+
+const BannerAbove = ({ products = [] }: BannerAboveProps) => {
+    const banners = products.slice(0, 3)
+    if (!banners.length) return null
+
     return (
         <div className="banner-block md:pt-10 pt-8">
             <div className="container">
                 <div className="list-banner grid lg:grid-cols-3 sm:grid-cols-2 lg:gap-[30px] gap-[20px]">
-                    <a href='/shop/breadcrumb-img'
-                        className="banner-item relative py-[53.5px] px-10 bg-primary block duration-500 rounded-2xl overflow-hidden">
-                        <div className="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
-                            <Image width={5000} height={5000} src='/images/banner/marketplace1.png' className='w-full duration-500' alt='img' />
-                        </div>
-                        <div className="banner-content relative">
-                            <div className="heading6 text-white">Surface <br />Save Up To $569</div>
-                            <div
-                                className="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2">
-                                Shop Surface</div>
-                        </div>
-                    </a>
-                    <a href='/shop/breadcrumb-img'
-                        className="banner-item relative py-[53.5px] px-10 bg-brand block duration-500 rounded-2xl overflow-hidden">
-                        <div className="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
-                            <Image width={5000} height={5000} src='/images/banner/marketplace2.png' className='w-full duration-500' alt='img' />
-                        </div>
-                        <div className="banner-content relative">
-                            <div className="heading6 text-white">Gamepad <br />Save Up To $69</div>
-                            <div
-                                className="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2">
-                                Shop Deals</div>
-                        </div>
-                    </a>
-                    <a href='/shop/breadcrumb-img'
-                        className="banner-item relative py-[53.5px] px-10 bg-primary-dark block duration-500 max-lg:hidden max-sm:block rounded-2xl overflow-hidden">
-                        <div className="banner-img w-1/2 absolute top-1/2 -translate-y-1/2 right-10">
-                            <Image width={5000} height={5000} src='/images/banner/marketplace3.png' className='w-full duration-500' alt='img' />
-                        </div>
-                        <div className="banner-content relative">
-                            <div className="heading6 text-white">Cameras <br />Save Up To $169</div>
-                            <div
-                                className="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-2">
-                                Shop Camera</div>
-                        </div>
-                    </a>
+                    {banners.map((product, index) => {
+                        const image = product.thumbImage?.[0] || product.images?.[0]
+                        const discount = product.originPrice > product.price
+                            ? `Save ${Math.round(((product.originPrice - product.price) / product.originPrice) * 100)}%`
+                            : 'Shop now'
+                        const background = index === 1 ? 'bg-brand' : index === 2 ? 'bg-primary-dark' : 'bg-primary'
+
+                        return (
+                            <a
+                                key={product.id}
+                                href={`/product/${product.slug}`}
+                                className={`banner-item relative py-[42px] px-8 ${background} block duration-500 rounded-2xl overflow-hidden min-h-[210px]`}
+                            >
+                                {image && (
+                                    <div className="banner-img w-1/2 h-full absolute top-0 right-4 flex items-center justify-center">
+                                        <Image width={700} height={520} src={image} className="w-full h-full object-contain duration-500" alt={product.name} />
+                                    </div>
+                                )}
+                                <div className="banner-content relative z-10 max-w-[55%]">
+                                    <div className="heading6 text-white line-clamp-2">{product.name}</div>
+                                    <div className="text-sm text-white/80 mt-2">{discount}</div>
+                                    <div className="text-button text-white relative inline-block pb-1 border-b-2 border-white duration-500 mt-3">Shop now</div>
+                                </div>
+                            </a>
+                        )
+                    })}
                 </div>
             </div>
         </div>
