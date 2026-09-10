@@ -4,6 +4,7 @@ import MenuEleven from '@/components/Header/Menu/MenuEleven'
 import Footer from '@/components/Footer/Footer'
 import FullCatalog from '@/components/TheOnlineStore/FullCatalog'
 import { getAllMixenzaProducts } from '@/lib/catalogSync'
+import type { SourceProduct } from '@/lib/theOnlineStore'
 
 // Supplier API must not be called while Vercel is compiling the application.
 export const dynamic = 'force-dynamic'
@@ -11,7 +12,7 @@ export const revalidate = 0
 export const fetchCache = 'force-no-store'
 
 export default async function Fashion11CatalogPage() {
-    let products = []
+    let products: SourceProduct[] = []
     try {
         products = await getAllMixenzaProducts()
     } catch (error) {
