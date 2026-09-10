@@ -1,7 +1,7 @@
-import { ProductType } from '@/type/ProductType'
 import { apiPath } from '@/config/site'
+import { SourceProduct } from '@/lib/theOnlineStore'
 
-export type BackendProduct = {
+type BackendProduct = {
     _id?: string
     id?: string
     title: string
@@ -14,6 +14,7 @@ export type BackendProduct = {
     images?: Array<{ url?: string; src?: string; alt?: string } | string>
     category?: { _id?: string; id?: string; name?: string; slug?: string }
     tags?: string[]
+    sizes?: string[]
     isFeatured?: boolean
     isNewArrival?: boolean
     isBestSeller?: boolean
@@ -31,14 +32,15 @@ type BackendProductsResponse = {
 const imageUrls = (images: BackendProduct['images'] = []) =>
     images.map(image => typeof image === 'string' ? image : image.url || image.src || '').filter(Boolean) as string[]
 
-const mapProduct = (product: BackendProduct): ProductType => {
+const mapProduct = (product: BackendProduct): SourceProduct => {
     const images = imageUrls(product.images)
     const price = Number(product.discountPrice || product.price || 0)
     const originPrice = Number(product.price || price)
+    const categoryName = product.category?.name || 'General'
     return {
         id: String(product._id || product.id),
-        category: product.category?.name || 'General',
-        type: product.category?.name || 'Product',
+        category: categoryName,
+        type: categoryName,
         name: product.title,
         gender: 'unisex',
         new: Boolean(product.isNewArrival),
@@ -50,17 +52,24 @@ const mapProduct = (product: BackendProduct): ProductType => {
         sold: 0,
         quantity: Math.max(0, Number(product.stock || 0)),
         quantityPurchase: 1,
-        sizes: [],
+        sizes: product.sizes || [],
         variation: [],
         thumbImage: images.slice(0, 2),
         images,
         description: product.description || product.shortDescription || '',
         action: 'add to cart',
         slug: product.slug,
+        sourceId: Number(product._id || product.id || 0),
+        sourceUrl: `/product/default?id=${product._id || product.id}`,
+        sourceHandle: product.slug,
+        categories: [categoryName],
+        tags: product.tags || [],
+        sku: undefined,
+        stockStatus: Number(product.stock || 0) > 0 ? 'instock' : 'outofstock',
     }
 }
 
-export async function getBackendCatalogProducts(): Promise<ProductType[]> {
+export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
     const first = await fetch(apiPath('/products?page=1&limit=100&sort=newest'), {
         next: { revalidate: 300 },
         headers: { Accept: 'application/json' },
