@@ -1,31 +1,50 @@
 import { ProductType } from '@/type/ProductType'
 
 export const SOURCE_ORIGIN = 'https://theonlinestore.com.pk'
-const API_ORIGIN = `${SOURCE_ORIGIN}/wp-json/wc/store/v1`
+const API_ORIGIN = SOURCE_ORIGIN
 
-type StoreCategory = { id: number; name: string; slug: string; count: number }
-type StoreImage = { id: number; src: string; alt?: string }
-type StoreProduct = {
+type ShopifyImage = {
+    id: number
+    src: string
+    alt?: string | null
+}
+
+type ShopifyVariant = {
+    id: number
+    title?: string
+    price?: string
+    compare_at_price?: string | null
+    available?: boolean
+    inventory_quantity?: number | null
+    option1?: string | null
+    option2?: string | null
+    option3?: string | null
+}
+
+type ShopifyProduct = {
+    id: number
+    title: string
+    handle: string
+    body_html?: string
+    product_type?: string
+    vendor?: string
+    tags?: string | string[]
+    published_at?: string | null
+    created_at?: string
+    updated_at?: string
+    images?: ShopifyImage[]
+    variants?: ShopifyVariant[]
+}
+
+type ShopifyProductsResponse = { products: ShopifyProduct[] }
+
+export type SourceCategory = {
     id: number
     name: string
     slug: string
-    permalink: string
-    description?: string
-    short_description?: string
-    sku?: string
-    prices?: { price?: string; regular_price?: string; currency_minor_unit?: number }
-    on_sale?: boolean
-    is_in_stock?: boolean
-    stock_status?: string
-    stock_quantity?: number | null
-    images?: StoreImage[]
-    categories?: StoreCategory[]
-    tags?: Array<{ id: number; name: string; slug: string }>
-    attributes?: Array<{ name: string; terms?: Array<{ name: string }> }>
-    date_created?: string
+    count: number
 }
 
-export type SourceCategory = StoreCategory
 export type SourceProduct = ProductType & {
     sourceId: number
     sourceUrl: string
@@ -38,15 +57,18 @@ export type SourceProduct = ProductType & {
 
 async function fetchStoreApi<T>(path: string): Promise<T> {
     const response = await fetch(`${API_ORIGIN}${path}`, {
-        next: { revalidate: 900 },
-        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': 'Mixenza/1.0 catalog sync',
+        },
     })
-    if (!response.ok) throw new Error(`TheOnlineStore API request failed: ${response.status}`)
-    return response.json() as Promise<T>
-}
 
-function money(value: string | undefined, minorUnit = 2) {
-    return (Number(value || 0) || 0) / Math.pow(10, minorUnit)
+    if (!response.ok) {
+        throw new Error(`TheOnlineStore catalog request failed: ${response.status}`)
+    }
+
+    return response.json() as Promise<T>
 }
 
 function stripHtml(value = '') {
@@ -58,79 +80,144 @@ function stripHtml(value = '') {
         .replace(/&amp;/gi, '&')
         .replace(/&quot;/gi, '"')
         .replace(/&#39;/gi, "'")
+        .replace(/&#x27;/gi, "'")
         .replace(/\s+/g, ' ')
         .trim()
 }
 
-function mapProduct(product: StoreProduct): SourceProduct {
-    const minorUnit = product.prices?.currency_minor_unit ?? 2
-    const price = money(product.prices?.price, minorUnit)
-    const regularPrice = money(product.prices?.regular_price, minorUnit) || price
-    const categories = (product.categories || []).map(category => category.name)
-    const tags = (product.tags || []).map(tag => tag.name)
+function money(value: string | undefined | null) {
+    const parsed = Number(value)
+    return Number.isFinite(parsed) ? parsed : 0
+}
+
+function slugify(value: string) {
+    return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+}
+
+function normalizeTags(tags: string | string[] | undefined) {
+    if (Array.isArray(tags)) return tags.map(tag => tag.trim()).filter(Boolean)
+    return String(tags || '')
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(Boolean)
+}
+
+function mapProduct(product: ShopifyProduct): SourceProduct {
+    const variants = product.variants || []
+    const firstVariant = variants[0]
+    const price = money(firstVariant?.price)
+    const originPrice = money(firstVariant?.compare_at_price) || price
     const images = (product.images || []).map(image => image.src).filter(Boolean)
-    const attributes = (product.attributes || []).flatMap(attribute =>
-        (attribute.terms || []).map(term => term.name),
-    )
-    const quantity = product.stock_quantity == null
-        ? (product.is_in_stock === false ? 0 : 999)
-        : Math.max(0, product.stock_quantity)
+    const tags = normalizeTags(product.tags)
+    const category = product.product_type?.trim() || tags[0] || 'General'
+    const categories = [category]
+    const quantities = variants
+        .map(variant => variant.inventory_quantity)
+        .filter((quantity): quantity is number => typeof quantity === 'number')
+    const anyAvailable = variants.some(variant => variant.available !== false)
+    const quantity = quantities.length
+        ? Math.max(0, quantities.reduce((total, item) => total + item, 0))
+        : (anyAvailable ? 999 : 0)
+
+    const options = variants.flatMap(variant => [variant.option1, variant.option2, variant.option3])
+        .filter((value): value is string => Boolean(value && value !== 'Default Title'))
+    const sizes = Array.from(new Set(options))
 
     return {
         id: String(product.id),
-        category: categories[0] || 'General',
-        type: categories[0] || 'Product',
-        name: product.name,
+        category,
+        type: category,
+        name: product.title,
         gender: 'unisex',
-        new: Boolean(product.date_created && Date.now() - Date.parse(product.date_created) < 30 * 86400000),
-        sale: Boolean(product.on_sale),
+        new: Boolean(product.created_at && Date.now() - Date.parse(product.created_at) < 30 * 86400000),
+        sale: originPrice > price,
         rate: 0,
         price,
-        originPrice: regularPrice,
-        brand: 'TheOnlineStore',
+        originPrice,
+        brand: product.vendor || 'TheOnlineStore',
         sold: 0,
         quantity,
         quantityPurchase: 1,
-        sizes: attributes,
+        sizes,
         variation: [],
         thumbImage: images.slice(0, 2),
         images,
-        description: stripHtml(product.description || product.short_description || ''),
+        description: stripHtml(product.body_html || ''),
         action: 'add to cart',
-        slug: product.slug,
+        slug: product.handle,
         sourceId: product.id,
-        sourceUrl: product.permalink,
-        sourceHandle: product.slug,
+        sourceUrl: `${SOURCE_ORIGIN}/products/${product.handle}`,
+        sourceHandle: product.handle,
         categories,
         tags,
-        sku: product.sku || undefined,
-        stockStatus: product.stock_status || (product.is_in_stock ? 'instock' : 'outofstock'),
+        sku: firstVariant?.id ? String(firstVariant.id) : undefined,
+        stockStatus: quantity > 0 ? 'instock' : 'outofstock',
     }
-}
-
-export async function getSourceCategories(): Promise<SourceCategory[]> {
-    return fetchStoreApi<SourceCategory[]>('/products/categories?per_page=100&hide_empty=true')
 }
 
 export async function getSourceProducts(): Promise<SourceProduct[]> {
-    const products: StoreProduct[] = []
-    for (let page = 1; page <= 20; page += 1) {
-        const batch = await fetchStoreApi<StoreProduct[]>(`/products?per_page=100&page=${page}&orderby=menu_order&order=asc`)
+    const products: ShopifyProduct[] = []
+
+    // TheOnlineStore is a Shopify storefront. Shopify's public products.json
+    // endpoint supports up to 250 products per page, which covers the current
+    // catalog while retaining pagination for future catalog growth.
+    for (let page = 1; page <= 10; page += 1) {
+        const payload = await fetchStoreApi<ShopifyProductsResponse>(`/products.json?limit=250&page=${page}`)
+        const batch = payload.products || []
         products.push(...batch)
-        if (batch.length < 100) break
+        if (batch.length < 250) break
     }
+
     return products.map(mapProduct)
 }
 
-export async function getSourceProductById(id: string | number) {
-    try {
-        return mapProduct(await fetchStoreApi<StoreProduct>(`/products/${encodeURIComponent(String(id))}`))
-    } catch {
-        return null
+export async function getSourceCategories(): Promise<SourceCategory[]> {
+    const products = await getSourceProducts()
+    const counts = new Map<string, number>()
+
+    for (const product of products) {
+        for (const category of product.categories) {
+            counts.set(category, (counts.get(category) || 0) + 1)
+        }
     }
+
+    return Array.from(counts.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([name, count], index) => ({
+            id: index + 1,
+            name,
+            slug: slugify(name),
+            count,
+        }))
+}
+
+export async function getSourceProductById(id: string | number) {
+    const products = await getSourceProducts()
+    return products.find(product => product.sourceId === Number(id) || product.id === String(id)) || null
 }
 
 export async function getCatalog() {
-    const [products, categories] = await Promise.all([getSourceProducts(), getSourceCategories()])
+    const products = await getSourceProducts()
+    const counts = new Map<string, number>()
+
+    for (const product of products) {
+        for (const category of product.categories) {
+            counts.set(category, (counts.get(category) || 0) + 1)
+        }
+    }
+
+    const categories = Array.from(counts.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([name, count], index) => ({
+            id: index + 1,
+            name,
+            slug: slugify(name),
+            count,
+        }))
+
     return { products, categories }
 }
