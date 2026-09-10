@@ -18,7 +18,6 @@ export const revalidate = 300
 export default async function Marketplace() {
     let products = []
     try {
-        // The database is the canonical Mixenza catalogue after an admin import.
         products = await getBackendCatalogProducts()
     } catch (error) {
         console.error('Mixenza backend catalog unavailable; using source fallback', error)
@@ -39,7 +38,7 @@ export default async function Marketplace() {
                 <MenuMarketplace />
                 <SliderMarketplace />
             </div>
-            <BannerAbove />
+            <BannerAbove products={products} />
             <SourceCatalog products={products} />
             <NewsInsight data={blogData} start={18} limit={21} />
             <Benefit props="md:py-[60px] py-10 border-b border-line" />
