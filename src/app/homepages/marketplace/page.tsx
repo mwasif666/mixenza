@@ -11,12 +11,12 @@ import ModalNewsletter from '@/components/Modal/ModalNewsletter'
 import NewsInsight from '@/components/Home3/NewsInsight'
 import SourceCatalog from '@/components/TheOnlineStore/SourceCatalog'
 import { getBackendCatalogProducts } from '@/lib/backendCatalog'
-import { getSourceProducts } from '@/lib/theOnlineStore'
+import { getSourceProducts, type SourceProduct } from '@/lib/theOnlineStore'
 
 export const revalidate = 300
 
 export default async function Marketplace() {
-    let products = []
+    let products: SourceProduct[] = []
     try {
         products = await getBackendCatalogProducts()
     } catch (error) {
