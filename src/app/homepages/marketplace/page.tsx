@@ -1,6 +1,6 @@
 import React from 'react'
 import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuMarketplace from '@/components/Header/Menu/MenuMarketplace'
+import DynamicMarketplaceHeader from '@/components/Header/Menu/DynamicMarketplaceHeader'
 import SliderMarketplace from '@/components/Slider/SliderMarketplace'
 import BannerAbove from '@/components/Marketplace/BannerAbove'
 import Benefit from '@/components/Home1/Benefit'
@@ -35,7 +35,7 @@ export default async function Marketplace() {
                 slogan="New customers save 10% with the code GET10"
             />
             <div id="header" className="relative w-full">
-                <MenuMarketplace />
+                <DynamicMarketplaceHeader />
                 <SliderMarketplace />
             </div>
             <BannerAbove products={products} />
