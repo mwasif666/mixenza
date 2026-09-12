@@ -10,14 +10,13 @@ import ModalCompare from '@/components/Modal/ModalCompare'
 import CountdownTimeType from '@/type/CountdownType'
 import { countdownTime } from '@/store/countdownTime'
 import { BRAND, brandCssVariables } from '@/constants/brand'
+import DynamicMarketplaceHeader from '@/components/Header/Menu/DynamicMarketplaceHeader'
 
 const serverTimeLeft: CountdownTimeType = countdownTime();
 
 const instrument = Instrument_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  // Needed so relative OG/social image paths resolve to absolute URLs.
-  // Set NEXT_PUBLIC_SITE_URL in production.
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: {
     default: `${BRAND.name} — ${BRAND.tagline}`,
@@ -37,8 +36,6 @@ export const metadata: Metadata = {
     title: `${BRAND.name} — ${BRAND.tagline}`,
     description: BRAND.description,
     siteName: BRAND.name,
-    // The original (black background) reads better as a social card than a
-    // transparent PNG, which platforms composite unpredictably.
     images: [BRAND.logos.originalMain],
     type: 'website',
   },
@@ -57,16 +54,24 @@ export default function RootLayout({
     <GlobalProvider>
       <html lang="en">
         <head>
-          {/*
-            The one and only place brand colours enter the CSS layer.
-            Values come from src/constants/brand.ts — edit them there.
-          */}
           <style
             id="brand-theme"
             dangerouslySetInnerHTML={{ __html: brandCssVariables }}
           />
+          <style
+            id="single-site-header"
+            dangerouslySetInnerHTML={{ __html: `
+              /* Every route uses the single live Mixenza header below. */
+              body > .top-nav,
+              body > .header-menu,
+              body > #header > .header-menu {
+                display: none !important;
+              }
+            ` }}
+          />
         </head>
         <body className={instrument.className}>
+          <DynamicMarketplaceHeader />
           {children}
           <ModalCart serverTimeLeft={serverTimeLeft} />
           <ModalWishlist />

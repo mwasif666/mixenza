@@ -19,11 +19,9 @@ type Product = {
     images?: string[]
     categories?: string[]
     quantity?: number
-    sale?: boolean
 }
 
 type Category = { name: string; slug: string; count: number }
-
 type Catalog = { products?: Product[]; categories?: Category[] }
 
 export default function DynamicMarketplaceHeader() {
@@ -32,7 +30,7 @@ export default function DynamicMarketplaceHeader() {
     const [openShop, setOpenShop] = useState(false)
     const [keyword, setKeyword] = useState('')
     const { openLoginPopup, handleLoginPopup } = useLoginPopup()
-    const { openMenuMobile, handleMenuMobile } = useMenuMobile()
+    const { handleMenuMobile } = useMenuMobile()
     const { openModalCart } = useModalCartContext()
     const { openModalWishlist } = useModalWishlistContext()
     const { cartState } = useCart()
@@ -42,10 +40,12 @@ export default function DynamicMarketplaceHeader() {
         fetch('/api/catalog', { cache: 'no-store' })
             .then(response => response.ok ? response.json() : Promise.reject())
             .then((data: Catalog) => {
-                if (!cancelled) setCatalog({
-                    products: Array.isArray(data.products) ? data.products : [],
-                    categories: Array.isArray(data.categories) ? data.categories : [],
-                })
+                if (!cancelled) {
+                    setCatalog({
+                        products: Array.isArray(data.products) ? data.products : [],
+                        categories: Array.isArray(data.categories) ? data.categories : [],
+                    })
+                }
             })
             .catch(() => undefined)
         return () => { cancelled = true }
@@ -65,7 +65,22 @@ export default function DynamicMarketplaceHeader() {
     }
 
     return (
-        <header className="relative z-30 w-full bg-white">
+        <header className="site-global-marketplace-header relative z-[100] w-full bg-white">
+            <div className="md:h-[44px] h-[34px] bg-brand-dark border-b border-surface1">
+                <div className="container mx-auto h-full flex items-center justify-between">
+                    <div className="hidden md:flex items-center gap-5 text-white text-xs">
+                        <span>English</span>
+                        <span>USD</span>
+                    </div>
+                    <div className="text-center text-button-uppercase text-white flex-1">
+                        New customers save 10% with the code GET10
+                    </div>
+                    <div className="hidden md:flex items-center gap-4 text-white text-xs">
+                        <span>f</span><span>◎</span><span>▶</span><span>𝕏</span><span>p</span>
+                    </div>
+                </div>
+            </div>
+
             <div className="header-menu-main style-marketplace relative bg-brand w-full md:h-[74px] h-[56px]">
                 <div className="container mx-auto h-full">
                     <div className="header-main flex items-center justify-between h-full gap-4">
@@ -111,7 +126,7 @@ export default function DynamicMarketplaceHeader() {
                             <Icon.CaretDown size={17} />
                         </button>
                         {openDepartment && (
-                            <div className="absolute top-full left-0 mt-0 w-[290px] bg-white border border-line rounded-b-xl shadow-lg p-2">
+                            <div className="absolute top-full left-0 w-[290px] bg-white border border-line rounded-b-xl shadow-lg p-2">
                                 {categories.length ? categories.map(category => (
                                     <Link
                                         key={category.slug}
@@ -130,20 +145,31 @@ export default function DynamicMarketplaceHeader() {
                     <nav className="flex items-center gap-8 pl-8 h-full">
                         <Link href="/homepages/marketplace" className="text-button-uppercase">Demo</Link>
                         <div className="relative h-full flex items-center">
-                            <button onClick={() => setOpenShop(value => !value)} className="text-button-uppercase flex items-center gap-1">
+                            <button
+                                onClick={() => setOpenShop(value => !value)}
+                                className="text-button-uppercase flex items-center gap-1"
+                                aria-expanded={openShop}
+                            >
                                 Shop <Icon.CaretDown size={14} />
                             </button>
                             {openShop && (
-                                <div className="absolute top-full left-0 w-[760px] bg-white border border-line rounded-b-xl shadow-lg p-7 grid grid-cols-4 gap-6">
+                                <div className="absolute top-full left-0 w-[760px] max-h-[70vh] overflow-y-auto bg-white border border-line rounded-b-xl shadow-lg p-7 grid grid-cols-4 gap-6">
                                     {shopCategories.map(category => (
-                                        <Link key={category.slug} href={`/shop/breadcrumb1?category=${encodeURIComponent(category.name)}`} className="text-secondary hover:text-black">
+                                        <Link
+                                            key={category.slug}
+                                            href={`/shop/breadcrumb1?category=${encodeURIComponent(category.name)}`}
+                                            onClick={() => setOpenShop(false)}
+                                            className="text-secondary hover:text-black"
+                                        >
                                             <span className="block">{category.name}</span>
                                             <span className="text-xs text-secondary2">{category.count} products</span>
                                         </Link>
                                     ))}
                                     {!shopCategories.length && <span className="text-secondary col-span-4">Loading catalog...</span>}
                                     {shopCategories.length > 0 && (
-                                        <Link href="/shop/breadcrumb1" className="font-medium">View All Products</Link>
+                                        <Link href="/shop/breadcrumb1" onClick={() => setOpenShop(false)} className="font-medium">
+                                            View All Products
+                                        </Link>
                                     )}
                                 </div>
                             )}
@@ -158,12 +184,12 @@ export default function DynamicMarketplaceHeader() {
             <div className="hidden lg:block border-b border-line bg-white">
                 <div className="container mx-auto flex items-center justify-end gap-3 py-3">
                     <span className="text-button-uppercase mr-auto">Recent Products</span>
-                    <div className="flex gap-5">
+                    <div className="flex gap-5 overflow-hidden">
                         {recentProducts.map(product => {
                             const image = product.thumbImage?.[0] || product.images?.[0]
                             const sale = (product.originPrice || 0) > (product.price || 0)
                             return (
-                                <Link key={product.id} href={`/product/default?id=${encodeURIComponent(product.id)}`} className="flex items-center gap-3 w-[280px]">
+                                <Link key={product.id} href={`/product/default?id=${encodeURIComponent(product.id)}`} className="flex items-center gap-3 w-[280px] shrink-0">
                                     <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-surface shrink-0">
                                         {image && <img src={image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />}
                                     </div>
@@ -181,7 +207,7 @@ export default function DynamicMarketplaceHeader() {
                 </div>
             </div>
 
-            <div className={`login-popup absolute top-[74px] right-8 w-[320px] p-7 rounded-xl bg-white box-shadow-sm ${openLoginPopup ? 'open' : ''}`}>
+            <div className={`login-popup absolute top-[118px] right-8 w-[320px] p-7 rounded-xl bg-white box-shadow-sm ${openLoginPopup ? 'open' : ''}`}>
                 <Link href="/login" className="button-main w-full text-center">Login</Link>
                 <div className="text-secondary text-center mt-3 pb-4">Don’t have an account? <Link href="/register" className="text-black pl-1 hover:underline">Register</Link></div>
                 <Link href="/my-account" className="button-main bg-white text-black border border-black w-full text-center">Dashboard</Link>
