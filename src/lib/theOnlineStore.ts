@@ -37,6 +37,8 @@ type ShopifyProduct = {
 }
 
 type ShopifyProductsResponse = { products: ShopifyProduct[] }
+type ShopifyCollection = { id: number; title: string; handle: string }
+type ShopifyCollectionsResponse = { collections: ShopifyCollection[] }
 
 export type SourceCategory = {
     id: number
@@ -159,12 +161,9 @@ function mapProduct(product: ShopifyProduct): SourceProduct {
     }
 }
 
-export async function getSourceProducts(): Promise<SourceProduct[]> {
+async function getRawProducts(): Promise<ShopifyProduct[]> {
     const products: ShopifyProduct[] = []
 
-    // TheOnlineStore is a Shopify storefront. Shopify's public products.json
-    // endpoint supports up to 250 products per page, which covers the current
-    // catalog while retaining pagination for future catalog growth.
     for (let page = 1; page <= 10; page += 1) {
         const payload = await fetchStoreApi<ShopifyProductsResponse>(`/products.json?limit=250&page=${page}`)
         const batch = payload.products || []
@@ -172,7 +171,48 @@ export async function getSourceProducts(): Promise<SourceProduct[]> {
         if (batch.length < 250) break
     }
 
-    return products.map(mapProduct)
+    return products
+}
+
+async function enrichWithCollections(products: SourceProduct[]) {
+    try {
+        const payload = await fetchStoreApi<ShopifyCollectionsResponse>('/collections.json?limit=250')
+        const collections = payload.collections || []
+        const membership = new Map<number, string[]>()
+
+        await Promise.all(collections.map(async collection => {
+            try {
+                const response = await fetchStoreApi<ShopifyProductsResponse>(`/collections/${encodeURIComponent(collection.handle)}/products.json?limit=250`)
+                for (const sourceProduct of response.products || []) {
+                    const current = membership.get(sourceProduct.id) || []
+                    current.push(collection.title)
+                    membership.set(sourceProduct.id, current)
+                }
+            } catch {
+                // Ignore an individual collection so the rest of the live catalog remains available.
+            }
+        }))
+
+        return products.map(product => {
+            const categories = membership.get(product.sourceId)
+            if (!categories?.length) return product
+            const uniqueCategories = Array.from(new Set(categories))
+            return {
+                ...product,
+                category: uniqueCategories[0],
+                type: uniqueCategories[0],
+                categories: uniqueCategories,
+            }
+        })
+    } catch {
+        return products
+    }
+}
+
+export async function getSourceProducts(): Promise<SourceProduct[]> {
+    const rawProducts = await getRawProducts()
+    const products = rawProducts.map(mapProduct)
+    return enrichWithCollections(products)
 }
 
 export async function getSourceCategories(): Promise<SourceCategory[]> {
