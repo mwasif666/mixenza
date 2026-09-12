@@ -15,6 +15,7 @@ import { useModalCartContext } from '@/context/ModalCartContext';
 import { useModalWishlistContext } from '@/context/ModalWishlistContext';
 import { useCart } from '@/context/CartContext';
 import Logo from '@/components/Brand/Logo'
+import DynamicMarketplaceMenu from '@/components/TheOnlineStore/DynamicMarketplaceMenu'
 
 const MenuMarketplace = () => {
     const pathname = usePathname()
@@ -48,6 +49,7 @@ const MenuMarketplace = () => {
 
     return (
         <>
+            <DynamicMarketplaceMenu />
             <div className={`header-menu bg-white w-full top-0 z-10 duration-500`}>
                 <div className={`header-menu-main style-marketplace relative bg-brand w-full md:h-[74px] h-[56px]`}>
                     <div className="container mx-auto h-full">
