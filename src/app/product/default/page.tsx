@@ -12,24 +12,32 @@ interface Props {
     searchParams: { id?: string }
 }
 
-export const revalidate = 900
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 const ProductDefault = async ({ searchParams }: Props) => {
-    const productId = searchParams.id || '1'
+    const productId = searchParams.id || ''
 
-    if (productId.startsWith('source-')) {
-        const sourceProduct = await getSourceProductById(productId.replace(/^source-/, ''))
-        if (sourceProduct) {
-            return (
-                <>
-                    <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-                    <div id="header" className="relative w-full">
-                        <MenuOne props="bg-white" />
-                    </div>
-                    <SourceProductDetail product={sourceProduct} />
-                    <Footer />
-                </>
-            )
+    // Source catalog products use the real TheOnlineStore product id. Resolve
+    // those first so every product card, shop page and homepage opens a live
+    // product detail instead of falling back to the template JSON catalog.
+    if (productId) {
+        try {
+            const sourceProduct = await getSourceProductById(productId.replace(/^source-/, ''))
+            if (sourceProduct) {
+                return (
+                    <>
+                        <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
+                        <div id="header" className="relative w-full">
+                            <MenuOne props="bg-white" />
+                        </div>
+                        <SourceProductDetail product={sourceProduct} />
+                        <Footer />
+                    </>
+                )
+            }
+        } catch (error) {
+            console.error('Live product lookup failed', error)
         }
     }
 
@@ -38,9 +46,9 @@ const ProductDefault = async ({ searchParams }: Props) => {
             <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
             <div id="header" className="relative w-full">
                 <MenuOne props="bg-white" />
-                <BreadcrumbProduct data={productData} productPage="default" productId={productId} />
+                <BreadcrumbProduct data={productData} productPage="default" productId={productId || '1'} />
             </div>
-            <Default data={productData} productId={productId} />
+            <Default data={productData} productId={productId || '1'} />
             <Footer />
         </>
     )
