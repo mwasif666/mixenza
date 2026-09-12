@@ -7,6 +7,7 @@ import { CompareProvider } from '@/context/CompareContext'
 import { ModalCompareProvider } from '@/context/ModalCompareContext'
 import { ModalSearchProvider } from '@/context/ModalSearchContext'
 import { ModalQuickviewProvider } from '@/context/ModalQuickviewContext'
+import DynamicMarketplaceMenu from '@/components/TheOnlineStore/DynamicMarketplaceMenu'
 
 const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
@@ -19,11 +20,12 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
                                 <ModalSearchProvider>
                                     <ModalQuickviewProvider>
                                         {children}
+                                        <DynamicMarketplaceMenu />
                                     </ModalQuickviewProvider>
                                 </ModalSearchProvider>
                             </ModalCompareProvider>
                         </CompareProvider>
-                    </ModalWishlistProvider>
+                    </WishlistProvider>
                 </WishlistProvider>
             </ModalCartProvider>
         </CartProvider>
