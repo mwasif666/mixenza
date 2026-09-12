@@ -62,6 +62,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               display: none !important;
             }
           ` }} />
+          <script dangerouslySetInnerHTML={{ __html: `
+            (() => {
+              const fixCurrency = () => {
+                document.querySelectorAll('.product-price, .product-origin-price').forEach((el) => {
+                  el.textContent = el.textContent.replace(/^\\s*\\$/, 'Rs. ')
+                })
+              }
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', fixCurrency, { once: true })
+              } else {
+                fixCurrency()
+              }
+              new MutationObserver(fixCurrency).observe(document.documentElement, { childList: true, subtree: true })
+            })()
+          ` }} />
         </head>
         <body className={instrument.className}>
           <DynamicMarketplaceHeader />
