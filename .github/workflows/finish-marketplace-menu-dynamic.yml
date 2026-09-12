@@ -1,0 +1,49 @@
+name: Finish marketplace menu dynamic wiring
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  wire:
+    if: ${{ !contains(github.event.head_commit.message, 'chore: wire dynamic marketplace menu') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wire dynamic menu enhancer
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/components/Header/Menu/MenuMarketplace.tsx')
+          text = path.read_text()
+
+          import_line = "import DynamicMarketplaceMenu from '@/components/TheOnlineStore/DynamicMarketplaceMenu'\n"
+          logo_line = "import Logo from '@/components/Brand/Logo'\n"
+          if import_line not in text:
+              text = text.replace(logo_line, logo_line + import_line, 1)
+
+          marker = "            <div className={`header-menu bg-white w-full top-0 z-10 duration-500`}>"
+          render_line = "            <DynamicMarketplaceMenu />\n"
+          if render_line not in text and marker in text:
+              text = text.replace(marker, render_line + marker, 1)
+
+          path.write_text(text)
+          PY
+
+      - name: Commit wiring
+        shell: bash
+        run: |
+          rm -f .github/workflows/finish-marketplace-menu-dynamic.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/components/Header/Menu/MenuMarketplace.tsx .github/workflows/finish-marketplace-menu-dynamic.yml
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: wire dynamic marketplace menu"
+          git push
