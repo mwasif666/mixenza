@@ -25,7 +25,7 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
                                 </ModalSearchProvider>
                             </ModalCompareProvider>
                         </CompareProvider>
-                    </WishlistProvider>
+                    </ModalWishlistProvider>
                 </WishlistProvider>
             </ModalCartProvider>
         </CartProvider>
