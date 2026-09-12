@@ -29,7 +29,7 @@ export default function FullCatalog({ products }: { products: SourceProduct[] })
 
     return <section id="products" className="container py-14 md:py-20">
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div><p className="caption2 uppercase tracking-[0.18em] text-secondary">Mixenza Store</p><h2 className="heading3 mt-2">All Products</h2><p className="mt-2 text-secondary">{filtered.length} products · live catalog</p></div>
+            <div><p className="caption2 uppercase tracking-[0.18em] text-secondary">Mixenza Store</p><h2 className="heading3 mt-2">All Products</h2><p className="mt-2 text-secondary">{filtered.length} products · Mixenza collection</p></div>
             <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
                 <input aria-label="Search products" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search products..." className="h-12 min-w-[240px] rounded-full border border-line bg-white px-5 outline-none focus:border-black" />
                 <select aria-label="Sort products" value={sort} onChange={e => setSort(e.target.value)} className="h-12 rounded-full border border-line bg-white px-5 outline-none focus:border-black"><option value="featured">Featured</option><option value="newest">Newest</option><option value="price-low">Price: Low to High</option><option value="price-high">Price: High to Low</option></select>

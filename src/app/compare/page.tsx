@@ -1,4 +1,5 @@
 'use client'
+import { formatMoney } from '@/utils/currency'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -87,7 +88,7 @@ const Compare = () => {
                                         {compareState.compareArray.map((item, index) => (
                                             <td className="w-full border border-line h-[60px] border-t-0 border-r-0" key={index}>
                                                 <div className='h-full flex items-center justify-center'>
-                                                    ${item.price}.00
+                                                    {formatMoney(item.price)}
                                                 </div>
                                             </td>
                                         ))}

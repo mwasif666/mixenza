@@ -51,13 +51,13 @@ const SourceProductDetail: React.FC<Props> = ({ product }) => {
                 </div>
 
                 <div className="pt-2">
-                    <p className="caption2 text-secondary uppercase">{product.categories.join(' · ') || 'TheOnlineStore'}</p>
+                    <p className="caption2 text-secondary uppercase">{product.categories.join(' · ') || 'Mixenza'}</p>
                     <h1 className="heading3 mt-2">{product.name}</h1>
                     <div className="flex items-center gap-3 mt-5">
                         <span className="heading5">Rs. {product.price.toLocaleString('en-PK')}</span>
                         {product.originPrice > product.price && <del className="text-secondary2">Rs. {product.originPrice.toLocaleString('en-PK')}</del>}
                     </div>
-                    <div className="mt-6 pt-6 border-t border-line text-secondary leading-7">
+                    <div className="mt-6 pt-6 border-t border-line text-secondary leading-7 whitespace-pre-line">
                         {product.description || 'No additional description is available for this product.'}
                     </div>
 

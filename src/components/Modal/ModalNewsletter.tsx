@@ -1,14 +1,16 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { formatMoney } from '@/utils/currency'
 import React, { useState, useEffect } from 'react'
 import * as Icon from "@phosphor-icons/react/dist/ssr";
-import productData from '@/data/Product.json'
+import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { useModalQuickviewContext } from '@/context/ModalQuickviewContext';
 import Image from 'next/image';
 
 const ModalNewsletter = () => {
     const [open, setOpen] = useState<boolean>(false)
+    const productData = useCatalogProducts(open)
     const router = useRouter()
     const { openQuickview } = useModalQuickviewContext()
 
@@ -18,9 +20,10 @@ const ModalNewsletter = () => {
     };
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setOpen(true)
         }, 3000)
+        return () => clearTimeout(timer)
     }, [])
 
     return (
@@ -67,9 +70,9 @@ const ModalNewsletter = () => {
                                                 <div className=''>
                                                     <div className="name text-button">{item.name}</div>
                                                     <div className="flex items-center gap-2 mt-2">
-                                                        <div className="product-price text-title">${item.price}.00</div>
+                                                        <div className="product-price text-title">{formatMoney(item.price)}</div>
                                                         <div className="product-origin-price text-title text-secondary2">
-                                                            <del>${item.originPrice}.00</del>
+                                                            <del>{formatMoney(item.originPrice)}</del>
                                                         </div>
                                                     </div>
                                                 </div>

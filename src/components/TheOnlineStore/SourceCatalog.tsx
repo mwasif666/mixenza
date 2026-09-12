@@ -63,7 +63,7 @@ const SourceCatalog: React.FC<Props> = ({ products, initialCategory, title = 'Sh
                 <div>
                     <p className="caption2 uppercase tracking-[0.18em] text-secondary">Mixenza Collection</p>
                     <h2 className="heading3 mt-2">{title}</h2>
-                    <p className="mt-2 text-secondary">{filtered.length} products · live catalog synced from TheOnlineStore</p>
+                    <p className="mt-2 text-secondary">{filtered.length} products · Mixenza collection</p>
                 </div>
                 <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
                     <label className="relative min-w-[240px]">

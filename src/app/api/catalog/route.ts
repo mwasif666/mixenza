@@ -10,14 +10,14 @@ export async function GET() {
         const catalog = await getCatalog()
         return NextResponse.json(catalog, {
             headers: {
-                'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=3600',
+                'Cache-Control': 'no-store',
             },
         })
     } catch (error) {
         console.error('Catalog API failed', error)
         return NextResponse.json(
             { success: false, products: [], categories: [], error: 'Catalog unavailable' },
-            { status: 200, headers: { 'Cache-Control': 'no-store' } },
+            { status: 503, headers: { 'Cache-Control': 'no-store' } },
         )
     }
 }

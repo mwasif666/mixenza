@@ -10,6 +10,7 @@ import useMenuMobile from '@/store/useMenuMobile'
 import { useModalCartContext } from '@/context/ModalCartContext'
 import { useModalWishlistContext } from '@/context/ModalWishlistContext'
 import { useCart } from '@/context/CartContext'
+import { loadCatalog } from '@/lib/catalogClient'
 
 type Product = {
     id: string
@@ -32,6 +33,8 @@ export default function DynamicMarketplaceHeader() {
     const [openShop, setOpenShop] = useState(false)
     const [keyword, setKeyword] = useState('')
     const [searchOpen, setSearchOpen] = useState(false)
+    const [catalogLoading, setCatalogLoading] = useState(true)
+    const [catalogError, setCatalogError] = useState(false)
     const searchRef = useRef<HTMLDivElement>(null)
     const router = useRouter()
     const { openLoginPopup, handleLoginPopup } = useLoginPopup()
@@ -44,9 +47,7 @@ export default function DynamicMarketplaceHeader() {
         let cancelled = false
         const load = async () => {
             try {
-                const response = await fetch('/api/catalog', { cache: 'no-store' })
-                if (!response.ok) throw new Error('Catalog unavailable')
-                const data: Catalog = await response.json()
+                const data: Catalog = await loadCatalog()
                 if (!cancelled) {
                     setCatalog({
                         products: Array.isArray(data.products) ? data.products : [],
@@ -54,7 +55,9 @@ export default function DynamicMarketplaceHeader() {
                     })
                 }
             } catch {
-                if (!cancelled) setCatalog({ products: [], categories: [] })
+                if (!cancelled) setCatalogError(true)
+            } finally {
+                if (!cancelled) setCatalogLoading(false)
             }
         }
         load()
@@ -163,7 +166,7 @@ export default function DynamicMarketplaceHeader() {
                                     <Link key={category.slug} href={`/shop/breadcrumb1?category=${encodeURIComponent(category.name)}`} onClick={() => setOpenDepartment(false)} className="flex items-center justify-between px-4 py-3 border-b border-line last:border-b-0 hover:bg-surface">
                                         <span>{category.name}</span><span className="text-xs text-secondary">{category.count}</span>
                                     </Link>
-                                )) : <div className="px-4 py-3 text-secondary">Loading categories...</div>}
+                                )) : <div className="px-4 py-3 text-secondary">{catalogLoading ? 'Loading categories...' : catalogError ? 'Categories unavailable. Please reload.' : 'No categories yet.'}</div>}
                             </div>
                         )}
                     </div>
@@ -179,7 +182,7 @@ export default function DynamicMarketplaceHeader() {
                                             <span className="block">{category.name}</span><span className="text-xs text-secondary2">{category.count} products</span>
                                         </Link>
                                     ))}
-                                    {!categories.length && <span className="text-secondary col-span-4">Loading categories...</span>}
+                                    {!categories.length && <span className="text-secondary col-span-4">{catalogLoading ? 'Loading categories...' : catalogError ? 'Categories unavailable. Please reload.' : 'No categories yet.'}</span>}
                                     {categories.length > 0 && <Link href="/shop/breadcrumb1" onClick={() => setOpenShop(false)} className="font-medium">View All Products</Link>}
                                 </div>
                             )}

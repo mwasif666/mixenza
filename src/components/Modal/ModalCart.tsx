@@ -1,5 +1,6 @@
 'use client'
 
+import { formatMoney } from '@/utils/currency'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -70,8 +71,8 @@ const ModalCart = ({ serverTimeLeft }: { serverTimeLeft: CountdownTimeType }) =>
                                         <div className=''>
                                             <div className="name text-button">{product.name}</div>
                                             <div className="flex items-center gap-2 mt-2">
-                                                <div className="product-price text-title">${product.price}.00</div>
-                                                <div className="product-origin-price text-title text-secondary2"><del>${product.originPrice}.00</del></div>
+                                                <div className="product-price text-title">{formatMoney(product.price)}</div>
+                                                <div className="product-origin-price text-title text-secondary2"><del>{formatMoney(product.originPrice)}</del></div>
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +108,7 @@ const ModalCart = ({ serverTimeLeft }: { serverTimeLeft: CountdownTimeType }) =>
                             </div>
                         </div>
                         <div className="heading banner mt-3 px-6">
-                            <div className="text">Buy <span className="text-button"> $<span className="more-price">{moneyForFreeship - totalCart > 0 ? (<>{moneyForFreeship - totalCart}</>) : (0)}</span>.00 </span>
+                            <div className="text">Buy <span className="text-button"> <span className="more-price">{formatMoney(Math.max(0, moneyForFreeship - totalCart))}</span> </span>
                                 <span>more to get </span>
                                 <span className="text-button">freeship</span></div>
                             <div className="tow-bar-block mt-3">
@@ -142,9 +143,9 @@ const ModalCart = ({ serverTimeLeft }: { serverTimeLeft: CountdownTimeType }) =>
                                             </div>
                                             <div className="flex items-center justify-between gap-2 mt-3 w-full">
                                                 <div className="flex items-center text-secondary2 capitalize">
-                                                    {product.selectedSize || product.sizes[0]}/{product.selectedColor || product.variation[0].color}
+                                                    {product.selectedSize || product.sizes[0]}/{product.selectedColor || product.variation[0]?.color || ''}
                                                 </div>
-                                                <div className="product-price text-title">${product.price}.00</div>
+                                                <div className="product-price text-title">{formatMoney(product.price)}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -177,7 +178,7 @@ const ModalCart = ({ serverTimeLeft }: { serverTimeLeft: CountdownTimeType }) =>
                             </div>
                             <div className="flex items-center justify-between pt-6 px-6">
                                 <div className="heading5">Subtotal</div>
-                                <div className="heading5">${totalCart}.00</div>
+                                <div className="heading5">{formatMoney(totalCart)}</div>
                             </div>
                             <div className="block-button text-center p-6">
                                 <div className="flex items-center gap-4">

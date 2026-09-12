@@ -1,4 +1,5 @@
 'use client'
+import { formatMoney } from '@/utils/currency'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -143,7 +144,7 @@ const Cart = () => {
                                                         </div>
                                                     </div>
                                                     <div className="w-1/12 price flex items-center justify-center">
-                                                        <div className="text-title text-center">${product.price}.00</div>
+                                                        <div className="text-title text-center">{formatMoney(product.price)}</div>
                                                     </div>
                                                     <div className="w-1/6 flex items-center justify-center">
                                                         <div className="quantity-block bg-surface md:p-3 p-2 flex items-center justify-between rounded-lg border border-line md:w-[100px] flex-shrink-0 w-20">
@@ -163,7 +164,7 @@ const Cart = () => {
                                                         </div>
                                                     </div>
                                                     <div className="w-1/6 flex total-price items-center justify-center">
-                                                        <div className="text-title text-center">${product.quantity * product.price}.00</div>
+                                                        <div className="text-title text-center">{formatMoney(product.quantity * product.price)}</div>
                                                     </div>
                                                     <div className="w-1/12 flex items-center justify-center">
                                                         <Icon.XCircle

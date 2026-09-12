@@ -25,7 +25,8 @@ const WomenFashion: React.FC<Props> = ({ data, start, limit }) => {
         return data.filter(product => product.type === activeTab)
     }, [activeTab, data])
 
-    const products = filteredProducts.slice(start, start + limit)
+    const offset = activeTab === 'all' ? start : 0
+    const products = filteredProducts.slice(offset, offset + limit)
 
     return (
         <section className="tab-features-block md:pt-20 pt-10">

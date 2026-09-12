@@ -1,4 +1,5 @@
 'use client'
+import { formatMoney } from '@/utils/currency'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -246,14 +247,14 @@ const Checkout = () => {
                                                             <div className="caption1 text-secondary mt-2">
                                                                 <span className='size capitalize'>{product.selectedSize || product.sizes[0]}</span>
                                                                 <span>/</span>
-                                                                <span className='color capitalize'>{product.selectedColor || product.variation[0].color}</span>
+                                                                <span className='color capitalize'>{product.selectedColor || product.variation[0]?.color || ''}</span>
                                                             </div>
                                                         </div>
                                                         <div className="text-title">
                                                             <span className='quantity'>{product.quantity}</span>
                                                             <span className='px-1'>x</span>
                                                             <span>
-                                                                ${product.price}.00
+                                                                {formatMoney(product.price)}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -268,11 +269,11 @@ const Checkout = () => {
                                 </div>
                                 <div className="ship-block py-5 flex justify-between border-b border-line">
                                     <div className="text-title">Shipping</div>
-                                    <div className="text-title">{Number(ship) === 0 ? 'Free' : `$${ship}.00`}</div>
+                                    <div className="text-title">{Number(ship) === 0 ? 'Free' : `${formatMoney(ship)}`}</div>
                                 </div>
                                 <div className="total-cart-block pt-5 flex justify-between">
                                     <div className="heading5">Total</div>
-                                    <div className="heading5 total-cart">${totalCart - Number(discount) + Number(ship)}.00</div>
+                                    <div className="heading5 total-cart">{formatMoney(totalCart - Number(discount) + Number(ship))}</div>
                                 </div>
                             </div>
                         </div>

@@ -98,10 +98,10 @@ const SliderEleven = () => {
                     <div className="banner-ads-block lg:w-1/3 lg:pl-[15px] w-full max-lg:grid sm:grid-cols-2 gap-5">
                         <div className="banner-ads-item bg-linear rounded-2xl relative overflow-hidden cursor-pointer" onClick={() => handleTypeClick('swimwear')}>
                             <div className="text-content relative z-[1] py-12 pl-8">
-                                <div className="text-button-uppercase text-white bg-red px-2 py-0.5 inline-block rounded-sm">Save $10</div>
+                                <div className="text-button-uppercase text-white bg-red px-2 py-0.5 inline-block rounded-sm">Discover More</div>
                                 <div className="heading6 mt-2">Dive into Savings <br />on Swimwear</div>
                                 <div className="body1 mt-3 text-secondary">
-                                    Starting at <span className='text-red'>$59.99</span>
+                                    <span className='text-red'>Shop the collection</span>
                                 </div>
                             </div>
                             <Image
@@ -115,10 +115,10 @@ const SliderEleven = () => {
                         </div>
                         <div className="banner-ads-item bg-linear rounded-2xl relative overflow-hidden cursor-pointer lg:mt-8" onClick={() => handleTypeClick('accessories')}>
                             <div className="text-content relative z-[1] py-12 pl-8">
-                                <div className="text-button-uppercase text-white bg-red px-2 py-0.5 inline-block rounded-sm">Save $10</div>
+                                <div className="text-button-uppercase text-white bg-red px-2 py-0.5 inline-block rounded-sm">Discover More</div>
                                 <div className="heading6 mt-2">20% off <br />accessories</div>
                                 <div className="body1 mt-3 text-secondary">
-                                    Starting at <span className='text-red'>$59.99</span>
+                                    <span className='text-red'>Shop the collection</span>
                                 </div>
                             </div>
                             <Image

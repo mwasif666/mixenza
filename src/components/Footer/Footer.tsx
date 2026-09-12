@@ -98,9 +98,9 @@ const Footer = () => {
                                     </div>
                                     <div className="choose-currency flex items-center gap-1.5">
                                         <select name="currency" id="chooseCurrencyFooter" className='caption2 bg-transparent'>
-                                            <option value="USD">USD</option>
-                                            <option value="EUR">EUR</option>
-                                            <option value="GBP">GBP</option>
+                                            <option value="PKR">PKR</option>
+                                            
+                                            
                                         </select>
                                         <Icon.CaretDown size={12} color='#1F1F1F' />
                                     </div>

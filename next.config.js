@@ -6,6 +6,7 @@ const nextConfig = {
     distDir: process.env.NEXT_DIST_DIR || '.next',
     images: {
         remotePatterns: [
+            { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
             {
                 protocol: 'https',
                 hostname: 'theonlinestore.com.pk',

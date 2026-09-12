@@ -16,7 +16,7 @@ const serverTimeLeft: CountdownTimeType = countdownTime();
 const instrument = Instrument_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL((process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').split(',')[0].trim()),
   title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s | ${BRAND.name}` },
   description: BRAND.description,
   applicationName: BRAND.name,
@@ -41,7 +41,6 @@ export const viewport = { themeColor: BRAND.colors.brandDark }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <GlobalProvider>
       <html lang="en">
         <head>
           <style id="brand-theme" dangerouslySetInnerHTML={{ __html: brandCssVariables }} />
@@ -62,23 +61,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               display: none !important;
             }
           ` }} />
-          <script dangerouslySetInnerHTML={{ __html: `
-            (() => {
-              const fixCurrency = () => {
-                document.querySelectorAll('.product-price, .product-origin-price').forEach((el) => {
-                  el.textContent = el.textContent.replace(/^\\s*\\$/, 'Rs. ')
-                })
-              }
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', fixCurrency, { once: true })
-              } else {
-                fixCurrency()
-              }
-              new MutationObserver(fixCurrency).observe(document.documentElement, { childList: true, subtree: true })
-            })()
-          ` }} />
         </head>
         <body className={instrument.className}>
+          <GlobalProvider>
           <DynamicMarketplaceHeader />
           {children}
           <ModalCart serverTimeLeft={serverTimeLeft} />
@@ -86,8 +71,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ModalSearch />
           <ModalQuickview />
           <ModalCompare />
+          </GlobalProvider>
         </body>
       </html>
-    </GlobalProvider>
   )
 }

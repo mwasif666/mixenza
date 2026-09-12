@@ -1,11 +1,12 @@
 import { apiPath } from '@/config/site'
-import { SourceProduct } from '@/lib/theOnlineStore'
+import type { SourceProduct } from '@/lib/theOnlineStore'
 
 type BackendProduct = {
     _id?: string
     id?: string
     title: string
     slug: string
+    sku?: string
     price: number
     discountPrice?: number
     stock: number
@@ -59,35 +60,40 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
         description: product.description || product.shortDescription || '',
         action: 'add to cart',
         slug: product.slug,
-        sourceId: Number(product._id || product.id || 0),
+        sourceId: product.sku?.match(/^TOS-(\d+)/)?.[1] || String(product._id || product.id),
         sourceUrl: `/product/default?id=${product._id || product.id}`,
         sourceHandle: product.slug,
         categories: [categoryName],
         tags: product.tags || [],
-        sku: undefined,
+        sku: product.sku,
         stockStatus: Number(product.stock || 0) > 0 ? 'instock' : 'outofstock',
     }
 }
 
 export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
     const first = await fetch(apiPath('/products?page=1&limit=100&sort=newest'), {
-        next: { revalidate: 300 },
+        cache: 'no-store',
+        signal: AbortSignal.timeout(15000),
         headers: { Accept: 'application/json' },
     })
     if (!first.ok) throw new Error(`Mixenza backend products request failed: ${first.status}`)
     const firstPage = await first.json() as BackendProductsResponse
+    if (!firstPage.success || !Array.isArray(firstPage.data)) throw new Error('Invalid backend catalog response')
     const products = [...(firstPage.data || [])]
 
-    for (let page = 2; page <= Math.min(firstPage.pages || 1, 50); page += 1) {
+    const remaining = await Promise.all(Array.from({ length: Math.max(0, (firstPage.pages || 1) - 1) }, async (_, index) => {
+        const page = index + 2
         const response = await fetch(apiPath(`/products?page=${page}&limit=100&sort=newest`), {
-            next: { revalidate: 300 },
+            cache: 'no-store',
+            signal: AbortSignal.timeout(15000),
             headers: { Accept: 'application/json' },
         })
-        if (!response.ok) break
+        if (!response.ok) throw new Error(`Mixenza backend products request failed: ${response.status}`)
         const payload = await response.json() as BackendProductsResponse
-        products.push(...(payload.data || []))
-        if (!payload.data?.length) break
-    }
+        if (!payload.success || !Array.isArray(payload.data)) throw new Error('Invalid backend catalog page')
+        return payload.data
+    }))
+    products.push(...remaining.flat())
 
     return products.map(mapProduct)
 }
