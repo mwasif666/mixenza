@@ -13,15 +13,11 @@ import { BRAND, brandCssVariables } from '@/constants/brand'
 import DynamicMarketplaceHeader from '@/components/Header/Menu/DynamicMarketplaceHeader'
 
 const serverTimeLeft: CountdownTimeType = countdownTime();
-
 const instrument = Instrument_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-  title: {
-    default: `${BRAND.name} — ${BRAND.tagline}`,
-    template: `%s | ${BRAND.name}`,
-  },
+  title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s | ${BRAND.name}` },
   description: BRAND.description,
   applicationName: BRAND.name,
   icons: {
@@ -41,34 +37,31 @@ export const metadata: Metadata = {
   },
 }
 
-export const viewport = {
-  themeColor: BRAND.colors.brandDark,
-}
+export const viewport = { themeColor: BRAND.colors.brandDark }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <GlobalProvider>
       <html lang="en">
         <head>
-          <style
-            id="brand-theme"
-            dangerouslySetInnerHTML={{ __html: brandCssVariables }}
-          />
-          <style
-            id="single-site-header"
-            dangerouslySetInnerHTML={{ __html: `
-              /* Every route uses the single live Mixenza header below. */
-              body > .top-nav,
-              body > .header-menu,
-              body > #header > .header-menu {
-                display: none !important;
-              }
-            ` }}
-          />
+          <style id="brand-theme" dangerouslySetInnerHTML={{ __html: brandCssVariables }} />
+          <style id="single-site-header" dangerouslySetInnerHTML={{ __html: `
+            /* The root header is the only header shown on the client site. */
+            body > .top-nav,
+            body > .header-menu,
+            body > #header > .header-menu,
+            body > #header > .header-menu-main,
+            body > #header .header-menu,
+            body > #header .header-menu-main {
+              display: none !important;
+            }
+            body > .site-global-marketplace-header ~ .top-nav,
+            body > .site-global-marketplace-header ~ .header-menu,
+            body > .site-global-marketplace-header ~ #header .header-menu,
+            body > .site-global-marketplace-header ~ #header .header-menu-main {
+              display: none !important;
+            }
+          ` }} />
         </head>
         <body className={instrument.className}>
           <DynamicMarketplaceHeader />
