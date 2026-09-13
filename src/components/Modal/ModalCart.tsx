@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import * as Icon from "@phosphor-icons/react/dist/ssr";
-import productData from '@/data/Product.json'
+import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { ProductType } from '@/type/ProductType';
 import { useModalCartContext } from '@/context/ModalCartContext'
 import { useCart } from '@/context/CartContext'
@@ -25,6 +25,7 @@ const ModalCart = ({ serverTimeLeft }: { serverTimeLeft: CountdownTimeType }) =>
 
     const [activeTab, setActiveTab] = useState<string | undefined>('')
     const { isModalOpen, closeModalCart } = useModalCartContext();
+    const productData = useCatalogProducts(isModalOpen)
     const { cartState, addToCart, removeFromCart, updateCart } = useCart()
 
     const handleAddToCart = (productItem: ProductType) => {

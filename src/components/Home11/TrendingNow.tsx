@@ -16,7 +16,7 @@ export default function TrendingNow() {
                 else result.set(name, { name, count: 1, image: product.thumbImage[0] || '' })
             }
         }
-        return [...result.values()]
+        return Array.from(result.values())
     }, [products])
     if (!categories.length) return null
     return <section className="trending-block style-six md:pt-20 pt-10">
