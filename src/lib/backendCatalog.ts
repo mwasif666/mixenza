@@ -71,7 +71,8 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
 }
 
 export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
-    const first = await fetch(apiPath('/products?page=1&limit=100&sort=newest'), {
+    const backendUrl = (process.env.BACKEND_API_URL || apiPath('')).trim().replace(/\/+$/, '')
+    const first = await fetch(`${backendUrl}/products?page=1&limit=100&sort=newest`, {
         cache: 'no-store',
         signal: AbortSignal.timeout(15000),
         headers: { Accept: 'application/json' },
@@ -83,7 +84,7 @@ export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
 
     const remaining = await Promise.all(Array.from({ length: Math.max(0, (firstPage.pages || 1) - 1) }, async (_, index) => {
         const page = index + 2
-        const response = await fetch(apiPath(`/products?page=${page}&limit=100&sort=newest`), {
+        const response = await fetch(`${backendUrl}/products?page=${page}&limit=100&sort=newest`, {
             cache: 'no-store',
             signal: AbortSignal.timeout(15000),
             headers: { Accept: 'application/json' },
