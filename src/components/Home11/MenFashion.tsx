@@ -35,6 +35,7 @@ const MenFashion: React.FC<Props> = ({ data, start, limit }) => {
                         <div className="heading3">Featured Products</div>
                         <p className="text-secondary mt-2">Fresh picks from the Pickora.pk Daraz store</p>
                     </div>
+                    <Link href="/homepages/fashion11/catalog" className="text-button-uppercase underline underline-offset-4">View all products</Link>
                     {categories.length > 0 && (
                         <div className="menu-tab flex items-center gap-2 p-1 bg-surface rounded-2xl overflow-x-auto max-w-full">
                             <button type="button" onClick={() => setActiveTab('all')} className={`tab-item relative text-secondary py-2 px-5 whitespace-nowrap ${activeTab === 'all' ? 'text-black' : ''}`}>

@@ -43,13 +43,13 @@ export default function LiveCatalog() {
         )
     }
 
-    const featuredProducts = products.filter(product => product.isFeatured)
-    const homepageProducts = featuredProducts.length ? featuredProducts : products
+    const pickoraProducts = products.filter(product => /^DARAZ-/i.test(product.sku || ''))
+    const existingProducts = products.filter(product => !/^DARAZ-/i.test(product.sku || ''))
 
     return (
         <>
-            <MenFashion data={homepageProducts} start={0} limit={8} />
-            <WomenFashion data={homepageProducts} start={8} limit={8} />
+            <MenFashion data={pickoraProducts.length ? pickoraProducts : products} start={0} limit={8} />
+            <WomenFashion data={existingProducts.length ? existingProducts : products} start={0} limit={8} />
         </>
     )
 }
