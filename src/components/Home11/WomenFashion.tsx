@@ -34,9 +34,9 @@ const WomenFashion: React.FC<Props> = ({ data, start, limit }) => {
                 <div className="heading flex items-center justify-between gap-5 flex-wrap">
                     <div>
                         <div className="heading3">Mixenza Collection</div>
-                        <p className="text-secondary mt-2">Your original 199 products are still available</p>
+                        <p className="text-secondary mt-2">Your original Mixenza products are all still available</p>
                     </div>
-                    <Link href="/homepages/fashion11/catalog" className="text-button-uppercase underline underline-offset-4">Browse all 208</Link>
+                    <Link href="/homepages/fashion11/catalog" className="text-button-uppercase underline underline-offset-4">Browse full catalog</Link>
                     {categories.length > 0 && (
                         <div className="menu-tab flex items-center gap-2 p-1 bg-surface rounded-2xl overflow-x-auto max-w-full">
                             <button type="button" onClick={() => setActiveTab('all')} className={`tab-item relative text-secondary py-2 px-5 whitespace-nowrap ${activeTab === 'all' ? 'text-black' : ''}`}>

@@ -1,5 +1,6 @@
 import { apiPath } from '@/config/site'
 import type { SourceProduct } from '@/lib/theOnlineStore'
+import catalogFallback from '@/data/catalogFallback.json'
 import { pickoraFallbackProducts } from '@/data/pickoraCatalog'
 
 type BackendProduct = {
@@ -75,6 +76,9 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
     }
 }
 
+const bundledCatalog = (catalogFallback as BackendProduct[]).map(mapProduct)
+const fallbackCatalog = bundledCatalog.length ? bundledCatalog : pickoraFallbackProducts
+
 export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
     try {
         const backendUrl = (process.env.BACKEND_API_URL || apiPath('')).trim().replace(/\/+$/, '')
@@ -103,9 +107,9 @@ export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
         products.push(...remaining.flat())
 
         const mapped = products.map(mapProduct)
-        return mapped.length ? mapped : pickoraFallbackProducts
+        return mapped.length ? mapped : fallbackCatalog
     } catch (error) {
-        console.warn('Backend catalog unavailable; using the bundled Pickora catalog.', error)
-        return pickoraFallbackProducts
+        console.warn('Backend catalog unavailable; using the bundled full catalog.', error)
+        return fallbackCatalog
     }
 }
