@@ -12,6 +12,8 @@ export type SourceProduct = ProductType & {
     tags: string[]
     sku?: string
     stockStatus: string
+    isFeatured?: boolean
+    isNewArrival?: boolean
 }
 
 export const getSourceProducts = getBackendCatalogProducts

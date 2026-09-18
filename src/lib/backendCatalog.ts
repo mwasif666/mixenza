@@ -1,5 +1,6 @@
 import { apiPath } from '@/config/site'
 import type { SourceProduct } from '@/lib/theOnlineStore'
+import { pickoraFallbackProducts } from '@/data/pickoraCatalog'
 
 type BackendProduct = {
     _id?: string
@@ -20,6 +21,8 @@ type BackendProduct = {
     isNewArrival?: boolean
     isBestSeller?: boolean
     isRecommended?: boolean
+    ratingsAverage?: number
+    ratingsCount?: number
     createdAt?: string
 }
 
@@ -46,10 +49,10 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
         gender: 'unisex',
         new: Boolean(product.isNewArrival),
         sale: Boolean(product.discountPrice && product.discountPrice > 0 && product.discountPrice < product.price),
-        rate: 0,
+        rate: Number(product.ratingsAverage || 0),
         price,
         originPrice,
-        brand: 'Mixenza',
+        brand: /^DARAZ-/i.test(product.sku || '') ? 'Pickora.pk' : 'Mixenza',
         sold: 0,
         quantity: Math.max(0, Number(product.stock || 0)),
         quantityPurchase: 1,
@@ -60,41 +63,49 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
         description: product.description || product.shortDescription || '',
         action: 'add to cart',
         slug: product.slug,
-        sourceId: product.sku?.match(/^TOS-(\d+)/)?.[1] || String(product._id || product.id),
+        sourceId: product.sku?.match(/^(?:TOS|DARAZ)-(\d+)/i)?.[1] || String(product._id || product.id),
         sourceUrl: `/product/default?id=${product._id || product.id}`,
         sourceHandle: product.slug,
         categories: [categoryName],
         tags: product.tags || [],
         sku: product.sku,
         stockStatus: Number(product.stock || 0) > 0 ? 'instock' : 'outofstock',
+        isFeatured: Boolean(product.isFeatured),
+        isNewArrival: Boolean(product.isNewArrival),
     }
 }
 
 export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
-    const backendUrl = (process.env.BACKEND_API_URL || apiPath('')).trim().replace(/\/+$/, '')
-    const first = await fetch(`${backendUrl}/products?page=1&limit=100&sort=newest`, {
-        cache: 'no-store',
-        signal: AbortSignal.timeout(15000),
-        headers: { Accept: 'application/json' },
-    })
-    if (!first.ok) throw new Error(`Mixenza backend products request failed: ${first.status}`)
-    const firstPage = await first.json() as BackendProductsResponse
-    if (!firstPage.success || !Array.isArray(firstPage.data)) throw new Error('Invalid backend catalog response')
-    const products = [...(firstPage.data || [])]
-
-    const remaining = await Promise.all(Array.from({ length: Math.max(0, (firstPage.pages || 1) - 1) }, async (_, index) => {
-        const page = index + 2
-        const response = await fetch(`${backendUrl}/products?page=${page}&limit=100&sort=newest`, {
+    try {
+        const backendUrl = (process.env.BACKEND_API_URL || apiPath('')).trim().replace(/\/+$/, '')
+        const first = await fetch(`${backendUrl}/products?page=1&limit=100&sort=newest`, {
             cache: 'no-store',
             signal: AbortSignal.timeout(15000),
             headers: { Accept: 'application/json' },
         })
-        if (!response.ok) throw new Error(`Mixenza backend products request failed: ${response.status}`)
-        const payload = await response.json() as BackendProductsResponse
-        if (!payload.success || !Array.isArray(payload.data)) throw new Error('Invalid backend catalog page')
-        return payload.data
-    }))
-    products.push(...remaining.flat())
+        if (!first.ok) throw new Error(`Mixenza backend products request failed: ${first.status}`)
+        const firstPage = await first.json() as BackendProductsResponse
+        if (!firstPage.success || !Array.isArray(firstPage.data)) throw new Error('Invalid backend catalog response')
+        const products = [...(firstPage.data || [])]
 
-    return products.map(mapProduct)
+        const remaining = await Promise.all(Array.from({ length: Math.max(0, (firstPage.pages || 1) - 1) }, async (_, index) => {
+            const page = index + 2
+            const response = await fetch(`${backendUrl}/products?page=${page}&limit=100&sort=newest`, {
+                cache: 'no-store',
+                signal: AbortSignal.timeout(15000),
+                headers: { Accept: 'application/json' },
+            })
+            if (!response.ok) throw new Error(`Mixenza backend products request failed: ${response.status}`)
+            const payload = await response.json() as BackendProductsResponse
+            if (!payload.success || !Array.isArray(payload.data)) throw new Error('Invalid backend catalog page')
+            return payload.data
+        }))
+        products.push(...remaining.flat())
+
+        const mapped = products.map(mapProduct)
+        return mapped.length ? mapped : pickoraFallbackProducts
+    } catch (error) {
+        console.warn('Backend catalog unavailable; using the bundled Pickora catalog.', error)
+        return pickoraFallbackProducts
+    }
 }

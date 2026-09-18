@@ -32,8 +32,8 @@ const MenFashion: React.FC<Props> = ({ data, start, limit }) => {
             <div className="container">
                 <div className="heading flex items-center justify-between gap-5 flex-wrap">
                     <div>
-                        <div className="heading3">Featured Collections</div>
-                        <p className="text-secondary mt-2">Shop the latest products from Mixenza</p>
+                        <div className="heading3">Featured Products</div>
+                        <p className="text-secondary mt-2">Fresh picks from the Pickora.pk Daraz store</p>
                     </div>
                     {categories.length > 0 && (
                         <div className="menu-tab flex items-center gap-2 p-1 bg-surface rounded-2xl overflow-x-auto max-w-full">
@@ -52,10 +52,10 @@ const MenFashion: React.FC<Props> = ({ data, start, limit }) => {
                 </div>
 
                 <div className="list-product grid lg:grid-cols-4 grid-cols-2 sm:gap-[30px] gap-[16px] md:mt-10 mt-6">
-                    <Link href="/shop/breadcrumb1" className="banner rounded-[20px] overflow-hidden relative flex items-center justify-center min-h-[360px] bg-black">
-                        <div className="absolute inset-0 bg-black/20 z-[1]" />
-                        <Image src="/images/banner/13.png" width={1000} height={1000} alt="Featured fashion collection" className="absolute inset-0 w-full h-full object-cover duration-500" />
-                        <div className="heading4 text-white text-center relative z-[2]">Explore<br />Mixenza</div>
+                    <Link href="/product/default?id=1971845697" className="banner rounded-[20px] overflow-hidden relative flex items-end min-h-[360px] bg-[#dfeaff]">
+                        <Image src="/images/pickora/steel-tumbler.png" width={1000} height={1000} alt="40oz steel tumbler" className="absolute inset-0 w-full h-full object-cover duration-500" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-[1]" />
+                        <div className="heading5 text-white relative z-[2] p-6">The 40oz<br />Tumbler</div>
                     </Link>
                     {products.map((prd, index) => (
                         <Product key={`${prd.id}-${index}`} data={prd} type="grid" style="style-1" />

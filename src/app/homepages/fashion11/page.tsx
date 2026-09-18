@@ -1,9 +1,9 @@
 import React from "react";
 import TopNavOne from "@/components/Header/TopNav/TopNavOne";
 import MenuEleven from "@/components/Header/Menu/MenuEleven";
-import SliderEleven from "@/components/Slider/SliderEleven";
+import SliderPickora from "@/components/Slider/SliderPickora";
 import TrendingNow from "@/components/Home11/TrendingNow";
-import Banner from "@/components/Home9/Banner";
+import ProductBanners from "@/components/Home11/ProductBanners";
 import Benefit from "@/components/Home1/Benefit";
 import blogData from "@/data/Blog.json";
 import NewsInsight from "@/components/Home3/NewsInsight";
@@ -18,15 +18,15 @@ export default function HomeEleven() {
     <>
       <TopNavOne
         props="style-one bg-black"
-        slogan="New customers save 10% with the code GET10"
+        slogan="Fresh Pickora.pk arrivals — practical products, honest prices"
       />
       <div id="header" className="relative w-full">
         <MenuEleven />
-        <SliderEleven />
+        <SliderPickora />
       </div>
       <TrendingNow />
       <LiveCatalog />
-      <Banner />
+      <ProductBanners />
       <Benefit props="md:mt-20 mt-10 py-10 px-2.5 bg-surface rounded-[32px]" />
       <NewsInsight data={blogData} start={0} limit={3} />
       <Brand />
