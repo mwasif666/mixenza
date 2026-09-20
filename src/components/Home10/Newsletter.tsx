@@ -1,4 +1,5 @@
 import React from 'react'
+import NewsletterForm from '@/components/Newsletter/NewsletterForm'
 
 const Newsletter = () => {
     return (
@@ -9,12 +10,8 @@ const Newsletter = () => {
                         <div className="heading3 max-lg:text-center">Sign up and get 10% off</div>
                         <div className='mt-2 max-lg:text-center'>Sign up for early sale access, new in, promotions and more</div>
                     </div>
-                    <div className="input-block xl:w-5/12 md:w-1/2 sm:w-3/5 w-full h-[52px]">
-                        <form className='w-full h-full relative' action="post">
-                            <input type="email" placeholder='Enter your e-mail' className='caption1 w-full h-full pl-4 pr-14 rounded-xl border border-line' required />
-                            <button className='button-main bg-green text-black absolute top-1 bottom-1 right-1 flex items-center justify-center'>Subscribe
-                            </button>
-                        </form>
+                    <div className="input-block xl:w-5/12 md:w-1/2 sm:w-3/5 w-full">
+                        <NewsletterForm source="homepage" variant="bar" />
                     </div>
                 </div>
             </div>

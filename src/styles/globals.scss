@@ -93,11 +93,25 @@ input[type="file"] {
 
 /* Main class used in Mixenza */
 .container {
-  max-width: 1322px !important;
+  max-width: 1280px !important;
   width: 100%;
-  padding-right: 16px;
-  padding-left: 16px;
+  padding-right: 24px;
+  padding-left: 24px;
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-right: 48px;
+    padding-left: 48px;
+  }
 }
 
 .bg-red {

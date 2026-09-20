@@ -1,10 +1,8 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
 import blogData from '@/data/Blog.json'
 import NewsInsight from '@/components/Home3/NewsInsight';
 import Footer from '@/components/Footer/Footer'
@@ -33,10 +31,6 @@ const BlogDetailOne = () => {
 
     return (
         <>
-            <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-            <div id="header" className='relative w-full'>
-                <MenuOne props="bg-white" />
-            </div>
             <div className='blog detail1'>
                 <div className="bg-img md:mt-[74px] mt-14">
                     <Image
@@ -70,7 +64,7 @@ const BlogDetailOne = () => {
                             </div>
                             <div className="content md:mt-8 mt-5">
                                 <div className="body1">{blogMain.description}</div>
-                                <div className="body1 mt-3">I’ve always been passionate about underwear and shapewear and have a huge collection from over the years! When it came to shapewear, I could never find exactly what I was looking for and I would cut up pieces and sew them together to create the style and compression I needed.</div>
+                                {blogMain.shortDesc && <div className="body1 mt-3">{blogMain.shortDesc}</div>}
                                 <div className="grid sm:grid-cols-2 gap-[30px] md:mt-8 mt-5">
                                     {blogMain.subImg.map((item, index) => (
                                         <Image
@@ -83,9 +77,6 @@ const BlogDetailOne = () => {
                                         />
                                     ))}
                                 </div>
-                                <div className="heading4 md:mt-8 mt-5">How did SKIMS start?</div>
-                                <div className="body1 mt-4">This is such a hard question! Honestly, every time we drop a new collection I get obsessed with it. The pieces that have been my go-tos though are some of our simplest styles that we launched with. I wear our Fits Everybody Thong every single day – it is the only underwear I have now, it’s so comfortable and stretchy and light enough that you can wear anything over it.</div>
-                                <div className="body1 mt-4">For bras, I love our Cotton Jersey Scoop Bralette – it’s lined with this amazing power mesh so you get great support and is so comfy I can sleep in it. I also love our Seamless Sculpt Bodysuit – it’s the perfect all in one sculpting, shaping and smoothing shapewear piece with different levels of support woven throughout.</div>
                             </div>
                             <div className="action flex items-center justify-between flex-wrap gap-5 md:mt-8 mt-5">
                                 <div className="left flex items-center gap-3 flex-wrap">

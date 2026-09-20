@@ -4,23 +4,21 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SourceProduct } from '@/lib/theOnlineStore'
+import { shopPath } from '@/lib/storePaths'
+import { formatMoney } from '@/utils/currency'
+import { StarRow } from '@/components/Shop/StoreProductCard'
 import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
 
-interface Props {
-    product: SourceProduct
-}
-
-const SourceProductDetail: React.FC<Props> = ({ product }) => {
-    const [activeImage, setActiveImage] = useState(product.images[0] || '')
+export default function SourceProductDetail({ product }: { product: SourceProduct }) {
+    const [activeImage, setActiveImage] = useState(product.images[0] || product.thumbImage[0] || '')
     const [quantity, setQuantity] = useState(1)
     const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
-    const salePercent = product.originPrice > product.price
-        ? Math.round((1 - product.price / product.originPrice) * 100)
-        : 0
+    const salePercent = product.originPrice > product.price ? Math.round((1 - product.price / product.originPrice) * 100) : 0
+    const category = product.categories[0] || 'Shop'
 
-    const handleAddToCart = () => {
+    const add = () => {
         addToCart({ ...product, quantityPurchase: quantity })
         updateCart(product.id, quantity, '', '')
         openModalCart()
@@ -28,60 +26,74 @@ const SourceProductDetail: React.FC<Props> = ({ product }) => {
 
     return (
         <main className="container py-10 md:py-16">
-            <div className="mb-8 text-secondary caption1">
-                <Link href="/homepages/marketplace" className="hover:text-black">Home</Link>
+            <p className="caption1 text-secondary">
+                <Link href="/" className="hover:text-black">Home</Link>
                 <span className="mx-2">/</span>
-                <span>{product.categories[0] || 'Product'}</span>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-14">
+                <Link href={shopPath(category)} className="hover:text-black">{category}</Link>
+                <span className="mx-2">/</span>
+                <span>{product.name}</span>
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mt-8">
                 <div>
-                    <div className="relative aspect-square rounded-2xl overflow-hidden bg-surface">
-                        {activeImage && (
-                            <Image src={activeImage} alt={product.name} fill unoptimized className="object-contain" priority />
-                        )}
-                        {salePercent > 0 && <span className="absolute left-4 top-4 rounded-full bg-black px-3 py-1 text-white text-xs">-{salePercent}%</span>}
+                    <div className="relative aspect-square rounded-3xl overflow-hidden bg-[#f4f4f5]">
+                        {activeImage && <Image src={activeImage} alt={product.name} fill unoptimized priority className="object-contain p-8" />}
                     </div>
-                    <div className="grid grid-cols-5 gap-3 mt-3">
-                        {product.images.slice(0, 5).map(image => (
-                            <button key={image} type="button" onClick={() => setActiveImage(image)} className={`relative aspect-square overflow-hidden rounded-xl border ${activeImage === image ? 'border-black' : 'border-line'}`}>
-                                <Image src={image} alt={product.name} fill unoptimized className="object-cover" />
+                    <div className="grid grid-cols-4 gap-3 mt-4">
+                        {(product.images.length ? product.images : product.thumbImage).slice(0, 4).map(image => (
+                            <button key={image} type="button" onClick={() => setActiveImage(image)} className={`relative aspect-square overflow-hidden rounded-2xl bg-[#f4f4f5] border ${activeImage === image ? 'border-black' : 'border-transparent'}`}>
+                                <Image src={image} alt="" fill unoptimized className="object-contain p-2" />
                             </button>
                         ))}
                     </div>
                 </div>
 
-                <div className="pt-2">
-                    <p className="caption2 text-secondary uppercase">{product.categories.join(' · ') || 'Mixenza'}</p>
-                    <h1 className="heading3 mt-2">{product.name}</h1>
-                    <div className="flex items-center gap-3 mt-5">
-                        <span className="heading5">Rs. {product.price.toLocaleString('en-PK')}</span>
-                        {product.originPrice > product.price && <del className="text-secondary2">Rs. {product.originPrice.toLocaleString('en-PK')}</del>}
-                    </div>
-                    <div className="mt-6 pt-6 border-t border-line text-secondary leading-7 whitespace-pre-line">
-                        {product.description || 'No additional description is available for this product.'}
+                <div>
+                    <h1 className="heading3">{product.name}</h1>
+                    <p className="text-secondary mt-3">{product.description?.slice(0, 140) || 'A Mixenza everyday essential, priced in PKR.'}</p>
+                    <StarRow rate={product.rate} count={product.sold || 121} />
+                    <div className="flex items-end gap-3 mt-6">
+                        <span className="heading4">{formatMoney(product.price)}</span>
+                        {product.originPrice > product.price && <del className="text-secondary">{formatMoney(product.originPrice)}</del>}
+                        {salePercent > 0 && <span className="text-sm text-[#16a34a]">-{salePercent}%</span>}
                     </div>
 
                     <div className="flex items-center gap-3 mt-8">
-                        <div className="flex items-center rounded-lg border border-line">
-                            <button type="button" onClick={() => setQuantity(value => Math.max(1, value - 1))} className="w-11 h-11">−</button>
-                            <span className="w-11 text-center">{quantity}</span>
-                            <button type="button" onClick={() => setQuantity(value => Math.min(product.quantity || 999, value + 1))} className="w-11 h-11">+</button>
+                        <div className="flex items-center rounded-full border border-line h-12">
+                            <button type="button" onClick={() => setQuantity(value => Math.max(1, value - 1))} className="w-12 h-12">−</button>
+                            <span className="w-8 text-center">{quantity}</span>
+                            <button type="button" onClick={() => setQuantity(value => Math.min(product.quantity || 99, value + 1))} className="w-12 h-12">+</button>
                         </div>
-                        <button type="button" onClick={handleAddToCart} disabled={product.quantity === 0} className="button-main flex-1 text-center disabled:opacity-50">
-                            {product.quantity === 0 ? 'Out of Stock' : 'Add To Cart'}
-                        </button>
+                        {product.quantity > 0 && <span className="text-sm text-secondary">Only {product.quantity} items left</span>}
                     </div>
 
-                    <div className="mt-8 space-y-3 caption1 text-secondary">
-                        {product.sku && <div><strong className="text-black">SKU:</strong> {product.sku}</div>}
-                        <div><strong className="text-black">Category:</strong> {product.categories.join(', ') || 'General'}</div>
-                        {product.tags.length > 0 && <div><strong className="text-black">Tags:</strong> {product.tags.join(', ')}</div>}
-                        <div><strong className="text-black">Availability:</strong> {product.quantity === 0 ? 'Out of stock' : 'In stock'}</div>
+                    <div className="grid sm:grid-cols-2 gap-3 mt-6">
+                        <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
+                        <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full border border-black disabled:opacity-40">Add to Cart</button>
+                    </div>
+
+                    <div className="mt-8 space-y-4 text-sm">
+                        <div className="flex gap-3"><span>🚚</span><div><strong>Free delivery</strong><p className="text-secondary">Enter your city for delivery availability</p></div></div>
+                        <div className="flex gap-3"><span>↩</span><div><strong>Return delivery</strong><p className="text-secondary">Free 14-day returns. Details on FAQs.</p></div></div>
                     </div>
                 </div>
             </div>
+
+            <section className="mt-16">
+                <h2 className="heading5">{product.name} specifications</h2>
+                <div className="grid md:grid-cols-2 gap-6 mt-6">
+                    <dl className="rounded-3xl bg-[#f7f7f8] divide-y divide-white">
+                        {[['Brand', product.brand || 'Mixenza'], ['Category', category], ['SKU', product.sku || product.id], ['Availability', product.quantity === 0 ? 'Out of stock' : 'In stock']].map(([label, value]) => (
+                            <div key={label} className="grid grid-cols-2 px-5 py-3 text-sm"><dt className="text-secondary">{label}</dt><dd>{value}</dd></div>
+                        ))}
+                    </dl>
+                    <dl className="rounded-3xl bg-[#f7f7f8] divide-y divide-white">
+                        {[['Type', product.type || 'General'], ['Tags', product.tags.slice(0, 4).join(', ') || 'Everyday'], ['Price', formatMoney(product.price)], ['Stock', String(product.quantity)]].map(([label, value]) => (
+                            <div key={label} className="grid grid-cols-2 px-5 py-3 text-sm"><dt className="text-secondary">{label}</dt><dd>{value}</dd></div>
+                        ))}
+                    </dl>
+                </div>
+            </section>
         </main>
     )
 }
-
-export default SourceProductDetail

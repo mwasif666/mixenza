@@ -9,18 +9,23 @@ const offers = [
 
 export default function ProductBanners() {
     return <section className="md:pt-20 pt-10">
-        <div className="container grid lg:grid-cols-3 md:grid-cols-2 gap-5">
-            {offers.map(offer => <Link key={offer.id} href={`/product/default?id=${offer.id}`} className={`group relative min-h-[260px] rounded-3xl overflow-hidden ${offer.color}`}>
-                <div className="relative z-[1] p-7 w-[58%]">
-                    <span className="text-button-uppercase text-secondary">{offer.subtitle}</span>
-                    <h3 className="heading5 mt-2">{offer.title}</h3>
-                    <p className="text-title mt-4">{offer.price}</p>
-                    <span className="caption1 font-semibold inline-block border-b border-black mt-5">Shop now</span>
-                </div>
-                <div className="absolute right-[-8%] top-0 bottom-0 w-[58%] transition-transform duration-500 group-hover:scale-105">
-                    <Image src={offer.image} alt={offer.title} fill sizes="(max-width: 1024px) 50vw, 33vw" className="object-contain" />
-                </div>
-            </Link>)}
+        <div className="container">
+            <h2 className="heading3">Featured Collections</h2>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-5 md:mt-10 mt-6">
+                {offers.map(offer => (
+                    <Link key={offer.id} href={`/product/${offer.id}`} className={`group rounded-3xl overflow-hidden ${offer.color}`}>
+                        <div className="relative aspect-square overflow-hidden">
+                            <Image src={offer.image} alt={offer.title} fill sizes="(max-width: 1024px) 50vw, 30vw" className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
+                        </div>
+                        <div className="p-6 pt-2">
+                            <span className="text-button-uppercase text-secondary">{offer.subtitle}</span>
+                            <h3 className="heading5 mt-2">{offer.title}</h3>
+                            <p className="text-title mt-3">{offer.price}</p>
+                            <span className="caption1 font-semibold inline-block border-b border-black mt-4">Shop now</span>
+                        </div>
+                    </Link>
+                ))}
+            </div>
         </div>
     </section>
 }

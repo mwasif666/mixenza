@@ -16,7 +16,9 @@ const ModalSearch = () => {
     const router = useRouter()
 
     const handleSearch = (value: string) => {
-        router.push(`/search-result?query=${value}`)
+        const query = value.trim()
+        if (!query) return
+        router.push(`/search-result?query=${encodeURIComponent(query)}`)
         closeModalSearch()
         setSearchKeyword('')
     }
@@ -49,27 +51,27 @@ const ModalSearch = () => {
                         <div className="list-keyword flex items-center flex-wrap gap-3 mt-4">
                             <div
                                 className="item px-4 py-1.5 border border-line rounded-full cursor-pointer duration-300 hover:bg-black hover:text-white"
-                                onClick={() => handleSearch('dress')}
+                                onClick={() => handleSearch('tumbler')}
                             >
-                                Dress
+                                Tumbler
                             </div>
                             <div
                                 className="item px-4 py-1.5 border border-line rounded-full cursor-pointer duration-300 hover:bg-black hover:text-white"
-                                onClick={() => handleSearch('t-shirt')}
+                                onClick={() => handleSearch('fan')}
                             >
-                                T-shirt
+                                Fan
                             </div>
                             <div
                                 className="item px-4 py-1.5 border border-line rounded-full cursor-pointer duration-300 hover:bg-black hover:text-white"
-                                onClick={() => handleSearch('underwear')}
+                                onClick={() => handleSearch('massage')}
                             >
-                                Underwear
+                                Massage
                             </div>
                             <div
                                 className="item px-4 py-1.5 border border-line rounded-full cursor-pointer duration-300 hover:bg-black hover:text-white"
-                                onClick={() => handleSearch('top')}
+                                onClick={() => handleSearch('brush')}
                             >
-                                Top
+                                Hair brush
                             </div>
                         </div>
                     </div>

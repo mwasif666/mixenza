@@ -4,8 +4,8 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BlogType } from '@/type/BlogType'
-import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { useRouter } from 'next/navigation'
+import { blogPath } from '@/lib/storePaths'
 
 interface BlogProps {
     data: BlogType
@@ -16,27 +16,27 @@ const BlogItem: React.FC<BlogProps> = ({ data, type }) => {
     const router = useRouter()
     const handleBlogClick = (blogId: string) => {
         // Go to blog detail with blogId selected
-        router.push(`/blog/detail1?id=${blogId}`);
+        router.push(blogPath({ id: blogId, title: data.title, slug: data.slug }))
     };
 
     return (
         <>
             {type === "style-one" ? (
-                <div
-                    className="blog-item style-one h-full cursor-pointer"
-                    onClick={() => handleBlogClick(data.id)}
+                <Link
+                    href={blogPath(data)}
+                    className="blog-item style-one h-full cursor-pointer block"
                 >
                     <div className="blog-main h-full block">
-                        <div className="blog-thumb rounded-[20px] overflow-hidden">
+                        <div className="blog-thumb rounded-[20px] overflow-hidden bg-surface mb-5">
                             <Image
                                 src={data.thumbImg}
-                                width={2000}
-                                height={1500}
-                                alt='blog-img'
-                                className='w-full duration-500'
+                                width={960}
+                                height={640}
+                                alt={data.title}
+                                className='w-full aspect-[3/2] object-cover duration-500'
                             />
                         </div>
-                        <div className="blog-infor mt-7">
+                        <div className="blog-infor">
                             <div className="blog-tag bg-green py-1 px-2.5 rounded-full text-button-uppercase inline-block">{data.tag}</div>
                             <div className="heading6 blog-title mt-3 duration-300">{data.title}</div>
                             <div className="flex items-center gap-2 mt-2">
@@ -46,7 +46,7 @@ const BlogItem: React.FC<BlogProps> = ({ data, type }) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Link>
             ) : (
                 <>
                     {type === "style-list" ? (

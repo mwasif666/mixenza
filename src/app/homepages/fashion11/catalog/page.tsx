@@ -1,28 +1,5 @@
-import React from 'react'
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuEleven from '@/components/Header/Menu/MenuEleven'
-import Footer from '@/components/Footer/Footer'
-import FullCatalog from '@/components/TheOnlineStore/FullCatalog'
-import { getAllMixenzaProducts } from '@/lib/catalogSync'
-import type { SourceProduct } from '@/lib/theOnlineStore'
+import { redirect } from 'next/navigation'
 
-// Supplier API must not be called while Vercel is compiling the application.
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-export const fetchCache = 'force-no-store'
-
-export default async function Fashion11CatalogPage() {
-    let products: SourceProduct[] = []
-    try {
-        products = await getAllMixenzaProducts()
-    } catch (error) {
-        console.error('Fashion11 catalog unavailable', error)
-    }
-
-    return <>
-        <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-        <div id="header" className="relative w-full"><MenuEleven /></div>
-        <FullCatalog products={products} />
-        <Footer />
-    </>
+export default function Fashion11CatalogRedirect() {
+    redirect('/shop/breadcrumb1')
 }

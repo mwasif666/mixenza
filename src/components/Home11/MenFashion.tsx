@@ -30,12 +30,14 @@ const MenFashion: React.FC<Props> = ({ data, start, limit }) => {
     return (
         <section className="tab-features-block md:pt-20 pt-10">
             <div className="container">
-                <div className="heading flex items-center justify-between gap-5 flex-wrap">
-                    <div>
-                        <div className="heading3">Featured Products</div>
-                        <p className="text-secondary mt-2">Fresh picks from the Pickora.pk Daraz store</p>
+                <div className="heading flex flex-col gap-5">
+                    <div className="flex items-center justify-between gap-5 flex-wrap">
+                        <div>
+                            <div className="heading3">Featured Products</div>
+                            <p className="text-secondary mt-2">Fresh picks from the Pickora.pk Daraz store</p>
+                        </div>
+                        <Link href="/homepages/fashion11/catalog" className="text-button-uppercase underline underline-offset-4">View all products</Link>
                     </div>
-                    <Link href="/homepages/fashion11/catalog" className="text-button-uppercase underline underline-offset-4">View all products</Link>
                     {categories.length > 0 && (
                         <div className="menu-tab flex items-center gap-2 p-1 bg-surface rounded-2xl overflow-x-auto max-w-full">
                             <button type="button" onClick={() => setActiveTab('all')} className={`tab-item relative text-secondary py-2 px-5 whitespace-nowrap ${activeTab === 'all' ? 'text-black' : ''}`}>
@@ -53,9 +55,9 @@ const MenFashion: React.FC<Props> = ({ data, start, limit }) => {
                 </div>
 
                 <div className="list-product grid lg:grid-cols-4 grid-cols-2 sm:gap-[30px] gap-[16px] md:mt-10 mt-6">
-                    <Link href="/product/default?id=1971845697" className="banner rounded-[20px] overflow-hidden relative flex items-end min-h-[360px] bg-[#dfeaff]">
-                        <Image src="/images/pickora/steel-tumbler.png" width={1000} height={1000} alt="40oz steel tumbler" className="absolute inset-0 w-full h-full object-cover duration-500" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-[1]" />
+                    <Link href="/product/default?id=1971845697" className="banner rounded-[20px] overflow-hidden relative flex items-end aspect-square bg-[#dfeaff]">
+                        <Image src="/images/pickora/steel-tumbler.png" fill sizes="(max-width: 1024px) 50vw, 25vw" alt="40oz steel tumbler" className="object-cover duration-500" />
+                        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/65 to-transparent z-[1]" />
                         <div className="heading5 text-white relative z-[2] p-6">The 40oz<br />Tumbler</div>
                     </Link>
                     {products.map((prd, index) => (

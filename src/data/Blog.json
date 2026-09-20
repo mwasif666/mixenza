@@ -1,57 +1,57 @@
 [
     {
         "id": "1",
-        "category": "fashion",
-        "tag": "Jean, glasses",
-        "title": "Fashion Trends to Watch Out for in Summer 2023",
-        "date": "Dec 20, 2023",
-        "author": "Chris Evans",
-        "avatar": "/images/avatar/1.png",
-        "thumbImg": "/images/blog/1.png",
-        "coverImg": "/images/blog/1.png",
+        "category": "market",
+        "tag": "Gold Prices",
+        "title": "Gold Holds Near Record Highs - What That Means for PKR Shoppers",
+        "date": "Sep 19, 2026",
+        "author": "Mixenza Team",
+        "avatar": "/images/blog/gold-prices.png",
+        "thumbImg": "/images/blog/gold-prices.png",
+        "coverImg": "/images/blog/gold-prices.png",
         "subImg": [
-            "/images/blog/3.png",
-            "/images/blog/2.png"
+            "/images/blog/gold-prices.png",
+            "/images/blog/china-shipping.png"
         ],
-        "shortDesc": "Discover the latest fashion trends that will dominate the upcoming season. From vibrant colors to unique patterns and innovative styles.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "fashion-news"
+        "shortDesc": "International gold is sticky near record territory. That keeps imported gadgets, drinkware and cash tools priced in rupees under pressure.",
+        "description": "Gold is still trading near historic highs this week, which keeps the rupee under pressure and makes imported everyday goods more expensive to restock. Mixenza shoppers feel it on steel tumblers, UV money detectors and other China-sourced essentials — landed cost moves with bullion and the dollar, not just the product page. Fake-note checkers stay useful when cash volumes rise around Eid and wedding season. We keep prices visible in PKR and restock when freight and metal markets cool, instead of hiding a sudden jump behind a fake discount.",
+        "slug": "gold-prices-pkr-shoppers"
     },
     {
         "id": "2",
-        "category": "fashion",
-        "tag": "Jean, shoes",
-        "title": "How to Build a Sustainable and Stylish Wardrobe",
-        "date": "Dec 21, 2023",
-        "author": "Alex Balde",
-        "avatar": "/images/avatar/2.png",
-        "thumbImg": "/images/blog/2.png",
-        "coverImg": "/images/blog/2.png",
+        "category": "market",
+        "tag": "China Shipping",
+        "title": "China Freight Is Slowing Again - How Long Marketplace Orders Take",
+        "date": "Sep 18, 2026",
+        "author": "Mixenza Team",
+        "avatar": "/images/blog/china-shipping.png",
+        "thumbImg": "/images/blog/china-shipping.png",
+        "coverImg": "/images/blog/china-shipping.png",
         "subImg": [
-            "/images/blog/1.png",
-            "/images/blog/3.png"
+            "/images/blog/china-shipping.png",
+            "/images/blog/mobile-prices.png"
         ],
-        "shortDesc": "Build a versatile and timeless wardrobe with our list of must-have fashion staples. From the classic little black dress to the perfect pair of jeans.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "fashion-news"
+        "shortDesc": "Sea freight from South China is stretching again. Water pumps, fans and home gadgets on Mixenza follow that calendar, not overnight ads.",
+        "description": "South China to Karachi sea freight is stretching again after peak summer sailings, so restocks of water dispenser pumps, hand fans and similar home gadgets take longer than marketplace ads suggest. Mixenza only lists pieces we can actually ship from local stock or a confirmed inbound lot — that is why a bestseller can pause instead of showing a fake 2-day badge. If you need a bottle pump or fan this week, order from in-stock cards on the homepage. Backordered SKUs wait on the next container, not a promise we cannot keep.",
+        "slug": "china-shipping-marketplace-orders"
     },
     {
         "id": "3",
-        "category": "fashion",
-        "tag": "Jean, skirt",
-        "title": "Fashion and Beauty Tips for Busy Professionals",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/3.png",
-        "thumbImg": "/images/blog/3.png",
-        "coverImg": "/images/blog/3.png",
+        "category": "market",
+        "tag": "Mobile Prices",
+        "title": "Phone Prices Stay Firm - Accessories Are Where Shoppers Save",
+        "date": "Sep 17, 2026",
+        "author": "Mixenza Team",
+        "avatar": "/images/blog/mobile-prices.png",
+        "thumbImg": "/images/blog/mobile-prices.png",
+        "coverImg": "/images/blog/mobile-prices.png",
         "subImg": [
-            "/images/blog/1.png",
-            "/images/blog/2.png"
+            "/images/blog/mobile-prices.png",
+            "/images/blog/gold-prices.png"
         ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "fashion-news"
+        "shortDesc": "New phone tags in Pakistan are barely moving. USB fans, desk mats and small gadgets are the practical way to upgrade a setup without a new handset.",
+        "description": "Official smartphone prices in Pakistan have barely eased this month, so most buyers are holding the phone they already have and spending on small electronics instead. That is the Mixenza lane: USB rechargeable fans for load-shedding, shortcut desk mats for work-from-home, and compact wellness tools that sit next to a phone, not replace it. If a listing claims a flagship at last year’s rate, treat it as noise. We price accessories against live PKR landed cost and keep eight honest homepage picks in stock rather than a wall of repeated cards.",
+        "slug": "mobile-prices-accessories-pakistan"
     },
     {
         "id": "4",
