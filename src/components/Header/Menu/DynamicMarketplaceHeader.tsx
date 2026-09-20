@@ -29,50 +29,150 @@ type Product = {
     sold?: number
 }
 
-type CategoryCard = { name: string; slug: string; count: number; image: string }
+type CategoryCard = { name: string; slug: string; count: number; image: string; products: Product[] }
 
-function MegaMenu({
+/* ─── Department: simple vertical list dropdown ─── */
+function DepartmentDropdown({
     categories,
     loading,
     error,
-    featuredImage,
     onClose,
 }: {
     categories: CategoryCard[]
     loading: boolean
     error: boolean
-    featuredImage: string
     onClose: () => void
 }) {
     return (
-        <div className="absolute top-full left-0 z-[130] w-[min(920px,calc(100vw-48px))] rounded-2xl bg-[#f3f3f0] p-6 shadow-2xl grid lg:grid-cols-[1fr_250px] gap-6">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
-                {categories.slice(0, 9).map(category => (
-                    <Link
-                        key={category.slug}
-                        href={shopPath(category.name)}
-                        onClick={onClose}
-                        className="group flex items-start gap-3"
-                    >
-                        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-[#e8f36a]">
-                            {category.image && <img src={category.image} alt="" className="h-full w-full object-contain p-1.5" />}
+        <div className="absolute top-full left-0 z-[130] w-[260px] rounded-2xl bg-white border border-line shadow-2xl py-2 overflow-hidden">
+            {categories.length > 0 ? categories.slice(0, 10).map(category => (
+                <Link
+                    key={category.slug}
+                    href={shopPath(category.name)}
+                    onClick={onClose}
+                    className="group flex items-center gap-3 px-5 py-2.5 transition-colors hover:bg-[#f5f5f3]"
+                >
+                    <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-[#f0f0ee]">
+                        {category.image && <img src={category.image} alt="" className="h-full w-full rounded-lg object-cover" loading="lazy" />}
+                    </span>
+                    <span className="min-w-0">
+                        <span className="block truncate text-sm font-medium text-black group-hover:text-primary">{category.name}</span>
+                        <span className="block text-[11px] text-secondary">{category.count} products</span>
+                    </span>
+                </Link>
+            )) : (
+                <p className="px-5 py-4 text-sm text-secondary">{loading ? 'Loading...' : error ? 'Unavailable' : 'No categories'}</p>
+            )}
+            {categories.length > 10 && (
+                <Link href="/shop" onClick={onClose} className="block border-t border-line mt-1 px-5 py-3 text-xs font-semibold text-primary hover:underline text-center">
+                    View all categories →
+                </Link>
+            )}
+        </div>
+    )
+}
+
+/* ─── Shop: mega menu with category columns + products (3rd screenshot style) ─── */
+function ShopMegaMenu({
+    categories,
+    loading,
+    error,
+    onClose,
+}: {
+    categories: CategoryCard[]
+    loading: boolean
+    error: boolean
+    onClose: () => void
+}) {
+    /* Show max 6 categories (2 per column × 3 columns) to fit on screen */
+    const visibleCategories = categories.slice(0, 6)
+    const colSize = 2
+    const columns: CategoryCard[][] = []
+    for (let i = 0; i < visibleCategories.length; i += colSize) {
+        columns.push(visibleCategories.slice(i, i + colSize))
+    }
+
+    return (
+        <div className="absolute top-full left-1/2 -translate-x-1/2 z-[130] w-[min(1080px,calc(100vw-32px))] rounded-[22px] border border-black/5 bg-[#f3f3f0] p-7 shadow-2xl">
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_260px] gap-8">
+                {/* Category columns with products */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-0">
+                    {columns.map((col, colIdx) => (
+                        <div key={colIdx} className="min-w-0">
+                            {col.map(category => (
+                                <div key={category.slug} className="mb-6">
+                                    {/* Category heading with icon */}
+                                    <Link
+                                        href={shopPath(category.name)}
+                                        onClick={onClose}
+                                        className="group flex items-center gap-2.5 mb-2.5"
+                                    >
+                                        <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-xl bg-[#f0f0ee]">
+                                            {category.image && <img src={category.image} alt="" className="h-full w-full rounded-lg object-cover" loading="lazy" />}
+                                        </span>
+                                        <span className="min-w-0">
+                                            <span className="block truncate text-sm font-bold text-black group-hover:underline">{category.name}</span>
+                                            <span className="block text-[11px] text-secondary">{category.count} products</span>
+                                        </span>
+                                    </Link>
+                                    {/* Products list under category */}
+                                    <div className="pl-[42px] space-y-1.5">
+                                        {category.products.slice(0, 3).map(product => (
+                                            <Link
+                                                key={product.id}
+                                                href={productPath(product)}
+                                                onClick={onClose}
+                                                className="block truncate text-[13px] text-secondary transition-colors hover:text-black hover:underline"
+                                            >
+                                                {product.name}
+                                            </Link>
+                                        ))}
+                                        {category.count > 3 && (
+                                            <Link
+                                                href={shopPath(category.name)}
+                                                onClick={onClose}
+                                                className="block text-[13px] font-semibold text-black hover:underline"
+                                            >
+                                                View all →
+                                            </Link>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                    {!categories.length && (
+                        <p className="text-secondary col-span-3 py-4">{loading ? 'Loading categories...' : error ? 'Categories unavailable. Please reload.' : 'No categories yet.'}</p>
+                    )}
+                </div>
+
+                {/* Featured card on right — gradient CTA, no images */}
+                <Link href="/shop" onClick={onClose} className="group relative overflow-hidden rounded-2xl p-7 flex flex-col justify-between" style={{ background: 'linear-gradient(145deg, #0b1c29 0%, #163a52 50%, #1a6b4a 100%)' }}>
+                    {/* Decorative circles */}
+                    <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/5" />
+                    <div className="absolute bottom-12 -left-8 h-28 w-28 rounded-full bg-white/5" />
+                    <div className="absolute top-1/2 right-6 h-16 w-16 rounded-full bg-white/[0.03]" />
+
+                    <div className="relative">
+                        <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[11px] uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">Selected Projects</span>
+                    </div>
+
+                    <div className="relative mt-auto pt-8">
+                        <h4 className="text-[22px] font-bold text-white leading-tight">See work that turns ideas into outcomes</h4>
+                        <p className="mt-3 text-sm text-white/60 leading-relaxed">{categories.length} categories &middot; {categories.reduce((sum, c) => sum + c.count, 0)}+ products</p>
+                        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:gap-3 transition-all">
+                            View all our work <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
                         </span>
-                        <span>
-                            <span className="block text-sm font-semibold text-black group-hover:underline">{category.name}</span>
-                            <span className="block text-xs text-secondary mt-0.5">{category.count} products</span>
-                        </span>
-                    </Link>
-                ))}
-                {!categories.length && (
-                    <p className="text-secondary col-span-3">{loading ? 'Loading categories...' : error ? 'Categories unavailable. Please reload.' : 'No categories yet.'}</p>
-                )}
+                    </div>
+                </Link>
             </div>
-            <Link href="/shop" onClick={onClose} className="relative min-h-[220px] overflow-hidden rounded-2xl bg-[#0b1c29] text-white p-6 flex flex-col justify-end">
-                {featuredImage && <img src={featuredImage} alt="" className="absolute inset-0 h-full w-full object-contain opacity-40 p-8" />}
-                <span className="relative text-[11px] uppercase tracking-[0.18em] text-white/70">Bestsellers</span>
-                <span className="relative heading6 mt-3">Shop picks that actually sell</span>
-                <span className="relative mt-5 text-sm inline-flex items-center gap-2">View all products <span aria-hidden>→</span></span>
-            </Link>
+            {categories.length > 6 && (
+                <div className="mt-5 pt-4 border-t border-black/5 text-center">
+                    <Link href="/shop" onClick={onClose} className="text-sm font-semibold text-black hover:underline inline-flex items-center gap-1.5">
+                        View all {categories.length} categories <span aria-hidden>→</span>
+                    </Link>
+                </div>
+            )}
         </div>
     )
 }
@@ -124,7 +224,9 @@ export default function DynamicMarketplaceHeader() {
                     slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
                     count: 1,
                     image: product.thumbImage?.[0] || product.images?.[0] || '',
+                    products: [product],
                 })
+                if (existing && !existing.products.some(item => item.id === product.id)) existing.products.push(product)
             }
         }
         return Array.from(map.values()).sort((a, b) => b.count - a.count)
@@ -200,7 +302,7 @@ export default function DynamicMarketplaceHeader() {
                                             </div>
                                             <strong className="text-sm">Rs. {Number(product.price || 0).toLocaleString('en-PK')}</strong>
                                         </Link>
-                                    )) : <button type="button" onClick={() => search()} className="w-full px-3 py-3 text-left text-sm text-secondary">Search for “{keyword.trim()}”</button>}
+                                    )) : <button type="button" onClick={() => search()} className="w-full px-3 py-3 text-left text-sm text-secondary">Search for &ldquo;{keyword.trim()}&rdquo;</button>}
                                 </div>
                             )}
                         </div>
@@ -223,45 +325,34 @@ export default function DynamicMarketplaceHeader() {
                 </div>
             )}
 
-            <div className="border-b border-line h-[52px] max-lg:hidden bg-white">
-                <div className="container mx-auto h-full flex items-center">
-                    <div
-                        className="relative h-full flex items-center pr-8 border-r border-line"
-                        onMouseEnter={() => setOpenDepartment(true)}
-                        onMouseLeave={() => setOpenDepartment(false)}
-                    >
-                        <button className="h-full flex items-center gap-3 text-button-uppercase" aria-expanded={openDepartment}>
-                            <Icon.List size={19} /> Department <Icon.CaretDown size={17} />
-                        </button>
-                        {openDepartment && (
-                            <MegaMenu categories={categories} loading={catalogLoading} error={catalogError} featuredImage={featuredImage} onClose={() => setOpenDepartment(false)} />
-                        )}
-                    </div>
-
-                    <nav className="flex items-center gap-8 pl-8 h-full">
+            <div className="relative border-b border-line h-[52px] max-lg:hidden bg-white" onMouseLeave={() => setOpenShop(false)}>
+                <div className="container mx-auto h-full flex items-center justify-center">
+                    <nav className="flex items-center gap-8 h-full">
                         <Link href="/" className="text-button-uppercase">Home</Link>
+                        {/* ─── SHOP: mega menu with category columns + products ─── */}
                         <div
-                            className="relative h-full flex items-center"
+                            className="h-full flex items-center"
                             onMouseEnter={() => setOpenShop(true)}
-                            onMouseLeave={() => setOpenShop(false)}
                         >
                             <Link href="/shop" className="h-full flex items-center gap-1 text-button-uppercase">
                                 Shop <Icon.CaretDown size={14} />
                             </Link>
-                            {openShop && (
-                                <MegaMenu categories={categories} loading={catalogLoading} error={catalogError} featuredImage={featuredImage} onClose={() => setOpenShop(false)} />
-                            )}
                         </div>
                         <Link href="/shop" className="text-button-uppercase">Products</Link>
                         <Link href="/blog" className="text-button-uppercase">Blog</Link>
                         <Link href="/pages/contact" className="text-button-uppercase">Contact</Link>
                     </nav>
                 </div>
+                {openShop && (
+                    <div className="container relative mx-auto h-0" onMouseEnter={() => setOpenShop(true)}>
+                        <ShopMegaMenu categories={categories} loading={catalogLoading} error={catalogError} onClose={() => setOpenShop(false)} />
+                    </div>
+                )}
             </div>
 
             <div className={`login-popup absolute top-[118px] right-8 w-[320px] p-7 rounded-xl bg-white box-shadow-sm ${openLoginPopup ? 'open' : ''}`}>
                 <Link href="/login" className="button-main w-full text-center">Login</Link>
-                <div className="text-secondary text-center mt-3 pb-4">Don’t have an account? <Link href="/register" className="text-black pl-1 hover:underline">Register</Link></div>
+                <div className="text-secondary text-center mt-3 pb-4">Don&apos;t have an account? <Link href="/register" className="text-black pl-1 hover:underline">Register</Link></div>
                 <Link href="/my-account" className="button-main bg-white text-black border border-black w-full text-center">Dashboard</Link>
             </div>
         </header>
