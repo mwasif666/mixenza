@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SourceProduct } from '@/lib/theOnlineStore'
@@ -11,7 +11,11 @@ import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
 
 export default function SourceProductDetail({ product }: { product: SourceProduct }) {
-    const [activeImage, setActiveImage] = useState(product.images[0] || product.thumbImage[0] || '')
+    const galleryImages = useMemo(() => Array.from(new Set([
+        ...(product.images || []),
+        ...(product.thumbImage || []),
+    ].filter(Boolean))), [product.images, product.thumbImage])
+    const [activeImage, setActiveImage] = useState(galleryImages[0] || '')
     const [quantity, setQuantity] = useState(1)
     const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
@@ -36,13 +40,13 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
 
             <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mt-8">
                 <div>
-                    <div className="relative aspect-square rounded-3xl overflow-hidden bg-[#f4f4f5]">
-                        {activeImage && <Image src={activeImage} alt={product.name} fill unoptimized priority className="object-contain p-8" />}
+                    <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#f4f4f5]">
+                        {activeImage && <Image src={activeImage} alt={product.name} fill unoptimized priority sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />}
                     </div>
-                    <div className="grid grid-cols-4 gap-3 mt-4">
-                        {(product.images.length ? product.images : product.thumbImage).slice(0, 4).map(image => (
-                            <button key={image} type="button" onClick={() => setActiveImage(image)} className={`relative aspect-square overflow-hidden rounded-2xl bg-[#f4f4f5] border ${activeImage === image ? 'border-black' : 'border-transparent'}`}>
-                                <Image src={image} alt="" fill unoptimized className="object-contain p-2" />
+                    <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 mt-4">
+                        {galleryImages.map((image, index) => (
+                            <button key={`${image}-${index}`} type="button" onClick={() => setActiveImage(image)} className={`relative aspect-square overflow-hidden rounded-2xl bg-[#f4f4f5] border transition ${activeImage === image ? 'border-black ring-2 ring-black/10' : 'border-transparent hover:border-black/30'}`}>
+                                <Image src={image} alt={`${product.name} image ${index + 1}`} fill unoptimized sizes="96px" className="object-cover" />
                             </button>
                         ))}
                     </div>
