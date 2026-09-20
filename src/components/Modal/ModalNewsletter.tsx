@@ -2,11 +2,12 @@
 
 import { useRouter } from 'next/navigation'
 import { formatMoney } from '@/utils/currency'
-import React, { useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { useModalQuickviewContext } from '@/context/ModalQuickviewContext';
 import Image from 'next/image';
+import { productPath } from '@/lib/storePaths'
 
 const ModalNewsletter = () => {
     const [open, setOpen] = useState<boolean>(false)
@@ -14,9 +15,24 @@ const ModalNewsletter = () => {
     const router = useRouter()
     const { openQuickview } = useModalQuickviewContext()
 
+    const recommendations = useMemo(() => {
+        const usableProducts = productData.filter(item =>
+            Boolean(item.thumbImage?.[0] || item.images?.[0]) && item.quantity !== 0,
+        )
+
+        return [...usableProducts]
+            .sort((a, b) => (
+                Number(Boolean(b.isFeatured)) - Number(Boolean(a.isFeatured))
+                || Number(Boolean(b.isNewArrival)) - Number(Boolean(a.isNewArrival))
+                || Number(Boolean(b.sale)) - Number(Boolean(a.sale))
+                || Number(b.sold || 0) - Number(a.sold || 0)
+            ))
+            .slice(0, 5)
+    }, [productData])
+
     const handleDetailProduct = (productId: string) => {
-        // redirect to shop with category selected
-        router.push(`/product/default?id=${productId}`);
+        const product = productData.find(item => item.id === productId)
+        router.push(product ? productPath(product) : `/product/${encodeURIComponent(productId)}`)
     };
 
     useEffect(() => {
@@ -54,18 +70,34 @@ const ModalNewsletter = () => {
                             </div>
                             <div className="heading5 pb-5">You May Also Like</div>
                             <div className="list flex flex-col gap-5 overflow-x-auto sm:pr-6">
-                                {productData.slice(11, 16).map((item, index) => (
+                                {!productData.length && (
+                                    Array.from({ length: 3 }).map((_, index) => (
+                                        <div key={`recommendation-skeleton-${index}`} className="flex items-center gap-5 border-b border-line pb-5">
+                                            <div className="h-[100px] w-[100px] shrink-0 animate-pulse rounded-lg bg-surface" />
+                                            <div className="flex-1 space-y-3">
+                                                <div className="h-4 w-4/5 animate-pulse rounded bg-surface" />
+                                                <div className="h-4 w-2/5 animate-pulse rounded bg-surface" />
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                                {recommendations.map((item) => (
                                     <div
                                             className='product-item item pb-5 flex items-center justify-between gap-3 border-b border-line'
-                                            key={index}
+                                            key={item.id}
                                         >
                                             <div
                                                 className="infor flex items-center gap-5 cursor-pointer"
                                                 onClick={() => handleDetailProduct(item.id)}
                                             >
                                                 <div className="bg-img flex-shrink-0">
-                                                    <Image width={5000} height={5000} src={item.thumbImage[0]} alt={item.name}
-                                                        className='w-[100px] aspect-square flex-shrink-0 rounded-lg' />
+                                                <Image
+                                                    width={500}
+                                                    height={500}
+                                                    src={item.thumbImage?.[0] || item.images[0]}
+                                                    alt={item.name}
+                                                    className='w-[100px] aspect-square flex-shrink-0 rounded-xl object-cover transition-transform duration-300 hover:scale-105'
+                                                />
                                                 </div>
                                                 <div className=''>
                                                     <div className="name text-button">{item.name}</div>
