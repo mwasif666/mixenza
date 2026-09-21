@@ -31,7 +31,7 @@ Questions and FAQ set:
 - Does it count notes?
 - What does the price include?
 
-Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611); ERITE 395nm UV Money Detector Pen (/product/pickora-1963263814). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/check-currency-notes-uv only if relevant; for topic 1, select a same-cluster guide before publication.
+Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611); ERITE 395nm UV Money Detector Pen (/product/pickora-1963263814). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/check-currency-notes-uv; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Use SBP banknote-series guidance and do not infer authenticity from wavelength alone.
 
@@ -73,7 +73,7 @@ Questions and FAQ set:
 - Which note series is covered?
 - What if unsure?
 
-Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/rechargeable-hand-fans-pakistan only if relevant; for topic 2, select a same-cluster guide before publication.
+Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/money-detector-price-pakistan; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Use SBP banknote-series guidance and do not infer authenticity from wavelength alone.
 
@@ -115,7 +115,7 @@ Questions and FAQ set:
 - What runtime is measured?
 - Is a charger included?
 
-Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/portable-fan-buying-guide only if relevant; for topic 3, select a same-cluster guide before publication.
+Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/portable-fan-buying-guide; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -157,7 +157,7 @@ Questions and FAQ set:
 - How should it be stored?
 - Is the battery replaceable?
 
-Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-price-pakistan only if relevant; for topic 4, select a same-cluster guide before publication.
+Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/rechargeable-hand-fans-pakistan; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -200,7 +200,7 @@ Questions and FAQ set:
 - Is a warranty documented?
 - Who should seek advice first?
 
-Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573); Foot Roller Massager (/product/tos-8396207653025-foot-roller-massager). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-attachments only if relevant; for topic 5, select a same-cluster guide before publication.
+Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573); Foot Roller Massager (/product/tos-8396207653025-foot-roller-massager). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-attachments; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Require a qualified reviewer for any usage or contraindication advice; avoid treatment claims.
 
@@ -242,7 +242,7 @@ Questions and FAQ set:
 - Can heads be washed?
 - Where are the instructions?
 
-Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/water-dispenser-pump-pakistan only if relevant; for topic 6, select a same-cluster guide before publication.
+Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-price-pakistan; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Require a qualified reviewer for any usage or contraindication advice; avoid treatment claims.
 
@@ -284,7 +284,7 @@ Questions and FAQ set:
 - Is the hose included?
 - How is it cleaned?
 
-Products: Automatic Rechargeable Water Dispenser Pump (/product/pickora-1971400774); Manual Water Pump (Minimum Order Quantity 1 Carton/60 PCs) (/product/tos-8317065920673-manual-water-pump). Category: /shop/home-essentials. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/digital-kitchen-scale-uses only if relevant; for topic 7, select a same-cluster guide before publication.
+Products: Automatic Rechargeable Water Dispenser Pump (/product/pickora-1971400774); Manual Water Pump (Minimum Order Quantity 1 Carton/60 PCs) (/product/tos-8317065920673-manual-water-pump). Category: /shop/home-essentials. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/manual-vs-electric-water-pump; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -327,7 +327,7 @@ Questions and FAQ set:
 - What capacity is verified?
 - Can it weigh very small quantities?
 
-Products: Digital Kitchen Weight Scale Machine (/product/tos-8381141581985-digital-kitchen-weight-scale-machine). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/mini-chopper-vs-manual only if relevant; for topic 8, select a same-cluster guide before publication.
+Products: Digital Kitchen Weight Scale Machine (/product/tos-8381141581985-digital-kitchen-weight-scale-machine). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/clean-kitchen-scale; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -369,7 +369,7 @@ Questions and FAQ set:
 - Which ingredients are supported?
 - Are parts removable?
 
-Products: Mini Food Chopper (/product/tos-8381139779745-mini-food-chopper); Silver Crest 4 in 1 Hand Blender Set (/product/tos-8349003153569-silver-crest-4-in-1-hand-blender-set). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/spray-mop-vs-spin-mop only if relevant; for topic 9, select a same-cluster guide before publication.
+Products: Mini Food Chopper (/product/tos-8381139779745-mini-food-chopper); Silver Crest 4 in 1 Hand Blender Set (/product/tos-8349003153569-silver-crest-4-in-1-hand-blender-set). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/hand-blender-vs-chopper; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -412,7 +412,7 @@ Questions and FAQ set:
 - Are pads included?
 - Is the bucket model actually a spin mop?
 
-Products: Water Spray Mop (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317065298081-water-spray-mop); Easy Mop Steel Strainer with Mop Stick (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317064577185-easy-mop-steel-strainer-with-mop-stick). Category: /shop/cleaning-products. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/money-detector-price-pakistan only if relevant; for topic 10, select a same-cluster guide before publication.
+Products: Water Spray Mop (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317065298081-water-spray-mop); Easy Mop Steel Strainer with Mop Stick (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317064577185-easy-mop-steel-strainer-with-mop-stick). Category: /shop/cleaning-products. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/mop-for-tile-marble; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 

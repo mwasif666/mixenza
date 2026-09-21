@@ -18,6 +18,8 @@ First resolve the checkout implementation: `src/app/checkout/page.tsx` only call
 
 ## Critical Problems
 
+### Critical SEO & Trust Issues
+
 | Priority | Verified problem | Why it matters | Required action |
 |---|---|---|---|
 | P0 | Checkout source simulates success without creating an order | Traffic cannot reliably become recorded orders through this implementation | Create orders server-side; validate stock, selected quantity, totals and shipping; return a persisted order ID; test failure/success in staging |
@@ -25,7 +27,7 @@ First resolve the checkout implementation: `src/app/checkout/page.tsx` only call
 | P0 | Homepage says 24/7 support and worldwide shipping; Contact says Mon–Sat 10am–7pm PKT and Pakistan | Conflicting promises impair trust | Confirm actual service coverage/hours and apply consistently |
 | P1 | `/robots.txt` and `/sitemap.xml` return 404 | Missing discovery/control resources; a robots 404 does not itself prohibit crawling | Generate both in Next.js; submit sitemap in GSC |
 | P0 | No canonical tags on sampled home/shop pages | Parameters and alternate routes can form duplicate clusters | Add self-referencing canonicals; canonicalize or noindex parameter states |
-| P0 | Theme/demo routes are public (`/homepages/*`, `/shop/breadcrumb1`, `/blog/default`, product style routes) | Thin, irrelevant pages dilute quality and may be indexed | Return 404/410 or 301 only where a genuine equivalent exists; remove internal links |
+| P0 | Sampled theme/demo pages return 200 (`/homepages/fashion11`, `/blog/default`, `/product/out-of-stock`); `/shop/breadcrumb1` redirects 307 to `/shop` | Thin, irrelevant pages dilute quality and may be indexed | Return 404/410 or 301 only where a genuine equivalent exists; remove internal links |
 | P0 | Product cards show a default `(121)` review count and five stars when no rating exists | Unverified social proof is a trust and structured-data risk | Render ratings only from verified review records; never emit fake AggregateRating |
 | P0 | Product page states “Free delivery” and “Free 14-day returns” without policy evidence in the audited code | Misleading claims harm conversion and compliance | Replace with confirmed shipping/returns terms linked to policy pages |
 | P1 | 87 products use category “Shop” and 20 use “General” | More than half the catalog has no meaningful topical parent | Reclassify every product into a controlled taxonomy before category SEO |
@@ -111,14 +113,14 @@ The isolated `site:mixenza.com` query returned no results in the available searc
 | `/search-result` and internal-search parameters | `noindex,follow` | Infinite/low-quality query combinations |
 | `/homepages/*` and theme route variants | 404/410; 301 only to genuine equivalent | Demo content |
 | `/shop?category=`, `?type=`, sort/filter combinations | Canonical to clean category or noindex | Duplicate facets |
-| `/product/default?id=*` | 308 to canonical product | Duplicate legacy route |
+| `/product/default?id=*` | 301 to canonical product | Duplicate legacy route |
 | Duplicate/irrelevant blog records | Noindex now, then 410 or close 301 | Template contamination |
 | Empty categories and “General”/“Shop” taxonomy pages | Noindex until curated | No coherent intent |
 | Sold-out products with no demand, links or replacement | 410 after a retention period, or 301 to exact successor | Avoid soft 404s and irrelevant redirects |
 
 ## Pakistan Market Analysis
 
-Current Pakistan SERPs favor stores that make trust and fulfilment explicit: COD, delivery coverage/time, returns, WhatsApp/help, stock and PKR price. WeHome pairs a deep kitchen taxonomy with quality and COD language; Traderz and MZ Trends combine product-led category copy with trust sections; Zahida Store and Banowi expose product counts, filters and concise category copy; Khanify uses selective Roman Urdu in product benefits. Sources: [WeHome](https://wehome.pk/collections/kitchen-tools-gadgets), [Traderz](https://traderz.pk/product-category/kitchen-dining-gadgets/), [MZ Trends](https://www.mztrends.com/), [Zahida Store](https://zahidastore.myshopify.com/collections/kitchen-gadgets), [Khanify](https://khanify.me/collections/kitchen-tools).
+Pakistan-focused web search samples surfaced stores that prominently state trust and fulfilment information: COD, delivery coverage/time, returns, WhatsApp/help, stock and PKR price. WeHome pairs a deep kitchen taxonomy with quality and COD language; Traderz and MZ Trends combine product-led category copy with trust sections; Zahida Store and Banowi expose product counts, filters and concise category copy; Khanify uses selective Roman Urdu in product benefits. Sources: [WeHome](https://wehome.pk/collections/kitchen-tools-gadgets), [Traderz](https://traderz.pk/product-category/kitchen-dining-gadgets/), [MZ Trends](https://www.mztrends.com/), [Zahida Store](https://zahidastore.myshopify.com/collections/kitchen-gadgets), [Khanify](https://khanify.me/collections/kitchen-tools).
 
 Mixenza should position around “useful everyday products for Pakistani homes,” not try to out-rank Daraz for the entire “online shopping Pakistan” head term. Its best near-term commercial wedges are money detectors, rechargeable hand fans, massage/recovery, water dispensers, kitchen prep/cleaning and compact home organizers. Roman Urdu belongs in FAQs, social proof and explanatory copy where natural (for example, “bijli band honay par portable fan”), not in every title or URL.
 
@@ -884,7 +886,7 @@ Questions and FAQ set:
 - Does it count notes?
 - What does the price include?
 
-Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611); ERITE 395nm UV Money Detector Pen (/product/pickora-1963263814). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/check-currency-notes-uv only if relevant; for topic 1, select a same-cluster guide before publication.
+Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611); ERITE 395nm UV Money Detector Pen (/product/pickora-1963263814). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/check-currency-notes-uv; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Use SBP banknote-series guidance and do not infer authenticity from wavelength alone.
 
@@ -926,7 +928,7 @@ Questions and FAQ set:
 - Which note series is covered?
 - What if unsure?
 
-Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/rechargeable-hand-fans-pakistan only if relevant; for topic 2, select a same-cluster guide before publication.
+Products: JC-205 Rechargeable 365nm UV Money Detector (/product/pickora-1972612611). Category: /shop/money-detectors. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/money-detector-price-pakistan; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Use SBP banknote-series guidance and do not infer authenticity from wavelength alone.
 
@@ -968,7 +970,7 @@ Questions and FAQ set:
 - What runtime is measured?
 - Is a charger included?
 
-Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/portable-fan-buying-guide only if relevant; for topic 3, select a same-cluster guide before publication.
+Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/portable-fan-buying-guide; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -1010,7 +1012,7 @@ Questions and FAQ set:
 - How should it be stored?
 - Is the battery replaceable?
 
-Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-price-pakistan only if relevant; for topic 4, select a same-cluster guide before publication.
+Products: Portable USB Rechargeable Mini Hand Fan (/product/pickora-1965017109); Digital 5-Speed Rechargeable Hand Fan with Display (/product/pickora-1966895078). Category: /shop/portable-fans. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/rechargeable-hand-fans-pakistan; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -1053,7 +1055,7 @@ Questions and FAQ set:
 - Is a warranty documented?
 - Who should seek advice first?
 
-Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573); Foot Roller Massager (/product/tos-8396207653025-foot-roller-massager). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-attachments only if relevant; for topic 5, select a same-cluster guide before publication.
+Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573); Foot Roller Massager (/product/tos-8396207653025-foot-roller-massager). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-attachments; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Require a qualified reviewer for any usage or contraindication advice; avoid treatment claims.
 
@@ -1095,7 +1097,7 @@ Questions and FAQ set:
 - Can heads be washed?
 - Where are the instructions?
 
-Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/water-dispenser-pump-pakistan only if relevant; for topic 6, select a same-cluster guide before publication.
+Products: 5-in-1 Rechargeable Full Body Massage Gun (/product/pickora-1973702573). Category: /shop/wellness. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/massage-gun-price-pakistan; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Require a qualified reviewer for any usage or contraindication advice; avoid treatment claims.
 
@@ -1137,7 +1139,7 @@ Questions and FAQ set:
 - Is the hose included?
 - How is it cleaned?
 
-Products: Automatic Rechargeable Water Dispenser Pump (/product/pickora-1971400774); Manual Water Pump (Minimum Order Quantity 1 Carton/60 PCs) (/product/tos-8317065920673-manual-water-pump). Category: /shop/home-essentials. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/digital-kitchen-scale-uses only if relevant; for topic 7, select a same-cluster guide before publication.
+Products: Automatic Rechargeable Water Dispenser Pump (/product/pickora-1971400774); Manual Water Pump (Minimum Order Quantity 1 Carton/60 PCs) (/product/tos-8317065920673-manual-water-pump). Category: /shop/home-essentials. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/manual-vs-electric-water-pump; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -1180,7 +1182,7 @@ Questions and FAQ set:
 - What capacity is verified?
 - Can it weigh very small quantities?
 
-Products: Digital Kitchen Weight Scale Machine (/product/tos-8381141581985-digital-kitchen-weight-scale-machine). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/mini-chopper-vs-manual only if relevant; for topic 8, select a same-cluster guide before publication.
+Products: Digital Kitchen Weight Scale Machine (/product/tos-8381141581985-digital-kitchen-weight-scale-machine). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/clean-kitchen-scale; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -1222,7 +1224,7 @@ Questions and FAQ set:
 - Which ingredients are supported?
 - Are parts removable?
 
-Products: Mini Food Chopper (/product/tos-8381139779745-mini-food-chopper); Silver Crest 4 in 1 Hand Blender Set (/product/tos-8349003153569-silver-crest-4-in-1-hand-blender-set). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/spray-mop-vs-spin-mop only if relevant; for topic 9, select a same-cluster guide before publication.
+Products: Mini Food Chopper (/product/tos-8381139779745-mini-food-chopper); Silver Crest 4 in 1 Hand Blender Set (/product/tos-8349003153569-silver-crest-4-in-1-hand-blender-set). Category: /shop/kitchenware. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/hand-blender-vs-chopper; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
@@ -1265,7 +1267,7 @@ Questions and FAQ set:
 - Are pads included?
 - Is the bucket model actually a spin mop?
 
-Products: Water Spray Mop (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317065298081-water-spray-mop); Easy Mop Steel Strainer with Mop Stick (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317064577185-easy-mop-steel-strainer-with-mop-stick). Category: /shop/cleaning-products. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/money-detector-price-pakistan only if relevant; for topic 10, select a same-cluster guide before publication.
+Products: Water Spray Mop (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317065298081-water-spray-mop); Easy Mop Steel Strainer with Mop Stick (Minimum Order Quantity 1 Carton/30 PCs) (/product/tos-8317064577185-easy-mop-steel-strainer-with-mop-stick). Category: /shop/cleaning-products. Link to /pages/contact for unanswered product questions and approved policies when discussing delivery/returns. Related guide: /blog/mop-for-tile-marble; publish this cross-link only after the related guide passes its overlap and evidence gates.
 
 Required original material: photograph the exact stocked unit and box contents; add a labelled specification or comparison table; document unknowns. Do not borrow capacity, runtime, compatibility or care claims from similar-looking supplier products.
 
