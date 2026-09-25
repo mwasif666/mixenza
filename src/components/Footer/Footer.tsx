@@ -44,14 +44,14 @@ const Footer = () => {
                             Everyday essentials, useful gadgets and marketplace finds delivered across Pakistan.
                         </p>
                         <div className="mt-6 space-y-3">
-                            <a href={`mailto:${BRAND.email}`} className="group flex w-fit items-center gap-3">
+                            <Link href={`mailto:${BRAND.email}`} className="group flex w-fit items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.EnvelopeSimple size={18} /></span>
                                 <span className="caption1 group-hover:text-primary">{BRAND.email}</span>
-                            </a>
-                            <a href={`tel:${BRAND.phoneHref}`} className="group flex w-fit items-center gap-3">
+                            </Link>
+                            <Link href={`tel:${BRAND.phoneHref}`} className="group flex w-fit items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.Phone size={18} /></span>
                                 <span className="caption1 group-hover:text-primary">{BRAND.phone}</span>
-                            </a>
+                            </Link>
                             <div className="flex items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.MapPin size={18} /></span>
                                 <span className="caption1">{BRAND.address}</span>
