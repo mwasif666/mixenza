@@ -1,9 +1,8 @@
 'use client'
 
 import React, { useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
-import { CaretDown, CaretRight } from '@phosphor-icons/react/dist/ssr'
+import { CaretDown, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { shopPath } from '@/lib/storePaths'
 import StoreProductCard from '@/components/Shop/StoreProductCard'
@@ -239,29 +238,28 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
 
                     {pageCount > 1 && (
                         <div className="mt-10 flex items-center justify-center gap-3">
-                            <button type="button" disabled={page === 1} onClick={() => setPage(value => value - 1)} className="rounded-lg border border-line px-4 py-2 text-sm disabled:opacity-40">Previous</button>
+                            <button
+                                type="button"
+                                disabled={page === 1}
+                                onClick={() => setPage(value => value - 1)}
+                                className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm transition hover:border-black disabled:cursor-not-allowed disabled:opacity-40"
+                            >
+                                <CaretLeft size={16} />
+                                Previous
+                            </button>
                             <span className="text-sm text-secondary">Page {page} of {pageCount}</span>
-                            <button type="button" disabled={page === pageCount} onClick={() => setPage(value => value + 1)} className="rounded-lg border border-line px-4 py-2 text-sm disabled:opacity-40">Next</button>
+                            <button
+                                type="button"
+                                disabled={page === pageCount}
+                                onClick={() => setPage(value => value + 1)}
+                                className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm transition hover:border-black disabled:cursor-not-allowed disabled:opacity-40"
+                            >
+                                Next
+                                <CaretRight size={16} />
+                            </button>
                         </div>
                     )}
 
-                    <div className="mt-12 grid gap-5 md:grid-cols-3">
-                        {[
-                            { title: 'Frequently Asked Questions', copy: 'Updates on safe shopping in our store.', image: '/images/blog/gold-prices.jpg', href: '/pages/faqs' },
-                            { title: 'Online Payment Process', copy: 'Pay securely at checkout.', image: '/images/blog/mobile-prices.jpg', href: '/pages/faqs' },
-                            { title: 'Home Delivery Options', copy: 'We ship across Pakistan.', image: '/images/blog/china-shipping.jpg', href: '/pages/faqs' },
-                        ].map(card => (
-                            <Link key={card.title} href={card.href} className="overflow-hidden rounded-2xl border border-line bg-[#f7f7f8] transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
-                                <div className="p-5">
-                                    <h3 className="heading6">{card.title}</h3>
-                                    <p className="caption1 mt-2 text-secondary">{card.copy}</p>
-                                </div>
-                                <div className="relative h-36">
-                                    <Image src={card.image} alt="" fill className="object-cover" />
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
                 </div>
             </div>
         </section>
