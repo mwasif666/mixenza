@@ -33,7 +33,7 @@ const SliderPickora = () => (
                         <h2 className="heading6 mt-1">UV Money Detector Pen</h2>
                         <div className="mt-3 flex flex-col items-start">
                             <span className="caption1 font-semibold">Rs. 270</span>
-                            <span className="mt-3 inline-flex min-w-[118px] items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#111647] shadow-sm transition group-hover:bg-primary group-hover:text-white">Shop now</span>
+                            <span className="button-main mt-3 inline-flex min-w-[118px] items-center justify-center">Shop now</span>
                         </div>
                     </div>
                 </Link>
