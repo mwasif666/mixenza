@@ -12,6 +12,7 @@ const SliderPickora = () => (
                     <div className="flex items-center gap-3 mt-7 flex-wrap">
                         <span className="button-main">Shop Tumbler</span>
                         <span className="heading6">Rs. 2,699</span>
+                        <span className="text-sm text-secondary line-through">Rs. 2,999</span>
                     </div>
                 </div>
                 <div className="relative m-4 aspect-square overflow-hidden rounded-[22px] bg-white/40 md:my-6 md:ml-0 md:mr-6 md:aspect-auto md:min-h-[472px]">
