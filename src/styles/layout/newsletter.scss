@@ -8,3 +8,11 @@
     background-color: var(--black);
     color: var(--white);
 }
+
+/* Keep newsletter submit labels visible on dark buttons.
+   The general .text-white override above is used to make copy dark on
+   pale newsletter backgrounds, but it must not recolor button text. */
+.newsletter-block.bg-green button.text-white,
+.newsletter-block.bg-transparent button.text-white {
+    color: var(--white);
+}
