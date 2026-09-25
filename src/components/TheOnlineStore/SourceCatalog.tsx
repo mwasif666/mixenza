@@ -2,7 +2,14 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { CaretDown, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
+import {
+    CaretDown,
+    CaretLeft,
+    CaretRight,
+    Check,
+    FunnelSimple,
+    MagnifyingGlass,
+} from '@phosphor-icons/react/dist/ssr'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { shopPath } from '@/lib/storePaths'
 import StoreProductCard from '@/components/Shop/StoreProductCard'
@@ -14,6 +21,7 @@ interface Props {
 }
 
 const PAGE_SIZE = 24
+const INITIAL_CATEGORY_LIMIT = 8
 
 const sortOptions = [
     { value: 'featured', label: 'Featured' },
@@ -28,17 +36,17 @@ function toggleValue(list: string[], value: string) {
 
 export default function SourceCatalog({ products, initialCategory, title = 'Shop' }: Props) {
     const [category, setCategory] = useState(initialCategory || 'All')
-    const [checkedCategories, setCheckedCategories] = useState<string[]>(initialCategory ? [initialCategory] : [])
     const [availability, setAvailability] = useState<string[]>([])
     const [brands, setBrands] = useState<string[]>([])
     const [page, setPage] = useState(1)
     const [query, setQuery] = useState('')
     const [sort, setSort] = useState('featured')
     const [sortOpen, setSortOpen] = useState(false)
+    const [showAllCategories, setShowAllCategories] = useState(false)
+    const [filtersOpen, setFiltersOpen] = useState(false)
 
     useEffect(() => {
         setCategory(initialCategory || 'All')
-        setCheckedCategories(initialCategory ? [initialCategory] : [])
         setPage(1)
     }, [initialCategory])
 
@@ -54,13 +62,19 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
         return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name))
     }, [products])
 
+    const visibleCategories = showAllCategories
+        ? categoryCards
+        : categoryCards.slice(0, INITIAL_CATEGORY_LIMIT)
+
     const brandCards = useMemo(() => {
         const map = new Map<string, number>()
         for (const product of products) {
             const brand = product.brand || 'Mixenza'
             map.set(brand, (map.get(brand) || 0) + 1)
         }
-        return Array.from(map.entries()).map(([name, count]) => ({ name, count })).sort((a, b) => a.name.localeCompare(b.name))
+        return Array.from(map.entries())
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => a.name.localeCompare(b.name))
     }, [products])
 
     const stockCounts = useMemo(() => ({
@@ -70,149 +84,206 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
 
     const filtered = useMemo(() => {
         const normalized = query.trim().toLowerCase()
-        const activeCategories = checkedCategories.length ? checkedCategories : (category === 'All' ? [] : [category])
+
         const result = products.filter(product => {
-            const categoryMatch = !activeCategories.length || product.categories.some(name => activeCategories.includes(name))
+            const categoryMatch = category === 'All' || product.categories.includes(category)
             const brandMatch = !brands.length || brands.includes(product.brand || 'Mixenza')
             const stockMatch = !availability.length
                 || (availability.includes('in') && product.quantity > 0)
                 || (availability.includes('out') && product.quantity === 0)
-            const queryMatch = !normalized || [product.name, product.category, product.description, ...product.tags].some(value => String(value || '').toLowerCase().includes(normalized))
+            const queryMatch = !normalized
+                || [product.name, product.category, product.description, ...product.tags]
+                    .some(value => String(value || '').toLowerCase().includes(normalized))
+
             return categoryMatch && brandMatch && stockMatch && queryMatch
         })
+
         return [...result].sort((a, b) => {
             if (sort === 'price-low') return a.price - b.price
             if (sort === 'price-high') return b.price - a.price
             if (sort === 'newest') return Number(b.new) - Number(a.new)
             return Number(b.sale) - Number(a.sale)
         })
-    }, [availability, brands, category, checkedCategories, products, query, sort])
+    }, [availability, brands, category, products, query, sort])
 
     const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
     const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
     const activeSortLabel = sortOptions.find(option => option.value === sort)?.label || 'Featured'
+    const hasActiveFilters = category !== 'All' || availability.length > 0 || brands.length > 0 || query.trim() !== ''
+
+    const clearLocalFilters = () => {
+        setCategory('All')
+        setAvailability([])
+        setBrands([])
+        setQuery('')
+        setSort('featured')
+        setPage(1)
+        setSortOpen(false)
+    }
 
     return (
         <section className="container py-8 md:py-12">
             <div className="mb-6 md:mb-8">
-                <p className="caption1 text-secondary">Home / Shop{category !== 'All' ? ` / ${category}` : ''}</p>
+                <p className="caption1 text-secondary">
+                    Home / Shop{category !== 'All' ? ` / ${category}` : ''}
+                </p>
                 <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
                     <div>
                         <h1 className="heading3">{title}</h1>
-                        <p className="caption1 mt-1 text-secondary">{filtered.length} items available</p>
+                        <p className="caption1 mt-1 text-secondary">
+                            {filtered.length} {filtered.length === 1 ? 'item' : 'items'} available
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-7">
+            <div className="grid gap-6 lg:grid-cols-[248px_minmax(0,1fr)] lg:gap-8">
                 <aside className="h-fit lg:sticky lg:top-28">
-                    <div className="overflow-hidden rounded-xl border border-line bg-white">
-                        <Link
-                            href="/shop"
-                            onClick={() => { setCategory('All'); setCheckedCategories([]); setPage(1) }}
-                            className={`flex min-h-11 items-center border-l-4 px-4 text-[17px] font-semibold transition ${category === 'All' && !checkedCategories.length ? 'border-l-primary bg-primary/5 text-black' : 'border-l-transparent hover:bg-surface'}`}
-                        >
-                            Home
-                        </Link>
+                    <button
+                        type="button"
+                        onClick={() => setFiltersOpen(value => !value)}
+                        className="mb-3 flex w-full items-center justify-between rounded-xl border border-line bg-white px-4 py-3 text-left lg:hidden"
+                    >
+                        <span className="flex items-center gap-2 text-[15px] font-semibold">
+                            <FunnelSimple size={18} className="text-primary" />
+                            Filters
+                        </span>
+                        <CaretDown size={16} className={`transition-transform ${filtersOpen ? 'rotate-180' : ''}`} />
+                    </button>
 
-                        <div className="border-t border-line">
-                            <div className="bg-surface/60 px-4 py-2.5">
-                                <div className="text-button-uppercase text-secondary">Browse</div>
+                    <div className={`${filtersOpen ? 'block' : 'hidden'} overflow-hidden rounded-[18px] border border-line bg-white lg:block`}>
+                        <div className="flex items-center justify-between border-b border-line px-4 py-3.5">
+                            <div className="flex items-center gap-2">
+                                <FunnelSimple size={18} className="text-primary" />
+                                <span className="text-[15px] font-semibold">Shop filters</span>
                             </div>
-                            <nav className="max-h-[290px] divide-y divide-line overflow-y-auto">
-                                {categoryCards.map(item => (
-                                    <Link
-                                        key={item.name}
-                                        href={shopPath(item.name)}
-                                        onClick={() => { setCategory(item.name); setCheckedCategories([item.name]); setPage(1) }}
-                                        className={`flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-[13px] transition ${category === item.name ? 'bg-primary/5 font-medium text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
-                                    >
-                                        <span className="leading-5">{item.name}</span>
-                                        <CaretRight size={13} className={`shrink-0 ${category === item.name ? 'text-primary' : 'text-secondary2'}`} />
-                                    </Link>
-                                ))}
-                            </nav>
+                            {hasActiveFilters && (
+                                <Link
+                                    href="/shop"
+                                    onClick={() => {
+                                        clearLocalFilters()
+                                        setFiltersOpen(false)
+                                    }}
+                                    className="text-[12px] font-medium text-primary hover:underline"
+                                >
+                                    Clear all
+                                </Link>
+                            )}
                         </div>
 
-                        <div className="border-t border-line">
-                            <div className="bg-surface/60 px-4 py-2.5">
-                                <div className="text-button-uppercase text-secondary">Categories</div>
+                        <div className="border-b border-line px-3 py-4">
+                            <div className="mb-2 px-1 text-[12px] font-semibold uppercase tracking-[0.08em] text-secondary">
+                                Categories
                             </div>
-                            <div className="max-h-[320px] divide-y divide-line overflow-y-auto">
-                                {categoryCards.map(item => {
-                                    const checked = checkedCategories.includes(item.name)
+
+                            <div className="space-y-1">
+                                <Link
+                                    href="/shop"
+                                    onClick={() => {
+                                        setCategory('All')
+                                        setPage(1)
+                                        setFiltersOpen(false)
+                                    }}
+                                    className={`flex min-h-9 items-center justify-between rounded-lg px-3 py-2 text-[13px] transition ${category === 'All' ? 'bg-primary-light font-semibold text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                >
+                                    <span>All products</span>
+                                    <span className={`rounded-full px-2 py-0.5 text-[11px] ${category === 'All' ? 'bg-white text-primary' : 'bg-surface text-secondary2'}`}>
+                                        {products.length}
+                                    </span>
+                                </Link>
+
+                                {visibleCategories.map(item => {
+                                    const active = category === item.name
                                     return (
-                                        <label
+                                        <Link
                                             key={item.name}
-                                            className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${checked ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                            href={shopPath(item.name)}
+                                            onClick={() => {
+                                                setCategory(item.name)
+                                                setPage(1)
+                                                setFiltersOpen(false)
+                                            }}
+                                            className={`flex min-h-9 items-center justify-between gap-3 rounded-lg px-3 py-2 text-[13px] transition ${active ? 'bg-primary-light font-semibold text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
                                         >
-                                            <input
-                                                type="checkbox"
-                                                className="h-3.5 w-3.5 shrink-0 rounded border-line"
-                                                style={{ accentColor: 'var(--primary)' }}
-                                                checked={checked}
-                                                onChange={() => { setCheckedCategories(toggleValue(checkedCategories, item.name)); setPage(1) }}
-                                            />
                                             <span className="min-w-0 flex-1 leading-5">{item.name}</span>
-                                            <span className="shrink-0 text-[11px] text-secondary2">({item.count})</span>
-                                        </label>
+                                            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] ${active ? 'bg-white text-primary' : 'bg-surface text-secondary2'}`}>
+                                                {item.count}
+                                            </span>
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+
+                            {categoryCards.length > INITIAL_CATEGORY_LIMIT && (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowAllCategories(value => !value)}
+                                    className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[12px] font-medium text-primary transition hover:bg-primary-light"
+                                >
+                                    {showAllCategories ? 'Show less' : `Show all ${categoryCards.length} categories`}
+                                    <CaretDown size={13} className={`transition-transform ${showAllCategories ? 'rotate-180' : ''}`} />
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="border-b border-line px-3 py-4">
+                            <div className="mb-2 px-1 text-[12px] font-semibold uppercase tracking-[0.08em] text-secondary">
+                                Availability
+                            </div>
+
+                            <div className="space-y-1">
+                                {[
+                                    { key: 'in', label: 'In stock', count: stockCounts.in },
+                                    { key: 'out', label: 'Out of stock', count: stockCounts.out },
+                                ].map(item => {
+                                    const active = availability.includes(item.key)
+                                    return (
+                                        <button
+                                            key={item.key}
+                                            type="button"
+                                            onClick={() => {
+                                                setAvailability(toggleValue(availability, item.key))
+                                                setPage(1)
+                                            }}
+                                            className={`flex min-h-9 w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-[13px] transition ${active ? 'bg-primary-light text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                            aria-pressed={active}
+                                        >
+                                            <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] border ${active ? 'border-primary bg-primary text-white' : 'border-outline bg-white'}`}>
+                                                {active && <Check size={11} weight="bold" />}
+                                            </span>
+                                            <span className="flex-1">{item.label}</span>
+                                            <span className="text-[11px] text-secondary2">{item.count}</span>
+                                        </button>
                                     )
                                 })}
                             </div>
                         </div>
 
-                        <div className="border-t border-line">
-                            <div className="bg-surface/60 px-4 py-2.5">
-                                <div className="text-button-uppercase text-secondary">Availability</div>
+                        <div className="px-3 py-4">
+                            <div className="mb-2 px-1 text-[12px] font-semibold uppercase tracking-[0.08em] text-secondary">
+                                Brand
                             </div>
-                            <div className="divide-y divide-line">
-                                <label className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${availability.includes('in') ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}>
-                                    <input
-                                        type="checkbox"
-                                        className="h-3.5 w-3.5 shrink-0 rounded border-line"
-                                        style={{ accentColor: 'var(--primary)' }}
-                                        checked={availability.includes('in')}
-                                        onChange={() => { setAvailability(toggleValue(availability, 'in')); setPage(1) }}
-                                    />
-                                    <span className="flex-1">In stock</span>
-                                    <span className="text-[11px] text-secondary2">({stockCounts.in})</span>
-                                </label>
-                                <label className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${availability.includes('out') ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}>
-                                    <input
-                                        type="checkbox"
-                                        className="h-3.5 w-3.5 shrink-0 rounded border-line"
-                                        style={{ accentColor: 'var(--primary)' }}
-                                        checked={availability.includes('out')}
-                                        onChange={() => { setAvailability(toggleValue(availability, 'out')); setPage(1) }}
-                                    />
-                                    <span className="flex-1">Out of stock</span>
-                                    <span className="text-[11px] text-secondary2">({stockCounts.out})</span>
-                                </label>
-                            </div>
-                        </div>
 
-                        <div className="border-t border-line">
-                            <div className="bg-surface/60 px-4 py-2.5">
-                                <div className="text-button-uppercase text-secondary">Brand</div>
-                            </div>
-                            <div className="max-h-[220px] divide-y divide-line overflow-y-auto">
+                            <div className="space-y-1">
                                 {brandCards.map(item => {
-                                    const checked = brands.includes(item.name)
+                                    const active = brands.includes(item.name)
                                     return (
-                                        <label
+                                        <button
                                             key={item.name}
-                                            className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${checked ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                            type="button"
+                                            onClick={() => {
+                                                setBrands(toggleValue(brands, item.name))
+                                                setPage(1)
+                                            }}
+                                            className={`flex min-h-9 w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-[13px] transition ${active ? 'bg-primary-light text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                            aria-pressed={active}
                                         >
-                                            <input
-                                                type="checkbox"
-                                                className="h-3.5 w-3.5 shrink-0 rounded border-line"
-                                                style={{ accentColor: 'var(--primary)' }}
-                                                checked={checked}
-                                                onChange={() => { setBrands(toggleValue(brands, item.name)); setPage(1) }}
-                                            />
-                                            <span className="min-w-0 flex-1 leading-5">{item.name}</span>
-                                            <span className="shrink-0 text-[11px] text-secondary2">({item.count})</span>
-                                        </label>
+                                            <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] border ${active ? 'border-primary bg-primary text-white' : 'border-outline bg-white'}`}>
+                                                {active && <Check size={11} weight="bold" />}
+                                            </span>
+                                            <span className="min-w-0 flex-1 truncate">{item.name}</span>
+                                            <span className="text-[11px] text-secondary2">{item.count}</span>
+                                        </button>
                                     )
                                 })}
                             </div>
@@ -221,13 +292,20 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                 </aside>
 
                 <div className="min-w-0">
-                    <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-line bg-surface/60 p-3 sm:flex-row sm:items-center">
+                    <div className="mb-6 flex flex-col gap-3 rounded-[18px] border border-line bg-white p-3 sm:flex-row sm:items-center">
                         <div className="relative flex-1">
+                            <MagnifyingGlass
+                                size={18}
+                                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-secondary2"
+                            />
                             <input
                                 value={query}
-                                onChange={event => { setQuery(event.target.value); setPage(1) }}
+                                onChange={event => {
+                                    setQuery(event.target.value)
+                                    setPage(1)
+                                }}
                                 placeholder="Search products..."
-                                className="h-11 w-full rounded-xl border border-line bg-white px-4 text-[14px] outline-none transition focus:border-primary"
+                                className="h-11 w-full rounded-xl border border-line bg-surface/60 pl-11 pr-4 text-[14px] outline-none transition focus:border-primary focus:bg-white"
                             />
                         </div>
 
@@ -235,22 +313,29 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                             <button
                                 type="button"
                                 onClick={() => setSortOpen(value => !value)}
-                                className="flex h-11 w-full items-center justify-between rounded-xl border border-line bg-white px-4 text-left text-[14px] font-medium transition hover:border-primary"
+                                className="flex h-11 w-full items-center justify-between rounded-xl border border-line bg-surface/60 px-4 text-left text-[14px] font-medium transition hover:border-primary hover:bg-white"
                                 aria-haspopup="listbox"
                                 aria-expanded={sortOpen}
                             >
                                 <span>{activeSortLabel}</span>
-                                <CaretDown size={15} className={`transition ${sortOpen ? 'rotate-180' : ''}`} />
+                                <CaretDown size={15} className={`transition-transform ${sortOpen ? 'rotate-180' : ''}`} />
                             </button>
 
                             {sortOpen && (
-                                <div className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-xl border border-line bg-white py-1 shadow-[0_14px_40px_rgba(31,31,31,0.12)]" role="listbox">
+                                <div
+                                    className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-xl border border-line bg-white p-1 shadow-[0_14px_40px_rgba(31,31,31,0.12)]"
+                                    role="listbox"
+                                >
                                     {sortOptions.map(option => (
                                         <button
                                             key={option.value}
                                             type="button"
-                                            onClick={() => { setSort(option.value); setPage(1); setSortOpen(false) }}
-                                            className={`block w-full px-4 py-2.5 text-left text-[14px] transition hover:bg-surface ${sort === option.value ? 'bg-primary/10 font-semibold text-primary' : 'text-black'}`}
+                                            onClick={() => {
+                                                setSort(option.value)
+                                                setPage(1)
+                                                setSortOpen(false)
+                                            }}
+                                            className={`block w-full rounded-lg px-3 py-2.5 text-left text-[13px] transition hover:bg-surface ${sort === option.value ? 'bg-primary-light font-semibold text-primary' : 'text-black'}`}
                                             role="option"
                                             aria-selected={sort === option.value}
                                         >
@@ -267,7 +352,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                             {visible.map(product => <StoreProductCard key={product.id} product={product} />)}
                         </div>
                     ) : (
-                        <div className="rounded-2xl border border-line bg-surface px-6 py-16 text-center">
+                        <div className="rounded-[18px] border border-line bg-surface px-6 py-16 text-center">
                             <h3 className="heading6">No products found</h3>
                             <p className="mt-2 text-secondary">Try another search or category.</p>
                         </div>
@@ -279,7 +364,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                                 type="button"
                                 disabled={page === 1}
                                 onClick={() => setPage(value => value - 1)}
-                                className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm transition hover:border-black disabled:cursor-not-allowed disabled:opacity-40"
+                                className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 <CaretLeft size={16} />
                                 Previous
@@ -289,14 +374,13 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                                 type="button"
                                 disabled={page === pageCount}
                                 onClick={() => setPage(value => value + 1)}
-                                className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm transition hover:border-black disabled:cursor-not-allowed disabled:opacity-40"
+                                className="inline-flex items-center gap-2 rounded-lg border border-line px-4 py-2 text-sm transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 Next
                                 <CaretRight size={16} />
                             </button>
                         </div>
                     )}
-
                 </div>
             </div>
         </section>
