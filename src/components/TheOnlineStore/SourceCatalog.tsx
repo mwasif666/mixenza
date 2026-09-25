@@ -104,81 +104,118 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                 </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-8">
+            <div className="grid gap-6 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-7">
                 <aside className="h-fit lg:sticky lg:top-28">
-                    <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
+                    <div className="overflow-hidden rounded-xl border border-line bg-white">
                         <Link
                             href="/shop"
                             onClick={() => { setCategory('All'); setCheckedCategories([]); setPage(1) }}
-                            className={`flex min-h-12 items-center px-4 text-[18px] font-semibold transition ${category === 'All' && !checkedCategories.length ? 'border-l-4 border-l-primary bg-primary/5' : 'border-l-4 border-l-transparent hover:bg-surface'}`}
+                            className={`flex min-h-11 items-center border-l-4 px-4 text-[17px] font-semibold transition ${category === 'All' && !checkedCategories.length ? 'border-l-primary bg-primary/5 text-black' : 'border-l-transparent hover:bg-surface'}`}
                         >
                             Home
                         </Link>
-                        <nav className="divide-y divide-line border-t border-line">
-                            {categoryCards.map(item => (
-                                <Link
-                                    key={item.name}
-                                    href={shopPath(item.name)}
-                                    onClick={() => { setCategory(item.name); setCheckedCategories([item.name]); setPage(1) }}
-                                    className="flex min-h-11 items-center justify-between gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black"
-                                >
-                                    <span className="leading-5">{item.name}</span>
-                                    <CaretRight size={14} className="shrink-0 text-secondary2" />
-                                </Link>
-                            ))}
-                        </nav>
-                    </div>
 
-                    <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
-                        <div className="border-b border-line px-4 py-3">
-                            <h2 className="text-[18px] font-semibold">Categories</h2>
+                        <div className="border-t border-line">
+                            <div className="bg-surface/60 px-4 py-2.5">
+                                <div className="text-button-uppercase text-secondary">Browse</div>
+                            </div>
+                            <nav className="max-h-[290px] divide-y divide-line overflow-y-auto">
+                                {categoryCards.map(item => (
+                                    <Link
+                                        key={item.name}
+                                        href={shopPath(item.name)}
+                                        onClick={() => { setCategory(item.name); setCheckedCategories([item.name]); setPage(1) }}
+                                        className={`flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-[13px] transition ${category === item.name ? 'bg-primary/5 font-medium text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                    >
+                                        <span className="leading-5">{item.name}</span>
+                                        <CaretRight size={13} className={`shrink-0 ${category === item.name ? 'text-primary' : 'text-secondary2'}`} />
+                                    </Link>
+                                ))}
+                            </nav>
                         </div>
-                        <div className="divide-y divide-line">
-                            {categoryCards.map(item => (
-                                <label key={item.name} className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
+
+                        <div className="border-t border-line">
+                            <div className="bg-surface/60 px-4 py-2.5">
+                                <div className="text-button-uppercase text-secondary">Categories</div>
+                            </div>
+                            <div className="max-h-[320px] divide-y divide-line overflow-y-auto">
+                                {categoryCards.map(item => {
+                                    const checked = checkedCategories.includes(item.name)
+                                    return (
+                                        <label
+                                            key={item.name}
+                                            className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${checked ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                className="h-3.5 w-3.5 shrink-0 rounded border-line"
+                                                style={{ accentColor: 'var(--primary)' }}
+                                                checked={checked}
+                                                onChange={() => { setCheckedCategories(toggleValue(checkedCategories, item.name)); setPage(1) }}
+                                            />
+                                            <span className="min-w-0 flex-1 leading-5">{item.name}</span>
+                                            <span className="shrink-0 text-[11px] text-secondary2">({item.count})</span>
+                                        </label>
+                                    )
+                                })}
+                            </div>
+                        </div>
+
+                        <div className="border-t border-line">
+                            <div className="bg-surface/60 px-4 py-2.5">
+                                <div className="text-button-uppercase text-secondary">Availability</div>
+                            </div>
+                            <div className="divide-y divide-line">
+                                <label className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${availability.includes('in') ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}>
                                     <input
                                         type="checkbox"
-                                        className="h-4 w-4 shrink-0 accent-black"
-                                        checked={checkedCategories.includes(item.name)}
-                                        onChange={() => { setCheckedCategories(toggleValue(checkedCategories, item.name)); setPage(1) }}
+                                        className="h-3.5 w-3.5 shrink-0 rounded border-line"
+                                        style={{ accentColor: 'var(--primary)' }}
+                                        checked={availability.includes('in')}
+                                        onChange={() => { setAvailability(toggleValue(availability, 'in')); setPage(1) }}
                                     />
-                                    <span className="flex-1 leading-5">{item.name}</span>
-                                    <span className="text-xs text-secondary2">({item.count})</span>
+                                    <span className="flex-1">In stock</span>
+                                    <span className="text-[11px] text-secondary2">({stockCounts.in})</span>
                                 </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
-                        <div className="border-b border-line px-4 py-3">
-                            <h2 className="text-[18px] font-semibold">Availability</h2>
-                        </div>
-                        <div className="divide-y divide-line">
-                            <label className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
-                                <input type="checkbox" className="h-4 w-4 shrink-0 accent-black" checked={availability.includes('in')} onChange={() => { setAvailability(toggleValue(availability, 'in')); setPage(1) }} />
-                                <span className="flex-1">In stock</span>
-                                <span className="text-xs text-secondary2">({stockCounts.in})</span>
-                            </label>
-                            <label className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
-                                <input type="checkbox" className="h-4 w-4 shrink-0 accent-black" checked={availability.includes('out')} onChange={() => { setAvailability(toggleValue(availability, 'out')); setPage(1) }} />
-                                <span className="flex-1">Out of stock</span>
-                                <span className="text-xs text-secondary2">({stockCounts.out})</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
-                        <div className="border-b border-line px-4 py-3">
-                            <h2 className="text-[18px] font-semibold">Brand</h2>
-                        </div>
-                        <div className="max-h-[300px] divide-y divide-line overflow-y-auto">
-                            {brandCards.map(item => (
-                                <label key={item.name} className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
-                                    <input type="checkbox" className="h-4 w-4 shrink-0 accent-black" checked={brands.includes(item.name)} onChange={() => { setBrands(toggleValue(brands, item.name)); setPage(1) }} />
-                                    <span className="flex-1 leading-5">{item.name}</span>
-                                    <span className="text-xs text-secondary2">({item.count})</span>
+                                <label className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${availability.includes('out') ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}>
+                                    <input
+                                        type="checkbox"
+                                        className="h-3.5 w-3.5 shrink-0 rounded border-line"
+                                        style={{ accentColor: 'var(--primary)' }}
+                                        checked={availability.includes('out')}
+                                        onChange={() => { setAvailability(toggleValue(availability, 'out')); setPage(1) }}
+                                    />
+                                    <span className="flex-1">Out of stock</span>
+                                    <span className="text-[11px] text-secondary2">({stockCounts.out})</span>
                                 </label>
-                            ))}
+                            </div>
+                        </div>
+
+                        <div className="border-t border-line">
+                            <div className="bg-surface/60 px-4 py-2.5">
+                                <div className="text-button-uppercase text-secondary">Brand</div>
+                            </div>
+                            <div className="max-h-[220px] divide-y divide-line overflow-y-auto">
+                                {brandCards.map(item => {
+                                    const checked = brands.includes(item.name)
+                                    return (
+                                        <label
+                                            key={item.name}
+                                            className={`flex min-h-10 cursor-pointer items-center gap-3 px-4 py-2 text-[13px] transition ${checked ? 'bg-primary/5 text-black' : 'text-secondary hover:bg-surface hover:text-black'}`}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                className="h-3.5 w-3.5 shrink-0 rounded border-line"
+                                                style={{ accentColor: 'var(--primary)' }}
+                                                checked={checked}
+                                                onChange={() => { setBrands(toggleValue(brands, item.name)); setPage(1) }}
+                                            />
+                                            <span className="min-w-0 flex-1 leading-5">{item.name}</span>
+                                            <span className="shrink-0 text-[11px] text-secondary2">({item.count})</span>
+                                        </label>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                 </aside>
@@ -190,7 +227,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                                 value={query}
                                 onChange={event => { setQuery(event.target.value); setPage(1) }}
                                 placeholder="Search products..."
-                                className="h-11 w-full rounded-xl border border-line bg-white px-4 text-[14px] outline-none transition focus:border-black"
+                                className="h-11 w-full rounded-xl border border-line bg-white px-4 text-[14px] outline-none transition focus:border-primary"
                             />
                         </div>
 
@@ -198,7 +235,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                             <button
                                 type="button"
                                 onClick={() => setSortOpen(value => !value)}
-                                className="flex h-11 w-full items-center justify-between rounded-xl border border-line bg-white px-4 text-left text-[14px] font-medium transition hover:border-secondary2"
+                                className="flex h-11 w-full items-center justify-between rounded-xl border border-line bg-white px-4 text-left text-[14px] font-medium transition hover:border-primary"
                                 aria-haspopup="listbox"
                                 aria-expanded={sortOpen}
                             >
