@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { CaretRight } from '@phosphor-icons/react/dist/ssr'
+import { CaretDown, CaretRight } from '@phosphor-icons/react/dist/ssr'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { shopPath } from '@/lib/storePaths'
 import StoreProductCard from '@/components/Shop/StoreProductCard'
@@ -15,6 +15,13 @@ interface Props {
 }
 
 const PAGE_SIZE = 24
+
+const sortOptions = [
+    { value: 'featured', label: 'Featured' },
+    { value: 'newest', label: 'Newest' },
+    { value: 'price-low', label: 'Price: Low to High' },
+    { value: 'price-high', label: 'Price: High to Low' },
+]
 
 function toggleValue(list: string[], value: string) {
     return list.includes(value) ? list.filter(item => item !== value) : [...list, value]
@@ -28,6 +35,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
     const [page, setPage] = useState(1)
     const [query, setQuery] = useState('')
     const [sort, setSort] = useState('featured')
+    const [sortOpen, setSortOpen] = useState(false)
 
     useEffect(() => {
         setCategory(initialCategory || 'All')
@@ -83,126 +91,172 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
 
     const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
     const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+    const activeSortLabel = sortOptions.find(option => option.value === sort)?.label || 'Featured'
 
     return (
-        <section className="container py-10 md:py-16">
-            <div className="mb-8">
+        <section className="container py-8 md:py-12">
+            <div className="mb-6 md:mb-8">
                 <p className="caption1 text-secondary">Home / Shop{category !== 'All' ? ` / ${category}` : ''}</p>
-                <h1 className="heading3 mt-2">{title}</h1>
-                <p className="text-secondary mt-2">{filtered.length} items available</p>
+                <div className="mt-2 flex flex-wrap items-end justify-between gap-3">
+                    <div>
+                        <h1 className="heading3">{title}</h1>
+                        <p className="caption1 mt-1 text-secondary">{filtered.length} items available</p>
+                    </div>
+                </div>
             </div>
 
-            <div className="grid lg:grid-cols-[280px_1fr] gap-8 lg:gap-12">
-                <aside className="lg:sticky lg:top-28 h-fit">
-                    <div className="rounded-xl border border-line bg-white">
+            <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-8">
+                <aside className="h-fit lg:sticky lg:top-28">
+                    <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
                         <Link
                             href="/shop"
                             onClick={() => { setCategory('All'); setCheckedCategories([]); setPage(1) }}
-                            className={`flex items-center h-14 px-5 text-[22px] font-semibold ${category === 'All' && !checkedCategories.length ? 'border-l-4 border-l-[#2563eb]' : 'border-l-4 border-l-transparent'}`}
+                            className={`flex min-h-12 items-center px-4 text-[18px] font-semibold transition ${category === 'All' && !checkedCategories.length ? 'border-l-4 border-l-primary bg-primary/5' : 'border-l-4 border-l-transparent hover:bg-surface'}`}
                         >
                             Home
                         </Link>
-                        <nav className="border-t border-line py-2">
+                        <nav className="divide-y divide-line border-t border-line">
                             {categoryCards.map(item => (
                                 <Link
                                     key={item.name}
                                     href={shopPath(item.name)}
                                     onClick={() => { setCategory(item.name); setCheckedCategories([item.name]); setPage(1) }}
-                                    className="flex items-center justify-between px-5 py-3.5 text-[15px] text-[#6b7280] hover:text-black"
+                                    className="flex min-h-11 items-center justify-between gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black"
                                 >
-                                    {item.name}
-                                    <CaretRight size={14} className="text-[#9ca3af]" />
+                                    <span className="leading-5">{item.name}</span>
+                                    <CaretRight size={14} className="shrink-0 text-secondary2" />
                                 </Link>
                             ))}
                         </nav>
                     </div>
 
-                    <div className="mt-8">
-                        <h2 className="text-[22px] font-semibold">Categories</h2>
-                        <div className="mt-4 space-y-3">
+                    <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
+                        <div className="border-b border-line px-4 py-3">
+                            <h2 className="text-[18px] font-semibold">Categories</h2>
+                        </div>
+                        <div className="divide-y divide-line">
                             {categoryCards.map(item => (
-                                <label key={item.name} className="flex items-center gap-3 text-[15px] text-[#6b7280] cursor-pointer">
+                                <label key={item.name} className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
                                     <input
                                         type="checkbox"
-                                        className="h-4 w-4 accent-black"
+                                        className="h-4 w-4 shrink-0 accent-black"
                                         checked={checkedCategories.includes(item.name)}
                                         onChange={() => { setCheckedCategories(toggleValue(checkedCategories, item.name)); setPage(1) }}
                                     />
-                                    {item.name} ({item.count})
+                                    <span className="flex-1 leading-5">{item.name}</span>
+                                    <span className="text-xs text-secondary2">({item.count})</span>
                                 </label>
                             ))}
                         </div>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-line">
-                        <h2 className="text-[22px] font-semibold">Availability</h2>
-                        <div className="mt-4 space-y-3">
-                            <label className="flex items-center gap-3 text-[15px] text-[#6b7280] cursor-pointer">
-                                <input type="checkbox" className="h-4 w-4 accent-black" checked={availability.includes('in')} onChange={() => { setAvailability(toggleValue(availability, 'in')); setPage(1) }} />
-                                In stock ({stockCounts.in})
+                    <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
+                        <div className="border-b border-line px-4 py-3">
+                            <h2 className="text-[18px] font-semibold">Availability</h2>
+                        </div>
+                        <div className="divide-y divide-line">
+                            <label className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
+                                <input type="checkbox" className="h-4 w-4 shrink-0 accent-black" checked={availability.includes('in')} onChange={() => { setAvailability(toggleValue(availability, 'in')); setPage(1) }} />
+                                <span className="flex-1">In stock</span>
+                                <span className="text-xs text-secondary2">({stockCounts.in})</span>
                             </label>
-                            <label className="flex items-center gap-3 text-[15px] text-[#6b7280] cursor-pointer">
-                                <input type="checkbox" className="h-4 w-4 accent-black" checked={availability.includes('out')} onChange={() => { setAvailability(toggleValue(availability, 'out')); setPage(1) }} />
-                                Out of stock ({stockCounts.out})
+                            <label className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
+                                <input type="checkbox" className="h-4 w-4 shrink-0 accent-black" checked={availability.includes('out')} onChange={() => { setAvailability(toggleValue(availability, 'out')); setPage(1) }} />
+                                <span className="flex-1">Out of stock</span>
+                                <span className="text-xs text-secondary2">({stockCounts.out})</span>
                             </label>
                         </div>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-line">
-                        <h2 className="text-[22px] font-semibold">Brand</h2>
-                        <div className="mt-4 space-y-3">
+                    <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_8px_30px_rgba(31,31,31,0.03)]">
+                        <div className="border-b border-line px-4 py-3">
+                            <h2 className="text-[18px] font-semibold">Brand</h2>
+                        </div>
+                        <div className="max-h-[300px] divide-y divide-line overflow-y-auto">
                             {brandCards.map(item => (
-                                <label key={item.name} className="flex items-center gap-3 text-[15px] text-[#6b7280] cursor-pointer">
-                                    <input type="checkbox" className="h-4 w-4 accent-black" checked={brands.includes(item.name)} onChange={() => { setBrands(toggleValue(brands, item.name)); setPage(1) }} />
-                                    {item.name} ({item.count})
+                                <label key={item.name} className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2.5 text-[14px] text-secondary transition hover:bg-surface hover:text-black">
+                                    <input type="checkbox" className="h-4 w-4 shrink-0 accent-black" checked={brands.includes(item.name)} onChange={() => { setBrands(toggleValue(brands, item.name)); setPage(1) }} />
+                                    <span className="flex-1 leading-5">{item.name}</span>
+                                    <span className="text-xs text-secondary2">({item.count})</span>
                                 </label>
                             ))}
                         </div>
                     </div>
                 </aside>
 
-                <div>
-                    <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                        <input value={query} onChange={event => { setQuery(event.target.value); setPage(1) }} placeholder="Search products..." className="h-12 flex-1 rounded-full border border-line bg-white px-5 outline-none focus:border-black" />
-                        <select value={sort} onChange={event => { setSort(event.target.value); setPage(1) }} className="h-12 rounded-full border border-line bg-white px-5 outline-none">
-                            <option value="featured">Featured</option>
-                            <option value="newest">Newest</option>
-                            <option value="price-low">Price: Low to High</option>
-                            <option value="price-high">Price: High to Low</option>
-                        </select>
+                <div className="min-w-0">
+                    <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-line bg-surface/60 p-3 sm:flex-row sm:items-center">
+                        <div className="relative flex-1">
+                            <input
+                                value={query}
+                                onChange={event => { setQuery(event.target.value); setPage(1) }}
+                                placeholder="Search products..."
+                                className="h-11 w-full rounded-xl border border-line bg-white px-4 text-[14px] outline-none transition focus:border-black"
+                            />
+                        </div>
+
+                        <div className="relative sm:w-[210px]">
+                            <button
+                                type="button"
+                                onClick={() => setSortOpen(value => !value)}
+                                className="flex h-11 w-full items-center justify-between rounded-xl border border-line bg-white px-4 text-left text-[14px] font-medium transition hover:border-secondary2"
+                                aria-haspopup="listbox"
+                                aria-expanded={sortOpen}
+                            >
+                                <span>{activeSortLabel}</span>
+                                <CaretDown size={15} className={`transition ${sortOpen ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            {sortOpen && (
+                                <div className="absolute right-0 z-30 mt-2 w-full overflow-hidden rounded-xl border border-line bg-white py-1 shadow-[0_14px_40px_rgba(31,31,31,0.12)]" role="listbox">
+                                    {sortOptions.map(option => (
+                                        <button
+                                            key={option.value}
+                                            type="button"
+                                            onClick={() => { setSort(option.value); setPage(1); setSortOpen(false) }}
+                                            className={`block w-full px-4 py-2.5 text-left text-[14px] transition hover:bg-surface ${sort === option.value ? 'bg-primary/10 font-semibold text-primary' : 'text-black'}`}
+                                            role="option"
+                                            aria-selected={sort === option.value}
+                                        >
+                                            {option.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {visible.length ? (
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10">
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:gap-x-5">
                             {visible.map(product => <StoreProductCard key={product.id} product={product} />)}
                         </div>
                     ) : (
-                        <div className="rounded-3xl bg-[#f7f7f8] px-6 py-20 text-center">
+                        <div className="rounded-2xl border border-line bg-surface px-6 py-16 text-center">
                             <h3 className="heading6">No products found</h3>
                             <p className="mt-2 text-secondary">Try another search or category.</p>
                         </div>
                     )}
 
                     {pageCount > 1 && (
-                        <div className="mt-12 flex items-center justify-center gap-3">
-                            <button type="button" disabled={page === 1} onClick={() => setPage(value => value - 1)} className="rounded-full border border-line px-5 py-2.5 disabled:opacity-40">Previous</button>
+                        <div className="mt-10 flex items-center justify-center gap-3">
+                            <button type="button" disabled={page === 1} onClick={() => setPage(value => value - 1)} className="rounded-lg border border-line px-4 py-2 text-sm disabled:opacity-40">Previous</button>
                             <span className="text-sm text-secondary">Page {page} of {pageCount}</span>
-                            <button type="button" disabled={page === pageCount} onClick={() => setPage(value => value + 1)} className="rounded-full border border-line px-5 py-2.5 disabled:opacity-40">Next</button>
+                            <button type="button" disabled={page === pageCount} onClick={() => setPage(value => value + 1)} className="rounded-lg border border-line px-4 py-2 text-sm disabled:opacity-40">Next</button>
                         </div>
                     )}
 
-                    <div className="grid md:grid-cols-3 gap-5 mt-16">
+                    <div className="mt-12 grid gap-5 md:grid-cols-3">
                         {[
                             { title: 'Frequently Asked Questions', copy: 'Updates on safe shopping in our store.', image: '/images/blog/gold-prices.jpg', href: '/pages/faqs' },
                             { title: 'Online Payment Process', copy: 'Pay securely at checkout.', image: '/images/blog/mobile-prices.jpg', href: '/pages/faqs' },
                             { title: 'Home Delivery Options', copy: 'We ship across Pakistan.', image: '/images/blog/china-shipping.jpg', href: '/pages/faqs' },
                         ].map(card => (
-                            <Link key={card.title} href={card.href} className="rounded-3xl bg-[#f7f7f8] overflow-hidden hover:shadow-md duration-200">
-                                <div className="p-6">
+                            <Link key={card.title} href={card.href} className="overflow-hidden rounded-2xl border border-line bg-[#f7f7f8] transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+                                <div className="p-5">
                                     <h3 className="heading6">{card.title}</h3>
-                                    <p className="caption1 text-secondary mt-2">{card.copy}</p>
+                                    <p className="caption1 mt-2 text-secondary">{card.copy}</p>
                                 </div>
-                                <div className="relative h-40">
+                                <div className="relative h-36">
                                     <Image src={card.image} alt="" fill className="object-cover" />
                                 </div>
                             </Link>
