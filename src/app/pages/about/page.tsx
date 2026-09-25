@@ -6,7 +6,6 @@ import MenuOne from '@/components/Header/Menu/MenuOne'
 import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
 import Benefit from '@/components/Home1/Benefit'
 import Newsletter from '@/components/Home4/Newsletter'
-import Instagram from '@/components/Home6/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 
@@ -61,7 +60,6 @@ const AboutUs = () => {
             </div>
             <Benefit props="md:pt-20 pt-10" />
             <Newsletter props="bg-green md:mt-20 mt-10" />
-            <Instagram />
             <Brand />
             <Footer />
         </>

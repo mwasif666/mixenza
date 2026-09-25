@@ -11,7 +11,6 @@ import Banner from '@/components/Home7/Banner'
 import testimonialData from '@/data/Testimonial.json'
 import Testimonial from '@/components/Home7/Testimonial'
 import Benefit from '@/components/Home1/Benefit'
-import Instagram from '@/components/Home6/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -31,7 +30,6 @@ export default function HomeSeven() {
             <Banner />
             <Testimonial data={testimonialData} limit={5} />
             <Benefit props="md:pt-20 pt-10" />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />

@@ -13,7 +13,6 @@ import FlashSale from '@/components/Cosmetic2/FlashSale'
 import Benefit from '@/components/Cosmetic1/Benefit'
 import blogData from '@/data/Blog.json'
 import NewsInsight from '@/components/Cosmetic2/NewsInsight'
-import Instagram from '@/components/Cosmetic1/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -35,7 +34,6 @@ export default function HomeCosmeticTwo() {
             <FlashSale />
             <Benefit props="md:py-20 py-10" />
             <NewsInsight data={blogData} start={6} limit={9} />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />

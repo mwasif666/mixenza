@@ -13,7 +13,6 @@ import NewArrival from '@/components/Cosmetic1/NewArrival'
 import Benefit from '@/components/Cosmetic1/Benefit'
 import Newsletter from '@/components/Home4/Newsletter'
 import Testimonial from '@/components/Cosmetic1/Testimonial'
-import Instagram from '@/components/Cosmetic1/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -36,7 +35,6 @@ export default function HomeCosmeticOne() {
             <Benefit props="md:py-20 py-10" />
             <Testimonial />
             <Newsletter props="bg-transparent" />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />

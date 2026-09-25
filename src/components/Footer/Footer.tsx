@@ -6,7 +6,33 @@ import NewsletterForm from '@/components/Newsletter/NewsletterForm'
 import { BRAND } from '@/constants/brand'
 
 const Footer = () => {
-    const paymentMethods = ['Visa', 'Mastercard', 'UnionPay', 'Easypaisa', 'JazzCash']
+    const paymentMethods = [
+        {
+            name: 'Visa',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg',
+            className: 'h-6 sm:h-7',
+        },
+        {
+            name: 'Mastercard',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg',
+            className: 'h-9 sm:h-10',
+        },
+        {
+            name: 'UnionPay',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/UnionPay_logo.svg',
+            className: 'h-9 sm:h-10',
+        },
+        {
+            name: 'Easypaisa',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Easypaisa_Digital_Bank_logo.png',
+            className: 'h-7 sm:h-8',
+        },
+        {
+            name: 'JazzCash',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/4/41/JazzCash_logo_%282025%29.png',
+            className: 'h-10 sm:h-11',
+        },
+    ]
 
     return (
         <footer id="footer" className="footer bg-surface">
@@ -64,11 +90,6 @@ const Footer = () => {
                         <div className="text-button-uppercase">Newsletter</div>
                         <p className="caption1 mt-3 leading-6 text-secondary">Get new arrivals, useful buying guides and subscriber-only offers.</p>
                         <div className="mt-4"><NewsletterForm source="footer" /></div>
-                        <div className="mt-6 flex items-center gap-5" aria-label="Social media links">
-                            <Link href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><div className="icon-facebook text-2xl text-black" /></Link>
-                            <Link href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><div className="icon-instagram text-2xl text-black" /></Link>
-                            <Link href="https://www.youtube.com/" target="_blank" aria-label="YouTube"><div className="icon-youtube text-2xl text-black" /></Link>
-                        </div>
                     </div>
                 </div>
 
@@ -82,10 +103,21 @@ const Footer = () => {
                             <Link href="/pages/terms-conditions" className="text-xs text-secondary hover:text-black">Terms</Link>
                         </div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-2" aria-label="Accepted payment methods">
+                    <div className="flex flex-wrap items-center gap-3" aria-label="Accepted payment methods">
                         <span className="caption1 mr-1 text-secondary">Accepted payments:</span>
                         {paymentMethods.map(method => (
-                            <span key={method} className="rounded-lg border border-line bg-white px-2.5 py-1.5 text-[11px] font-semibold shadow-sm">{method}</span>
+                            <div
+                                key={method.name}
+                                className="flex h-[58px] min-w-[82px] items-center justify-center rounded-xl border border-line bg-white px-4 py-2 shadow-sm sm:min-w-[96px]"
+                                title={method.name}
+                            >
+                                <img
+                                    src={method.src}
+                                    alt={method.name + ' accepted'}
+                                    loading="lazy"
+                                    className={method.className + ' max-w-[92px] object-contain'}
+                                />
+                            </div>
                         ))}
                     </div>
                 </div>

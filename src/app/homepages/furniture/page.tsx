@@ -12,7 +12,6 @@ import TabFeatures from '@/components/Furniture/TabFeatures'
 import Benefit from '@/components/Home1/Benefit'
 import dataTestimonial from '@/data/Testimonial.json'
 import Testimonial from '@/components/Furniture/Testimonial'
-import Instagram from '@/components/Furniture/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -33,7 +32,6 @@ export default function HomeFurniture() {
             <TabFeatures data={productData} start={0} limit={8} />
             <Benefit props="md:pt-20 pt-10" />
             <Testimonial data={dataTestimonial} limit={4} />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />

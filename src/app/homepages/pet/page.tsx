@@ -10,7 +10,6 @@ import ChooseUs from '@/components/Pet/ChooseUs'
 import Banner2 from '@/components/Pet/Banner2'
 import FeatureProduct from '@/components/Pet/FeatureProduct'
 import Benefit from '@/components/Home1/Benefit'
-import Instagram from '@/components/Pet/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -30,7 +29,6 @@ export default function HomePet() {
             <Banner2 />
             <FeatureProduct data={productData} start={0} limit={4} />
             <Benefit props="md:mt-20 mt-10 md:pt-20 pt-10 border-t border-line" />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />
