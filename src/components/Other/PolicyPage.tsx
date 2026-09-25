@@ -61,8 +61,8 @@ const PolicyPage = ({ title, intro, sections, updated = '25 September 2026' }: P
                                     Contact Mixenza before placing an order if you need clarification about a product, delivery, return or these terms.
                                 </p>
                                 <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6">
-                                    <a className="caption1 font-medium hover:text-primary" href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
-                                    <a className="caption1 font-medium hover:text-primary" href={`tel:${BRAND.phoneHref}`}>{BRAND.phone}</a>
+                                    <Link className="caption1 font-medium hover:text-primary" href={`mailto:${BRAND.email}`}>{BRAND.email}</Link>
+                                    <Link className="caption1 font-medium hover:text-primary" href={`tel:${BRAND.phoneHref}`}>{BRAND.phone}</Link>
                                     <span className="caption1 text-secondary">{BRAND.address}</span>
                                 </div>
                                 <Link href="/pages/contact" className="mt-4 inline-block text-button font-medium text-primary hover:underline">Contact us</Link>
