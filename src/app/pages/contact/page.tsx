@@ -1,6 +1,7 @@
 'use client'
 
 import React, { FormEvent, useState } from 'react'
+import Link from 'next/link'
 import * as Icon from '@phosphor-icons/react/dist/ssr'
 import TopNavOne from '@/components/Header/TopNav/TopNavOne'
 import MenuOne from '@/components/Header/Menu/MenuOne'
@@ -105,14 +106,14 @@ const ContactUs = () => {
                             <h2 className="heading4">Contact details</h2>
                             <p className="caption1 mt-3 leading-6 text-white/70">For product questions, order updates and after-sales support.</p>
                             <div className="mt-7 space-y-5">
-                                <a href={`mailto:${BRAND.email}`} className="group flex items-center gap-4">
+                                <Link href={`mailto:${BRAND.email}`} className="group flex items-center gap-4">
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary"><Icon.EnvelopeSimple size={21} /></span>
                                     <span><small className="block text-white/60">Email</small><strong className="font-medium group-hover:text-primary">{BRAND.email}</strong></span>
-                                </a>
-                                <a href={`tel:${BRAND.phoneHref}`} className="group flex items-center gap-4">
+                                </Link>
+                                <Link href={`tel:${BRAND.phoneHref}`} className="group flex items-center gap-4">
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary"><Icon.Phone size={21} /></span>
                                     <span><small className="block text-white/60">Phone / WhatsApp</small><strong className="font-medium group-hover:text-primary">{BRAND.phone}</strong></span>
-                                </a>
+                                </Link>
                                 <div className="flex items-center gap-4">
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary"><Icon.MapPin size={21} /></span>
                                     <span><small className="block text-white/60">Office / service area</small><strong className="font-medium">{BRAND.address}</strong></span>
