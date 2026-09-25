@@ -92,7 +92,7 @@ export const BRAND = {
     email: 'mixenza@gmail.com',
     phone: '+92 301 3769247',
     phoneHref: '+923013769247',
-    address: 'Pakistan · Nationwide delivery',
+    address: 'B-13, 1st Floor, Umer Colony #1, Shahrah-e-Faisal, near Parsa Tower, Karachi, Pakistan',
     colors: BRAND_COLORS,
     rgb: BRAND_RGB,
     logos: BRAND_LOGOS,
