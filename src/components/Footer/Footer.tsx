@@ -22,7 +22,7 @@ const Footer = () => {
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.EnvelopeSimple size={18} /></span>
                                 <span className="caption1 group-hover:text-primary">{BRAND.email}</span>
                             </a>
-                            <a href="tel:+923013769247" className="group flex w-fit items-center gap-3">
+                            <a href={`tel:${BRAND.phoneHref}`} className="group flex w-fit items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.Phone size={18} /></span>
                                 <span className="caption1 group-hover:text-primary">{BRAND.phone}</span>
                             </a>
@@ -53,9 +53,10 @@ const Footer = () => {
                         <div className="flex flex-col">
                             <div className="text-button-uppercase pb-4">Customer Care</div>
                             <Link className="caption1 has-line-before w-fit duration-300" href="/pages/faqs">Order FAQs</Link>
-                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/faqs">Shipping</Link>
-                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/faqs">Privacy Policy</Link>
-                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/order-tracking">Returns & Refunds</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/shipping-policy">Shipping Policy</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/privacy-policy">Privacy Policy</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/returns-refunds">Returns & Refunds</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/terms-conditions">Terms & Conditions</Link>
                         </div>
                     </nav>
 
@@ -72,7 +73,15 @@ const Footer = () => {
                 </div>
 
                 <div className="flex flex-col gap-4 border-t border-line py-5 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="caption1 text-secondary">©{new Date().getFullYear()} {BRAND.name}. All rights reserved.</div>
+                    <div>
+                        <div className="caption1 text-secondary">©{new Date().getFullYear()} {BRAND.name}. All rights reserved.</div>
+                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                            <Link href="/pages/privacy-policy" className="text-xs text-secondary hover:text-black">Privacy</Link>
+                            <Link href="/pages/returns-refunds" className="text-xs text-secondary hover:text-black">Returns & Refunds</Link>
+                            <Link href="/pages/shipping-policy" className="text-xs text-secondary hover:text-black">Shipping</Link>
+                            <Link href="/pages/terms-conditions" className="text-xs text-secondary hover:text-black">Terms</Link>
+                        </div>
+                    </div>
                     <div className="flex flex-wrap items-center gap-2" aria-label="Accepted payment methods">
                         <span className="caption1 mr-1 text-secondary">Accepted payments:</span>
                         {paymentMethods.map(method => (

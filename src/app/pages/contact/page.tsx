@@ -109,13 +109,13 @@ const ContactUs = () => {
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary"><Icon.EnvelopeSimple size={21} /></span>
                                     <span><small className="block text-white/60">Email</small><strong className="font-medium group-hover:text-primary">{BRAND.email}</strong></span>
                                 </a>
-                                <a href="tel:+923013769247" className="group flex items-center gap-4">
+                                <a href={`tel:${BRAND.phoneHref}`} className="group flex items-center gap-4">
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary"><Icon.Phone size={21} /></span>
                                     <span><small className="block text-white/60">Phone / WhatsApp</small><strong className="font-medium group-hover:text-primary">{BRAND.phone}</strong></span>
                                 </a>
                                 <div className="flex items-center gap-4">
                                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-primary"><Icon.MapPin size={21} /></span>
-                                    <span><small className="block text-white/60">Service area</small><strong className="font-medium">Pakistan · Nationwide delivery</strong></span>
+                                    <span><small className="block text-white/60">Office / service area</small><strong className="font-medium">{BRAND.address}</strong></span>
                                 </div>
                             </div>
                             <div className="mt-8 border-t border-white/15 pt-6">

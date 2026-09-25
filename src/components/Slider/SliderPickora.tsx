@@ -9,10 +9,13 @@ const SliderPickora = () => (
                     <span className="text-button-uppercase text-[#395997]">Pickora everyday essential</span>
                     <h1 className="heading2 mt-3">Sip in style,<br />all day long.</h1>
                     <p className="body1 text-secondary mt-4 max-w-[420px]">40oz insulated stainless steel tumbler with handle, secure lid and reusable steel straw.</p>
-                    <div className="flex items-center gap-3 mt-7 flex-wrap">
-                        <span className="button-main">Shop Tumbler</span>
-                        <span className="heading6">Rs. 2,699</span>
-                        <span className="text-sm text-secondary line-through">Rs. 2,999</span>
+                    <div className="mt-7">
+                        <div className="flex items-baseline gap-3 flex-wrap">
+                            <span className="heading6">Rs. 2,699</span>
+                            <span className="text-sm text-secondary line-through">Rs. 2,999</span>
+                            <span className="rounded-full bg-white/70 px-2.5 py-1 text-xs font-semibold text-[#395997]">Save 10%</span>
+                        </div>
+                        <span className="button-main mt-3 inline-block">Shop Tumbler</span>
                     </div>
                 </div>
                 <div className="relative m-4 aspect-square overflow-hidden rounded-[22px] bg-white/40 md:my-6 md:ml-0 md:mr-6 md:aspect-auto md:min-h-[472px]">
