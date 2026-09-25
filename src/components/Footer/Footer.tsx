@@ -10,27 +10,27 @@ const Footer = () => {
         {
             name: 'Visa',
             src: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg',
-            className: 'h-6 sm:h-7',
+            className: 'h-4 sm:h-5',
         },
         {
             name: 'Mastercard',
             src: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg',
-            className: 'h-9 sm:h-10',
+            className: 'h-6 sm:h-7',
         },
         {
             name: 'UnionPay',
             src: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/UnionPay_logo.svg',
-            className: 'h-9 sm:h-10',
+            className: 'h-6 sm:h-7',
         },
         {
             name: 'Easypaisa',
             src: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Easypaisa_Digital_Bank_logo.png',
-            className: 'h-7 sm:h-8',
+            className: 'h-5 sm:h-6',
         },
         {
             name: 'JazzCash',
             src: 'https://upload.wikimedia.org/wikipedia/commons/4/41/JazzCash_logo_%282025%29.png',
-            className: 'h-10 sm:h-11',
+            className: 'h-7 sm:h-8',
         },
     ]
 
@@ -108,14 +108,14 @@ const Footer = () => {
                         {paymentMethods.map(method => (
                             <div
                                 key={method.name}
-                                className="flex h-[58px] min-w-[82px] items-center justify-center rounded-xl border border-line bg-white px-4 py-2 shadow-sm sm:min-w-[96px]"
+                                className="flex h-[46px] min-w-[68px] items-center justify-center rounded-lg border border-line bg-white px-3 py-1.5 shadow-sm sm:min-w-[78px]"
                                 title={method.name}
                             >
                                 <img
                                     src={method.src}
                                     alt={method.name + ' accepted'}
                                     loading="lazy"
-                                    className={method.className + ' max-w-[92px] object-contain'}
+                                    className={method.className + ' max-w-[72px] object-contain'}
                                 />
                             </div>
                         ))}
