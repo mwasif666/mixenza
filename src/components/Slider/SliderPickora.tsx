@@ -15,7 +15,7 @@ const SliderPickora = () => (
                             <span className="text-sm text-secondary line-through">Rs. 2,999</span>
                             <span className="rounded-full bg-white/70 px-2.5 py-1 text-xs font-semibold text-[#395997]">Save 10%</span>
                         </div>
-                        <span className="button-main mt-3 inline-block">Shop Tumbler</span>
+                        <span className="inline-flex w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold uppercase text-white transition hover:bg-primary-dark mt-3">Shop Tumbler</span>
                     </div>
                 </div>
                 <div className="relative m-4 aspect-square overflow-hidden rounded-[22px] bg-white/40 md:my-6 md:ml-0 md:mr-6 md:aspect-auto md:min-h-[472px]">
@@ -33,7 +33,7 @@ const SliderPickora = () => (
                         <h2 className="heading6 mt-1">UV Money Detector Pen</h2>
                         <div className="mt-3 flex flex-col items-start">
                             <span className="caption1 font-semibold">Rs. 270</span>
-                            <span className="button-main mt-3 inline-flex min-w-[118px] items-center justify-center">Shop now</span>
+                            <span className="inline-flex w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold uppercase text-white transition hover:bg-primary-dark mt-3">Shop now</span>
                         </div>
                     </div>
                 </Link>
