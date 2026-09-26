@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { loadCatalog } from '@/lib/catalogClient'
+import { loadCatalog, subscribeCatalogUpdates } from '@/lib/catalogClient'
 import type { SourceProduct } from '@/lib/theOnlineStore'
 
 export function useCatalogProducts(enabled = true) {
@@ -9,10 +9,17 @@ export function useCatalogProducts(enabled = true) {
     useEffect(() => {
         if (!enabled) return
         let cancelled = false
-        loadCatalog().then(catalog => {
-            if (!cancelled) setProducts(catalog.products)
-        }).catch(() => { if (!cancelled) setProducts([]) })
-        return () => { cancelled = true }
+        const refresh = () => {
+            loadCatalog().then(catalog => {
+                if (!cancelled) setProducts(catalog.products)
+            }).catch(() => { if (!cancelled) setProducts([]) })
+        }
+        refresh()
+        const unsubscribe = subscribeCatalogUpdates(refresh)
+        return () => {
+            cancelled = true
+            unsubscribe()
+        }
     }, [enabled])
     return products
 }

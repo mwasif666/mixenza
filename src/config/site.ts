@@ -22,6 +22,15 @@ export const getSiteUrl = () =>
 export const getApiUrl = () =>
     normalizeUrl(process.env.NEXT_PUBLIC_API_URL, DEFAULT_API_URL)
 
+/** Socket.IO runs at the backend origin (without the /api path). */
+export const getSocketUrl = () => {
+    try {
+        return new URL(getApiUrl()).origin
+    } catch {
+        return getApiUrl().replace(/\/api\/?$/, '')
+    }
+}
+
 /** Build a full API URL: apiPath('/contact') -> https://backend.mixenza.com/api/contact */
 export const apiPath = (endpoint: string) =>
     `${getApiUrl()}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`

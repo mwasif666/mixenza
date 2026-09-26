@@ -11,7 +11,7 @@ import { useModalCartContext } from '@/context/ModalCartContext'
 import { useModalWishlistContext } from '@/context/ModalWishlistContext'
 import { useModalSearchContext } from '@/context/ModalSearchContext'
 import { useCart } from '@/context/CartContext'
-import { loadCatalog } from '@/lib/catalogClient'
+import { loadCatalog, subscribeCatalogUpdates } from '@/lib/catalogClient'
 import { productPath, shopPath } from '@/lib/storePaths'
 
 type Product = {
@@ -194,13 +194,23 @@ export default function DynamicMarketplaceHeader() {
 
     useEffect(() => {
         let cancelled = false
-        loadCatalog()
-            .then(data => {
-                if (!cancelled) setProducts(Array.isArray(data?.products) ? data.products : [])
-            })
-            .catch(() => { if (!cancelled) setCatalogError(true) })
-            .finally(() => { if (!cancelled) setCatalogLoading(false) })
-        return () => { cancelled = true }
+        const refresh = () => {
+            loadCatalog()
+                .then(data => {
+                    if (!cancelled) {
+                        setProducts(Array.isArray(data?.products) ? data.products : [])
+                        setCatalogError(false)
+                    }
+                })
+                .catch(() => { if (!cancelled) setCatalogError(true) })
+                .finally(() => { if (!cancelled) setCatalogLoading(false) })
+        }
+        refresh()
+        const unsubscribe = subscribeCatalogUpdates(refresh)
+        return () => {
+            cancelled = true
+            unsubscribe()
+        }
     }, [])
 
     useEffect(() => {

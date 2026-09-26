@@ -9,7 +9,7 @@ import { formatMoney } from '@/utils/currency'
 import { productPath } from '@/lib/storePaths'
 
 export default function Cart() {
-    const { cartState, updateCart, removeFromCart } = useCart()
+    const { cartState, isLoading, syncError, updateCart, removeFromCart } = useCart()
     const subtotal = cartState.cartArray.reduce((sum, item) => sum + item.price * item.quantity, 0)
     const shipping = subtotal >= 5000 || subtotal === 0 ? 0 : 250
     const total = subtotal + shipping
@@ -21,7 +21,9 @@ export default function Cart() {
                 <h1 className="heading3 mt-2">Review items</h1>
                 <div className="grid lg:grid-cols-[1fr_360px] gap-8 mt-8">
                     <div className="rounded-3xl border border-line p-5 md:p-7">
-                        {cartState.cartArray.length === 0 ? (
+                        {isLoading && cartState.cartArray.length === 0 ? (
+                            <div className="h-48 animate-pulse rounded-2xl bg-surface" aria-label="Loading cart" />
+                        ) : cartState.cartArray.length === 0 ? (
                             <p className="py-10 text-center text-secondary">Your cart is empty. <Link href="/shop" className="underline">Continue shopping</Link></p>
                         ) : cartState.cartArray.map(product => (
                             <div key={product.id} className="flex items-center gap-4 py-5 border-b border-line last:border-0">
@@ -43,13 +45,16 @@ export default function Cart() {
                                 <strong className="shrink-0">{formatMoney(product.price * product.quantity)}</strong>
                             </div>
                         ))}
+                        {syncError && <p className="mt-3 text-sm text-secondary" role="status">{syncError}</p>}
                     </div>
                     <aside className="h-fit rounded-3xl bg-[#f7f7f8] p-6">
                         <h2 className="heading6">Order summary</h2>
                         <div className="flex justify-between mt-5 text-sm"><span>Subtotal</span><span>{formatMoney(subtotal)}</span></div>
                         <div className="flex justify-between mt-3 text-sm"><span>Shipping</span><span>{shipping === 0 ? 'Free' : formatMoney(shipping)}</span></div>
                         <div className="flex justify-between mt-5 heading6"><span>Total</span><span>{formatMoney(total)}</span></div>
-                        <Link href={`/checkout?ship=${shipping}`} className="button-main w-full text-center mt-6 block">Checkout</Link>
+                        {cartState.cartArray.length > 0 && (
+                            <Link href="/checkout" className="button-main w-full text-center mt-6 block !bg-primary !text-white hover:!bg-primary-dark">Checkout</Link>
+                        )}
                         <Link href="/shop" className="block text-center mt-4 text-sm underline">Continue shopping</Link>
                     </aside>
                 </div>

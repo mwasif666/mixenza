@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import StoreProductCard from "@/components/Shop/StoreProductCard";
 import { SourceProduct } from "@/lib/theOnlineStore";
-import { loadCatalog } from "@/lib/catalogClient";
+import { loadCatalog, subscribeCatalogUpdates } from "@/lib/catalogClient";
 
 export default function LiveCatalog() {
   const [products, setProducts] = useState<SourceProduct[]>([]);
@@ -28,8 +28,10 @@ export default function LiveCatalog() {
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
+    const unsubscribe = subscribeCatalogUpdates(() => setAttempt((value) => value + 1));
     return () => {
       cancelled = true;
+      unsubscribe();
     };
   }, [attempt]);
 
