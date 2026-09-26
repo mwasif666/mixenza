@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { shopPath } from '@/lib/storePaths'
 import { formatMoney } from '@/utils/currency'
-import { StarRow } from '@/components/Shop/StoreProductCard'
 import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
 
@@ -55,7 +54,6 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                 <div>
                     <h1 className="heading3">{product.name}</h1>
                     <p className="text-secondary mt-3">{product.description?.slice(0, 140) || 'A Mixenza everyday essential, priced in PKR.'}</p>
-                    <StarRow rate={product.rate} count={product.sold || 121} />
                     <div className="flex items-end gap-3 mt-6">
                         <span className="heading4">{formatMoney(product.price)}</span>
                         {product.originPrice > product.price && <del className="text-secondary">{formatMoney(product.originPrice)}</del>}

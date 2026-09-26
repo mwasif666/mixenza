@@ -6,7 +6,33 @@ import NewsletterForm from '@/components/Newsletter/NewsletterForm'
 import { BRAND } from '@/constants/brand'
 
 const Footer = () => {
-    const paymentMethods = ['Visa', 'Mastercard', 'UnionPay', 'Easypaisa', 'JazzCash']
+    const paymentMethods = [
+        {
+            name: 'Visa',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg',
+            className: 'h-4 sm:h-5',
+        },
+        {
+            name: 'Mastercard',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg',
+            className: 'h-6 sm:h-7',
+        },
+        {
+            name: 'UnionPay',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/UnionPay_logo.svg',
+            className: 'h-6 sm:h-7',
+        },
+        {
+            name: 'Easypaisa',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Easypaisa_Digital_Bank_logo.png',
+            className: 'h-5 sm:h-6',
+        },
+        {
+            name: 'JazzCash',
+            src: 'https://upload.wikimedia.org/wikipedia/commons/4/41/JazzCash_logo_%282025%29.png',
+            className: 'h-7 sm:h-8',
+        },
+    ]
 
     return (
         <footer id="footer" className="footer bg-surface">
@@ -18,14 +44,14 @@ const Footer = () => {
                             Everyday essentials, useful gadgets and marketplace finds delivered across Pakistan.
                         </p>
                         <div className="mt-6 space-y-3">
-                            <a href={`mailto:${BRAND.email}`} className="group flex w-fit items-center gap-3">
+                            <Link href={`mailto:${BRAND.email}`} className="group flex w-fit items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.EnvelopeSimple size={18} /></span>
                                 <span className="caption1 group-hover:text-primary">{BRAND.email}</span>
-                            </a>
-                            <a href="tel:+923013769247" className="group flex w-fit items-center gap-3">
+                            </Link>
+                            <Link href={`tel:${BRAND.phoneHref}`} className="group flex w-fit items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.Phone size={18} /></span>
                                 <span className="caption1 group-hover:text-primary">{BRAND.phone}</span>
-                            </a>
+                            </Link>
                             <div className="flex items-center gap-3">
                                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-primary shadow-sm"><Icon.MapPin size={18} /></span>
                                 <span className="caption1">{BRAND.address}</span>
@@ -53,9 +79,10 @@ const Footer = () => {
                         <div className="flex flex-col">
                             <div className="text-button-uppercase pb-4">Customer Care</div>
                             <Link className="caption1 has-line-before w-fit duration-300" href="/pages/faqs">Order FAQs</Link>
-                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/faqs">Shipping</Link>
-                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/faqs">Privacy Policy</Link>
-                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/order-tracking">Returns & Refunds</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/shipping-policy">Shipping Policy</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/privacy-policy">Privacy Policy</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/returns-refunds">Returns & Refunds</Link>
+                            <Link className="caption1 has-line-before w-fit pt-2.5 duration-300" href="/pages/terms-conditions">Terms & Conditions</Link>
                         </div>
                     </nav>
 
@@ -63,20 +90,34 @@ const Footer = () => {
                         <div className="text-button-uppercase">Newsletter</div>
                         <p className="caption1 mt-3 leading-6 text-secondary">Get new arrivals, useful buying guides and subscriber-only offers.</p>
                         <div className="mt-4"><NewsletterForm source="footer" /></div>
-                        <div className="mt-6 flex items-center gap-5" aria-label="Social media links">
-                            <Link href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><div className="icon-facebook text-2xl text-black" /></Link>
-                            <Link href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><div className="icon-instagram text-2xl text-black" /></Link>
-                            <Link href="https://www.youtube.com/" target="_blank" aria-label="YouTube"><div className="icon-youtube text-2xl text-black" /></Link>
-                        </div>
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-4 border-t border-line py-5 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="caption1 text-secondary">©{new Date().getFullYear()} {BRAND.name}. All rights reserved.</div>
-                    <div className="flex flex-wrap items-center gap-2" aria-label="Accepted payment methods">
+                    <div>
+                        <div className="caption1 text-secondary">©{new Date().getFullYear()} {BRAND.name}. All rights reserved.</div>
+                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                            <Link href="/pages/privacy-policy" className="text-xs text-secondary hover:text-black">Privacy</Link>
+                            <Link href="/pages/returns-refunds" className="text-xs text-secondary hover:text-black">Returns & Refunds</Link>
+                            <Link href="/pages/shipping-policy" className="text-xs text-secondary hover:text-black">Shipping</Link>
+                            <Link href="/pages/terms-conditions" className="text-xs text-secondary hover:text-black">Terms</Link>
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3" aria-label="Accepted payment methods">
                         <span className="caption1 mr-1 text-secondary">Accepted payments:</span>
                         {paymentMethods.map(method => (
-                            <span key={method} className="rounded-lg border border-line bg-white px-2.5 py-1.5 text-[11px] font-semibold shadow-sm">{method}</span>
+                            <div
+                                key={method.name}
+                                className="flex h-[46px] min-w-[68px] items-center justify-center rounded-lg border border-line bg-white px-3 py-1.5 shadow-sm sm:min-w-[78px]"
+                                title={method.name}
+                            >
+                                <img
+                                    src={method.src}
+                                    alt={method.name + ' accepted'}
+                                    loading="lazy"
+                                    className={method.className + ' max-w-[72px] object-contain'}
+                                />
+                            </div>
                         ))}
                     </div>
                 </div>

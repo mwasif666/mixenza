@@ -13,7 +13,6 @@ import { useModalSearchContext } from '@/context/ModalSearchContext'
 import { useCart } from '@/context/CartContext'
 import { loadCatalog } from '@/lib/catalogClient'
 import { productPath, shopPath } from '@/lib/storePaths'
-import { StarRow } from '@/components/Shop/StoreProductCard'
 
 type Product = {
     id: string
@@ -146,22 +145,21 @@ function ShopMegaMenu({
                     )}
                 </div>
 
-                {/* Featured card on right — gradient CTA, no images */}
-                <Link href="/shop" onClick={onClose} className="group relative overflow-hidden rounded-2xl p-7 flex flex-col justify-between" style={{ background: 'linear-gradient(145deg, #0b1c29 0%, #163a52 50%, #1a6b4a 100%)' }}>
-                    {/* Decorative circles */}
+                {/* Featured card on right — Mixenza shop CTA */}
+                <Link href="/shop" onClick={onClose} className="group relative overflow-hidden rounded-2xl p-7 flex flex-col justify-between" style={{ background: 'linear-gradient(145deg, #303136 0%, #1A1B1F 55%, #D64A00 120%)' }}>
                     <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/5" />
-                    <div className="absolute bottom-12 -left-8 h-28 w-28 rounded-full bg-white/5" />
+                    <div className="absolute bottom-12 -left-8 h-28 w-28 rounded-full bg-primary/20" />
                     <div className="absolute top-1/2 right-6 h-16 w-16 rounded-full bg-white/[0.03]" />
 
                     <div className="relative">
-                        <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[11px] uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">Selected Projects</span>
+                        <span className="inline-block px-3 py-1 rounded-full bg-primary text-[11px] uppercase tracking-[0.18em] text-white">Mixenza Shop</span>
                     </div>
 
                     <div className="relative mt-auto pt-8">
-                        <h4 className="text-[22px] font-bold text-white leading-tight">See work that turns ideas into outcomes</h4>
-                        <p className="mt-3 text-sm text-white/60 leading-relaxed">{categories.length} categories &middot; {categories.reduce((sum, c) => sum + c.count, 0)}+ products</p>
+                        <h4 className="text-[22px] font-bold text-white leading-tight">Everyday essentials, priced in PKR</h4>
+                        <p className="mt-3 text-sm text-white/70 leading-relaxed">{categories.length} categories &middot; {categories.reduce((sum, c) => sum + c.count, 0)}+ products across Pakistan</p>
                         <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:gap-3 transition-all">
-                            View all our work <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+                            Shop the collection <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
                         </span>
                     </div>
                 </Link>
@@ -251,21 +249,6 @@ export default function DynamicMarketplaceHeader() {
 
     return (
         <header className="site-global-marketplace-header relative z-[100] w-full bg-white">
-            <div className="md:h-[44px] h-[34px] bg-brand-dark border-b border-surface1">
-                <div className="container mx-auto h-full flex items-center justify-between">
-                    <div className="hidden md:flex items-center gap-5 text-white text-xs">
-                        <span>English</span>
-                        <span>PKR</span>
-                    </div>
-                    <div className="text-center text-button-uppercase text-white flex-1">
-                        New customers save 10% with the code GET10
-                    </div>
-                    <div className="hidden md:flex items-center gap-4 text-white text-xs">
-                        <span>f</span><span>◎</span><span>▶</span><span>𝕏</span><span>p</span>
-                    </div>
-                </div>
-            </div>
-
             <div className="header-menu-main style-marketplace relative bg-brand w-full md:h-[74px] h-[56px]">
                 <div className="container mx-auto h-full">
                     <div className="header-main flex items-center justify-between h-full gap-4">
@@ -298,7 +281,6 @@ export default function DynamicMarketplaceHeader() {
                                             </div>
                                             <div className="min-w-0 flex-1">
                                                 <div className="truncate text-sm font-medium">{product.name}</div>
-                                                <StarRow rate={product.rate} count={product.sold || 121} />
                                             </div>
                                             <strong className="text-sm">Rs. {Number(product.price || 0).toLocaleString('en-PK')}</strong>
                                         </Link>

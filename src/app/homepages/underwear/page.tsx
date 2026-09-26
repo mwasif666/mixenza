@@ -13,7 +13,6 @@ import testimonialData from '@/data/Testimonial.json'
 import Testimonial from '@/components/Underwear/Testimonial'
 import blogData from '@/data/Blog.json'
 import OurBlog from '@/components/Underwear/OurBlog'
-import Instagram from '@/components/Underwear/Instagram'
 import Brand from '@/components/Underwear/Brand'
 import Benefit from '@/components/Underwear/Benefit'
 import Footer from '@/components/Footer/Footer'
@@ -36,7 +35,6 @@ export default function HomeUnderwear() {
             <Testimonial data={testimonialData} limit={6} />
             <OurBlog data={blogData} start={3} limit={6} />
             <Brand />
-            <Instagram />
             <Benefit props="py-[60px]" />
             <Footer />
             <ModalNewsletter />

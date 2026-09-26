@@ -11,7 +11,6 @@ import TabFeatures from '@/components/Jewelry/TabFeatures'
 import FeaturedProduct from '@/components/Jewelry/FeaturedProduct'
 import Newsletter from '@/components/Home4/Newsletter'
 import Benefit from '@/components/Jewelry/Benefit'
-import Instagram from '@/components/Jewelry/Instagram'
 import Brand from '@/components/Home1/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -32,7 +31,6 @@ export default function HomeJewelry() {
             <FeaturedProduct data={productData} />
             <Newsletter props="bg-transparent" />
             <Benefit props="py-[60px] bg-linear" />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />

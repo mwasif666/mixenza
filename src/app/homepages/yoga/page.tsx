@@ -13,7 +13,6 @@ import NewsInsight from '@/components/Toys/NewsInsight'
 import Benefit from '@/components/Jewelry/Benefit'
 import dataTestimonial from '@/data/Testimonial.json'
 import Testimonial from '@/components/Yoga/Testimonial'
-import Instagram from '@/components/Yoga/Instagram'
 import Brand from '@/components/Home6/Brand'
 import Footer from '@/components/Footer/Footer'
 import ModalNewsletter from '@/components/Modal/ModalNewsletter'
@@ -34,7 +33,6 @@ export default function HomeYoga() {
             <FlashSale />
             <NewsInsight data={blogData} start={12} limit={15} />
             <Testimonial data={dataTestimonial} start={0} limit={6} />
-            <Instagram />
             <Brand />
             <Footer />
             <ModalNewsletter />
