@@ -16,7 +16,7 @@ const SliderPickora = () => {
         <div className="container banner-block lg:pt-[30px] pt-5 grid lg:grid-cols-3 gap-5">
             <Link href="/product/1971845697" className="group lg:col-span-2 rounded-[28px] overflow-hidden bg-[#e7edf7] grid md:grid-cols-2 items-stretch">
                 <div className="relative z-[2] flex flex-col justify-center md:pl-14 px-6 py-10">
-                    <span className="text-button-uppercase text-[#395997]">Pickora everyday essential</span>
+                    <span className="text-button-uppercase text-[#395997]">Mixenza everyday essential</span>
                     <h1 className="heading2 mt-3">Sip in style,<br />all day long.</h1>
                     <p className="body1 text-secondary mt-4 max-w-[420px]">40oz insulated stainless steel tumbler with handle, secure lid and reusable steel straw.</p>
                     <div className="mt-7">
