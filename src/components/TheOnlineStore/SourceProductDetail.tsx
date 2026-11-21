@@ -17,6 +17,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
     ].filter(Boolean))), [product.images, product.thumbImage])
     const galleryVideos = useMemo(() => Array.from(new Set(product.videos || [])), [product.videos])
     const [activeImage, setActiveImage] = useState(galleryImages[0] || '')
+    const [failedImages, setFailedImages] = useState<string[]>([])
     const [quantity, setQuantity] = useState(1)
     const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
@@ -45,12 +46,25 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
             <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mt-8">
                 <div>
                     <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#f4f4f5]">
-                        {activeImage && <Image src={activeImage} alt={product.name} fill unoptimized priority sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />}
+                        {activeImage && !failedImages.includes(activeImage) ? (
+                            <Image src={activeImage} alt={product.name} fill unoptimized priority
+                                onError={() => setFailedImages(previous => [...previous, activeImage])}
+                                sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center px-6 text-center text-secondary">
+                                Product image temporarily unavailable
+                            </div>
+                        )}
                     </div>
                     <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 mt-4">
                         {galleryImages.map((image, index) => (
                             <button key={`${image}-${index}`} type="button" onClick={() => setActiveImage(image)} className={`relative aspect-square overflow-hidden rounded-2xl bg-[#f4f4f5] border transition ${activeImage === image ? 'border-black ring-2 ring-black/10' : 'border-transparent hover:border-black/30'}`}>
-                                <Image src={image} alt={`${product.name} image ${index + 1}`} fill unoptimized sizes="96px" className="object-cover" />
+                                {!failedImages.includes(image) ? (
+                                    <Image src={image} alt={`${product.name} image ${index + 1}`} fill unoptimized sizes="96px"
+                                        onError={() => setFailedImages(previous => [...previous, image])} className="object-contain" />
+                                ) : (
+                                    <span className="absolute inset-0 flex items-center justify-center p-1 text-[9px] text-secondary">Image unavailable</span>
+                                )}
                             </button>
                         ))}
                     </div>
