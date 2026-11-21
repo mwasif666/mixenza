@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SourceProduct } from '@/lib/theOnlineStore'
@@ -29,6 +29,14 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
     const descriptionSummary = (descriptionSections[0]?.body || '').split('\n\n')[0].trim()
     const [activeImage, setActiveImage] = useState(galleryImages[0] || '')
     const [failedImages, setFailedImages] = useState<string[]>([])
+    // If the selected photo is unavailable, automatically open the next
+    // working gallery entry rather than leaving the product's cover blank.
+    useEffect(() => {
+        if (activeImage && failedImages.includes(activeImage)) {
+            const next = galleryImages.find(image => !failedImages.includes(image))
+            if (next) setActiveImage(next)
+        }
+    }, [activeImage, failedImages, galleryImages])
     const [quantity, setQuantity] = useState(1)
     const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
