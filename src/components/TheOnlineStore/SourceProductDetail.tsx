@@ -84,7 +84,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                             <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
                             <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full border border-black disabled:opacity-40">Add to Cart</button>
                         </div>
-                    )
+                    )}
 
                     <div className="mt-8 space-y-4 text-sm">
                         <div className="flex gap-3"><span>🚚</span><div><strong>Delivery within Pakistan</strong><p className="text-secondary">Standard shipping is calculated at checkout. <Link href="/pages/shipping-policy" className="underline">Shipping policy</Link></p></div></div>
