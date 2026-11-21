@@ -1,0 +1,31 @@
+name: Mixenza Public Image Audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/media-audit.mjs'
+      - '.github/workflows/media-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  image-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check all storefront product image URLs
+        run: node scripts/media-audit.mjs
+      - name: Save media audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixenza-media-audit
+          path: mixenza-media-audit.json
+          retention-days: 7
+          if-no-files-found: ignore
