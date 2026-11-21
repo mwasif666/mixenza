@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
+import Logo from '@/components/Brand/Logo'
 import Link from 'next/link'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { shopPath } from '@/lib/storePaths'
@@ -71,7 +72,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                                 sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
                         ) : (
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#f1f3f9] to-[#e9edf5] px-6 text-center">
-                                <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl border border-white bg-white/80 text-4xl text-[#9ba7b9] shadow-sm" aria-hidden="true">▧</div>
+                                <div className="mb-5 rounded-3xl border border-white bg-white/90 px-7 py-6 shadow-sm"><Logo href={null} height={40} /></div>
                                 <p className="max-w-sm text-base font-semibold text-[#344054]">Product image temporarily unavailable</p>
                                 <p className="mt-2 max-w-sm text-sm leading-6 text-secondary">This Mixenza product photo is being restored. Contact us if you need pictures before ordering.</p>
                                 <Link href="/pages/contact" className="mt-5 rounded-full border border-[#aab2c1] bg-white px-5 py-2 text-sm font-semibold text-[#344054] transition hover:bg-[#eef2f7]">Request product photos</Link>
