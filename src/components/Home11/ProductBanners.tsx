@@ -1,9 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { formatMoney } from '@/utils/currency'
-
-'use client'
 
 const offers = [
     { id: '1973702573', title: 'Rechargeable Massage Gun', subtitle: 'Recovery made easier', image: '/images/pickora/massage-gun.png', color: 'bg-[#f5f0ff]' },
