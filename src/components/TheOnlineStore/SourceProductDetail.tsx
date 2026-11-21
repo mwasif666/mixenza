@@ -54,6 +54,25 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                             </button>
                         ))}
                     </div>
+                    {galleryVideos.length > 0 && (
+                        <section className="mt-7" aria-label="Product videos">
+                            <h2 className="text-base font-semibold">Product videos</h2>
+                            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                {galleryVideos.map((video, index) => (
+                                    <video
+                                        key={video}
+                                        src={video}
+                                        poster={galleryImages[0] || undefined}
+                                        controls
+                                        playsInline
+                                        preload="metadata"
+                                        aria-label={`${product.name} video ${index + 1}`}
+                                        className="aspect-video w-full rounded-xl bg-black object-contain"
+                                    />
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 <div>
