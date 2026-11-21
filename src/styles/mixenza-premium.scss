@@ -234,3 +234,13 @@
  .mx-hero-copy,.mx-hero-art{animation:none}
  .mx-category-card,.mx-product-card,.mx-button{transition:none}
 }
+
+/* Final reference refinements: orange CTA, emphasized hero headline and visible product actions */
+.mx-hero-copy h1{text-transform:uppercase;font-weight:750;font-size:clamp(27px,2.7vw,39px);letter-spacing:-.037em}
+.mx-hero-copy h1 span{color:var(--primary);font-weight:750}
+.mx-hero-stage .mx-button-light,.mx-lifestyle .mx-button-light{color:white!important;background:var(--primary)}
+.mx-hero-stage .mx-button-light:hover,.mx-lifestyle .mx-button-light:hover{background:var(--primary-dark)}
+.mx-product-card{padding-bottom:38px}
+.mx-product-card .mx-premium-cart-button{position:absolute;right:11px;bottom:10px;height:32px;width:32px;border-radius:9px;display:grid;place-items:center;background:var(--primary);color:white;font-size:22px;font-weight:400;box-shadow:0 4px 10px #fc590124;transition:background .2s,transform .2s}
+.mx-product-card .mx-premium-cart-button:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.mx-product-card .mx-premium-cart-button:disabled{background:#a0a0a0;cursor:not-allowed}

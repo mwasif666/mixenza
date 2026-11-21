@@ -86,7 +86,7 @@ export default function StoreProductCard({ product, premium = false }: { product
                 {soldOut && !bulkOnly && <span className="absolute bottom-0 inset-x-0 bg-black/70 py-1 text-center text-[11px] text-white">Out of stock</span>}
                 {bulkOnly ? (
                     <Link href={productPath(product)} className="absolute inset-x-2 bottom-2 z-[1] flex h-9 items-center justify-center rounded-full bg-black text-xs font-medium text-white">View bulk details</Link>
-                ) : (
+                ) : !premium ? (
                     <button type="button" disabled={soldOut} onClick={add}
                         className="absolute inset-x-2 bottom-2 z-[1] h-9 rounded-full bg-black text-xs font-medium text-white opacity-100 transition-all duration-200 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-40">
                         {soldOut ? 'Out of stock' : 'Add to Cart'}
@@ -98,6 +98,7 @@ export default function StoreProductCard({ product, premium = false }: { product
                 <strong className="shrink-0 text-[13px] leading-4">{formatMoney(product.price)}</strong>
             </div>
             <p className="text-[12px] text-secondary mt-0.5 line-clamp-1 leading-tight">{product.category || 'Mixenza pick'}</p>
+            {premium && !bulkOnly && <button type="button" disabled={soldOut} onClick={add} className="mx-premium-cart-button" aria-label={soldOut ? "Out of stock" : "Add " + product.name + " to cart"}><span aria-hidden="true">＋</span></button>}
         </article>
     )
 }
