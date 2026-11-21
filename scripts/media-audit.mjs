@@ -37,9 +37,11 @@ await Promise.all(Array.from({length:12},async()=>{
   while(next<products.length){
     const i=next++;const p=products[i],urls=(p.images||[]).map(img=>typeof img==='string'?img:(img?.url||img?.src||'')).filter(Boolean);
     const attempts=[];
-    for(const url of urls.slice(0,5)){
+    const isMemon = group(p) === 'Memon Traders';
+    for(const url of (isMemon ? urls : urls.slice(0,5))){
       const testResult=await test(url);attempts.push({url,...testResult});
-      if(testResult.ok)break;
+      // For Memon, verify *every* thumbnail, not only the cover.
+      if(testResult.ok && !isMemon)break;
     }
     results[i]={sku:p.sku,title:p.title,group:group(p),galleryCount:urls.length,
       validFirst:attempts[0]?.ok||false,anyValid:attempts.some(x=>x.ok),attempts};
@@ -52,7 +54,12 @@ for(const row of results){
  x.count++;if(row.validFirst)x.validCover++;else if(row.anyValid)x.hasWorkingAlternative++;else x.allFailed++;
  byGroup[row.group]=x;
 }
-console.log('AUDIT_SUMMARY_JSON',JSON.stringify({products:results.length,byGroup,totalBrokenCover:results.filter(x=>!x.validFirst).length,allFailed:results.filter(x=>!x.anyValid).length}));
+console.log('AUDIT_SUMMARY_JSON',JSON.stringify({products:results.length,byGroup,totalBrokenCover:results.filter(x=>!x.validFirst).length,allFailed:results.filter(x=>!x.anyValid).length,
+memonGalleryChecked:results.filter(x=>x.group==='Memon Traders').reduce((sum,r)=>sum+r.attempts.length,0),
+memonBrokenGalleryImages:results.filter(x=>x.group==='Memon Traders').reduce((sum,r)=>sum+r.attempts.filter(a=>!a.ok).length,0)}));
+for(const row of results.filter(x=>x.group==='Memon Traders'&&x.attempts.some(a=>!a.ok))) {
+  console.log('BAD_MEMON_GALLERY',JSON.stringify({sku:row.sku,failed:row.attempts.filter(a=>!a.ok).map(a=>({url:a.url,status:a.status,type:a.type}))}));
+}
 const failures=results.filter(x=>!x.validFirst);
 for(const row of failures.slice(0,120)){
  console.log('BAD_IMAGE',JSON.stringify({sku:row.sku,group:row.group,checks:row.attempts.map(a=>({status:a.status,type:a.type,url:a.url,message:a.message}))}));
