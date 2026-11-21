@@ -1,0 +1,16 @@
+name: Mixenza Branding Audit
+on:
+  push:
+    paths:
+      - 'scripts/branding-audit.mjs'
+      - '.github/workflows/branding-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan customer-facing source branding
+        run: node scripts/branding-audit.mjs
