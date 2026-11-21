@@ -7,6 +7,7 @@ import * as Icon from '@phosphor-icons/react/dist/ssr'
 import Footer from '@/components/Footer/Footer'
 import { useCart } from '@/context/CartContext'
 import { formatMoney } from '@/utils/currency'
+import { calculateShipping } from '@/lib/shipping'
 
 const fieldClass =
     'h-12 w-full rounded-xl border border-line bg-white px-4 text-[15px] text-black outline-none transition placeholder:text-secondary2 focus:border-primary focus:ring-4 focus:ring-primary/10'
@@ -18,7 +19,7 @@ export default function Checkout() {
     const [orderError, setOrderError] = useState('')
     const [orderNumber, setOrderNumber] = useState('')
     const subtotal = cartState.cartArray.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    const shipping = subtotal >= 5000 || subtotal === 0 ? 0 : 250
+    const shipping = calculateShipping(subtotal)
     const total = subtotal + shipping
     const itemCount = cartState.cartArray.reduce((sum, item) => sum + item.quantity, 0)
 

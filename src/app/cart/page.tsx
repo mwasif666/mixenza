@@ -6,12 +6,13 @@ import { Minus, Plus, X } from '@phosphor-icons/react/dist/ssr'
 import Footer from '@/components/Footer/Footer'
 import { useCart } from '@/context/CartContext'
 import { formatMoney } from '@/utils/currency'
+import { calculateShipping } from '@/lib/shipping'
 import { productPath } from '@/lib/storePaths'
 
 export default function Cart() {
     const { cartState, isLoading, syncError, updateCart, removeFromCart } = useCart()
     const subtotal = cartState.cartArray.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    const shipping = subtotal >= 5000 || subtotal === 0 ? 0 : 250
+    const shipping = calculateShipping(subtotal)
     const total = subtotal + shipping
 
     return (
