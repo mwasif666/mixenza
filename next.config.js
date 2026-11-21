@@ -7,6 +7,8 @@ const nextConfig = {
     images: {
         remotePatterns: [
             { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/**' },
+            // Temporary public media host for Memon Traders while Cloudinary is restricted.
+            { protocol: 'https', hostname: 'admin.mixenza.com', pathname: '/**' },
             {
                 protocol: 'https',
                 hostname: 'theonlinestore.com.pk',
