@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Eye, Heart } from '@phosphor-icons/react/dist/ssr'
@@ -30,6 +31,8 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
     const { wishlistState, addToWishlist, removeFromWishlist } = useWishlist()
     const wished = wishlistState.wishlistArray.some(item => item.id === product.id)
     const image = product.thumbImage?.[0] || product.images?.[0] || ''
+    const [imageFailed, setImageFailed] = useState(false)
+    useEffect(() => setImageFailed(false), [image])
     const bulkOnly = isBulkOnlyProduct(product.name)
     const soldOut = product.quantity === 0
 
@@ -44,10 +47,14 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
         <article className="group">
             <div className="relative h-[300px] rounded-xl bg-[#f4f4f5] overflow-hidden">
                 <Link href={productPath(product)} className="absolute inset-0">
-                    {image ? (
-                        <Image src={image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw" className="object-contain p-3 transition-transform duration-300 ease-out group-hover:scale-[1.03]" />
+                    {image && !imageFailed ? (
+                        <Image src={image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw"
+                            onError={() => setImageFailed(true)}
+                            className="object-contain p-3 transition-transform duration-300 ease-out group-hover:scale-[1.03]" />
                     ) : (
-                        <span className="absolute inset-0 flex items-center justify-center text-secondary text-sm">No image</span>
+                        <span className="absolute inset-0 flex items-center justify-center px-5 text-center text-secondary text-sm">
+                            Product image temporarily unavailable
+                        </span>
                     )}
                 </Link>
                 <div className="absolute top-2 right-2 z-[1] flex flex-col gap-1.5">
