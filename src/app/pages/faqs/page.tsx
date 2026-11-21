@@ -1,499 +1,63 @@
 'use client'
-import React, { useState } from 'react'
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
+import { useState } from 'react'
+import Link from 'next/link'
 import Footer from '@/components/Footer/Footer'
-import * as Icon from "@phosphor-icons/react/dist/ssr";
+import { BRAND } from '@/constants/brand'
 
-const Faqs = () => {
-    const [activeTab, setActiveTab] = useState<string | undefined>('how to buy')
-    const [activeQuestion, setActiveQuestion] = useState<string | undefined>('')
-
-    const handleActiveTab = (tab: string) => {
-        setActiveTab(tab)
-    }
-
-    const handleActiveQuestion = (question: string) => {
-        setActiveQuestion(prevQuestion => prevQuestion === question ? undefined : question)
-    }
-
-    return (
-        <>
-            <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-            <div id="header" className='relative w-full'>
-                <MenuOne props="bg-transparent" />
-                <Breadcrumb heading='FAQs' subHeading='FAQs' />
+const topics = [
+  { title: 'Ordering', items: [
+    ['How do I place an order?', 'Choose your product, add it to your cart and enter your delivery details at checkout. Some items may require stock confirmation before dispatch.'],
+    ['Can I change or cancel an order?', 'Contact us with your order number as soon as possible. Changes or cancellation may be possible before dispatch.'],
+    ['Are all listed products immediately available?', 'Availability may vary by seller and fulfillment partner. Bulk-carton listings require a separate quotation and confirmation.'],
+  ] },
+  { title: 'Payments', items: [
+    ['How can I pay?', 'Cash on Delivery is currently available for eligible orders. Checkout shows the payment methods enabled at the time of purchase.'],
+    ['Can I pay with a card or wallet?', 'Online payment options are not active yet. They will appear at checkout only after an approved payment integration goes live.'],
+    ['Which currency does Mixenza use?', 'Prices are displayed in Pakistani Rupees (PKR). Your shipping cost appears in the order summary.'],
+  ] },
+  { title: 'Delivery', items: [
+    ['Where do you deliver?', 'We serve destinations across Pakistan, subject to product availability and courier coverage.'],
+    ['How much is standard shipping?', 'Standard shipping costs Rs. 250 on orders below Rs. 5,000 and is free from Rs. 5,000. Supplier-specific or bulk orders may require separate confirmation.'],
+    ['How long does shipping take?', 'Delivery times depend on the product, fulfillment partner and destination. Estimates are not guaranteed dates.'],
+  ] },
+  { title: 'Returns & support', items: [
+    ['What if a product is damaged or incorrect?', 'Contact Mixenza with your order number and clear photos or video. Keep the packaging while we review your request.'],
+    ['Can I return an item?', 'Eligibility depends on item condition, product category and seller terms. Read our Returns & Refunds Policy before sending a parcel back.'],
+    ['How can I contact you?', `Reach Mixenza at ${BRAND.email} or ${BRAND.phone}.`],
+  ] },
+]
+export default function FaqsPage() {
+  const [topic,setTopic] = useState(0)
+  const [open,setOpen] = useState<number|null>(0)
+  return <>
+    <main className="container py-10 md:py-16">
+      <nav aria-label="Breadcrumb" className="text-sm text-secondary"><Link href="/">Home</Link> / FAQs</nav>
+      <h1 className="heading3 mt-4">Frequently asked questions</h1>
+      <p className="mt-3 text-secondary">Helpful information about ordering, payment, shipping and support.</p>
+      <div className="mt-9 grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
+        <nav aria-label="FAQ topics" className="flex gap-2 overflow-x-auto lg:flex-col">
+          {topics.map((item,i) => (
+            <button key={item.title} type="button" aria-current={topic === i ? 'page' : undefined}
+              onClick={() => {setTopic(i);setOpen(0)}}
+              className={`shrink-0 rounded-xl px-4 py-3 text-left text-sm font-semibold ${topic === i ? 'bg-black text-white' : 'bg-surface text-black hover:bg-primary-tint'}`}>
+              {item.title}
+            </button>
+          ))}
+        </nav>
+        <section className="space-y-3" aria-label={topics[topic].title}>
+          {topics[topic].items.map(([question,answer],i) => (
+            <div key={question} className="overflow-hidden rounded-2xl border border-line bg-white">
+              <h2><button type="button" aria-expanded={open === i}
+                onClick={() => setOpen(open === i ? null : i)}
+                className="flex w-full items-center justify-between gap-5 p-5 text-left font-semibold md:px-6">
+                {question}<span aria-hidden="true" className="text-xl text-primary">{open === i ? '−' : '+'}</span>
+              </button></h2>
+              {open === i && <p className="px-5 pb-5 leading-7 text-secondary md:px-6">{answer}</p>}
             </div>
-            <div className='faqs-block md:py-20 py-10'>
-                <div className="container">
-                    <div className="flex justify-between">
-                        <div className="left w-1/4">
-                            <div className="menu-tab flex flex-col gap-5">
-                                {[
-                                    'how to buy', 'payment methods', 'delivery', 'exchanges & returns', 'registration', 'look after your garments', 'contacts'
-                                ].map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`tab-item inline-block w-fit heading6 has-line-before text-secondary2 hover:text-black duration-300 ${activeTab === item ? 'active' : ''}`}
-                                        onClick={() => handleActiveTab(item)}
-                                    >
-                                        {item}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="right w-2/3">
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'how to buy' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '1' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('1')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'payment methods' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'delivery' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '1' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('1')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'exchanges & returns' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'registration' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '1' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('1')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'look after your garments' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                            <div className={`tab-question flex flex-col gap-5 ${activeTab === 'contacts' ? 'active' : ''}`}>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '1' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('1')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '2' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('2')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '3' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('3')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '4' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('4')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '5' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('5')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">How does COVID-19 affect my online orders and store purchases?</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com</div>
-                                </div>
-                                <div
-                                    className={`question-item px-7 py-5 rounded-[20px] overflow-hidden border border-line cursor-pointer ${activeQuestion === '6' ? 'open' : ''}`}
-                                    onClick={() => handleActiveQuestion('6')}
-                                >
-                                    <div className="heading flex items-center justify-between gap-6">
-                                        <div className="heading6">NEW! Plus sizes for Woman</div>
-                                        <Icon.CaretRight size={24} />
-                                    </div>
-                                    <div className="content body1 text-secondary">The courier companies have adapted their procedures to guarantee the safety of our employees and our community. We thank you for your patience, as there may be some delays to deliveries.
-                                        We remind you that you can still find us at Mango.com and on all our online channels. Our customer services are still there for you, to answer any questions you may have, although due to the current situation, we are operating with longer waiting times.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Footer />
-        </>
-    )
+          ))}
+        </section>
+      </div>
+      <p className="mt-9 text-sm text-secondary">See our <Link href="/pages/shipping-policy" className="underline">Shipping Policy</Link>, <Link href="/pages/returns-refunds" className="underline">Returns & Refunds</Link> or <Link href="/pages/contact" className="underline">contact support</Link>.</p>
+    </main><Footer />
+  </>
 }
-
-export default Faqs

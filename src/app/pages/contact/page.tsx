@@ -3,9 +3,6 @@
 import React, { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import * as Icon from '@phosphor-icons/react/dist/ssr'
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb'
 import Footer from '@/components/Footer/Footer'
 import { BRAND } from '@/constants/brand'
 
@@ -51,11 +48,6 @@ const ContactUs = () => {
 
     return (
         <>
-            <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-            <div id="header" className="relative w-full">
-                <MenuOne props="bg-transparent" />
-                <Breadcrumb heading="Contact us" subHeading="Contact us" />
-            </div>
             <main className="contact-us py-10 md:py-20">
                 <div className="container">
                     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.8fr)] lg:gap-12">

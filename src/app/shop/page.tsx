@@ -6,7 +6,7 @@ import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
-    title: `Shop | ${BRAND.name}`,
+    title: 'Shop',
     description: `Browse Mixenza products, categories and PKR prices.`,
 }
 

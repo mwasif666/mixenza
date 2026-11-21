@@ -15,7 +15,7 @@ function findPost(slug: string) {
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
     const post = findPost(params.slug)
-    return { title: `${post?.title || 'Story'} | ${BRAND.name}`, description: post?.shortDesc }
+    return { title: post?.title || 'Story', description: post?.shortDesc }
 }
 
 export default function BlogSlugPage({ params }: { params: { slug: string } }) {

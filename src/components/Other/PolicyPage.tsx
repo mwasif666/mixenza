@@ -1,8 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb'
 import Footer from '@/components/Footer/Footer'
 import { BRAND } from '@/constants/brand'
 
@@ -22,12 +19,6 @@ type PolicyPageProps = {
 const PolicyPage = ({ title, intro, sections, updated = '25 September 2026' }: PolicyPageProps) => {
     return (
         <>
-            <TopNavOne props="style-one bg-black" slogan="Shop useful everyday finds across Pakistan" />
-            <div id="header" className="relative w-full">
-                <MenuOne props="bg-transparent" />
-                <Breadcrumb heading={title} subHeading={title} />
-            </div>
-
             <main className="py-10 md:py-16">
                 <div className="container">
                     <div className="mx-auto max-w-[920px]">

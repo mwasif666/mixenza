@@ -1,380 +1,56 @@
 [
-    {
-        "id": "1",
-        "category": "market",
-        "tag": "Gold Prices",
-        "title": "Gold Holds Near Record Highs - What That Means for PKR Shoppers",
-        "date": "Sep 19, 2026",
-        "author": "Mixenza Team",
-        "avatar": "/images/blog/gold-prices.png",
-        "thumbImg": "/images/blog/gold-prices.png",
-        "coverImg": "/images/blog/gold-prices.png",
-        "subImg": [
-            "/images/blog/gold-prices.png",
-            "/images/blog/china-shipping.png"
-        ],
-        "shortDesc": "International gold is sticky near record territory. That keeps imported gadgets, drinkware and cash tools priced in rupees under pressure.",
-        "description": "Gold is still trading near historic highs this week, which keeps the rupee under pressure and makes imported everyday goods more expensive to restock. Mixenza shoppers feel it on steel tumblers, UV money detectors and other China-sourced essentials — landed cost moves with bullion and the dollar, not just the product page. Fake-note checkers stay useful when cash volumes rise around Eid and wedding season. We keep prices visible in PKR and restock when freight and metal markets cool, instead of hiding a sudden jump behind a fake discount.",
-        "slug": "gold-prices-pkr-shoppers"
-    },
-    {
-        "id": "2",
-        "category": "market",
-        "tag": "China Shipping",
-        "title": "China Freight Is Slowing Again - How Long Marketplace Orders Take",
-        "date": "Sep 18, 2026",
-        "author": "Mixenza Team",
-        "avatar": "/images/blog/china-shipping.png",
-        "thumbImg": "/images/blog/china-shipping.png",
-        "coverImg": "/images/blog/china-shipping.png",
-        "subImg": [
-            "/images/blog/china-shipping.png",
-            "/images/blog/mobile-prices.png"
-        ],
-        "shortDesc": "Sea freight from South China is stretching again. Water pumps, fans and home gadgets on Mixenza follow that calendar, not overnight ads.",
-        "description": "South China to Karachi sea freight is stretching again after peak summer sailings, so restocks of water dispenser pumps, hand fans and similar home gadgets take longer than marketplace ads suggest. Mixenza only lists pieces we can actually ship from local stock or a confirmed inbound lot — that is why a bestseller can pause instead of showing a fake 2-day badge. If you need a bottle pump or fan this week, order from in-stock cards on the homepage. Backordered SKUs wait on the next container, not a promise we cannot keep.",
-        "slug": "china-shipping-marketplace-orders"
-    },
-    {
-        "id": "3",
-        "category": "market",
-        "tag": "Mobile Prices",
-        "title": "Phone Prices Stay Firm - Accessories Are Where Shoppers Save",
-        "date": "Sep 17, 2026",
-        "author": "Mixenza Team",
-        "avatar": "/images/blog/mobile-prices.png",
-        "thumbImg": "/images/blog/mobile-prices.png",
-        "coverImg": "/images/blog/mobile-prices.png",
-        "subImg": [
-            "/images/blog/mobile-prices.png",
-            "/images/blog/gold-prices.png"
-        ],
-        "shortDesc": "New phone tags in Pakistan are barely moving. USB fans, desk mats and small gadgets are the practical way to upgrade a setup without a new handset.",
-        "description": "Official smartphone prices in Pakistan have barely eased this month, so most buyers are holding the phone they already have and spending on small electronics instead. That is the Mixenza lane: USB rechargeable fans for load-shedding, shortcut desk mats for work-from-home, and compact wellness tools that sit next to a phone, not replace it. If a listing claims a flagship at last year’s rate, treat it as noise. We price accessories against live PKR landed cost and keep eight honest homepage picks in stock rather than a wall of repeated cards.",
-        "slug": "mobile-prices-accessories-pakistan"
-    },
-    {
-        "id": "4",
-        "category": "underwear",
-        "tag": "underwear",
-        "title": "The Art of Makeup: Mastering the Perfect Everyday Look",
-        "date": "Dec 24, 2023",
-        "author": "Christina Smith",
-        "avatar": "/images/avatar/4.png",
-        "thumbImg": "/images/blog/4.png",
-        "coverImg": "/images/blog/4.png",
-        "subImg": [
-            "/images/blog/6.png",
-            "/images/blog/5.png"
-        ],
-        "shortDesc": "Discover the latest fashion trends that will dominate the upcoming season. From vibrant colors to unique patterns and innovative styles.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "underwear-blog"
-    },
-    {
-        "id": "5",
-        "category": "underwear",
-        "tag": "underwear",
-        "title": "Unlocking the Secrets of Anti-Aging: Effective Strategies and Products",
-        "date": "Dec 26, 2023",
-        "author": "Louis Ancelotti",
-        "avatar": "/images/avatar/5.png",
-        "thumbImg": "/images/blog/5.png",
-        "coverImg": "/images/blog/5.png",
-        "subImg": [
-            "/images/blog/4.png",
-            "/images/blog/6.png"
-        ],
-        "shortDesc": "Discover the latest fashion trends that will dominate the upcoming season. From vibrant colors to unique patterns and innovative styles.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "underwear-blog"
-    },
-    {
-        "id": "6",
-        "category": "underwear",
-        "tag": "underwear",
-        "title": "Exploring the World of Fragrances: How to Find Your Signature Scent",
-        "date": "Dec 26, 2023",
-        "author": "Davide Alvaro",
-        "avatar": "/images/avatar/6.png",
-        "thumbImg": "/images/blog/6.png",
-        "coverImg": "/images/blog/6.png",
-        "subImg": [
-            "/images/blog/5.png",
-            "/images/blog/4.png"
-        ],
-        "shortDesc": "Discover the latest fashion trends that will dominate the upcoming season. From vibrant colors to unique patterns and innovative styles.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "underwear-blog"
-    },
-    {
-        "id": "7",
-        "category": "cosmetic",
-        "tag": "body lotion",
-        "title": "cosmetic Trends to Watch Out for in Summer 2023",
-        "date": "Dec 20, 2023",
-        "author": "Chris Evans",
-        "avatar": "/images/avatar/8.png",
-        "thumbImg": "/images/blog/7.png",
-        "coverImg": "/images/blog/7.png",
-        "subImg": [
-            "/images/blog/9.png",
-            "/images/blog/8.png"
-        ],
-        "shortDesc": "Discover the latest cosmetic trends that will dominate the upcoming season. From vibrant colors to unique patterns and innovative styles, stay ahead of the cosmetic curve with our comprehensive guide.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "cosmetic-news"
-    },
-    {
-        "id": "8",
-        "category": "cosmetic",
-        "tag": "nourishing mask",
-        "title": "How to Build a Sustainable and Stylish Wardrobe",
-        "date": "Dec 21, 2023",
-        "author": "Alex Balde",
-        "avatar": "/images/avatar/1.png",
-        "thumbImg": "/images/blog/8.png",
-        "coverImg": "/images/blog/8.png",
-        "subImg": [
-            "/images/blog/7.png",
-            "/images/blog/9.png"
-        ],
-        "shortDesc": "Build a versatile and timeless wardrobe with our list of must-have cosmetic staples. From the classic little black dress to the perfect pair of jeans.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "cosmetic-news"
-    },
-    {
-        "id": "9",
-        "category": "cosmetic",
-        "tag": "body lotion",
-        "title": "cosmetic and Beauty Tips for Busy Professionals",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/2.png",
-        "thumbImg": "/images/blog/9.png",
-        "coverImg": "/images/blog/9.png",
-        "subImg": [
-            "/images/blog/8.png",
-            "/images/blog/7.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "cosmetic-news"
-    },
-    {
-        "id": "10",
-        "category": "toys-kid",
-        "tag": "body lotion",
-        "title": "The Art of Makeup: Mastering the Perfect Everyday Look",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/3.png",
-        "thumbImg": "/images/blog/toys1.png",
-        "coverImg": "/images/blog/toys1.png",
-        "subImg": [
-            "/images/blog/toys3.png",
-            "/images/blog/toys2.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "toys-kid-news"
-    },
-    {
-        "id": "11",
-        "category": "toys-kid",
-        "tag": "nourishing mask",
-        "title": "How to Build a Sustainable and Stylish Wardrobe",
-        "date": "Dec 21, 2023",
-        "author": "Alex Balde",
-        "avatar": "/images/avatar/4.png",
-        "thumbImg": "/images/blog/toys2.png",
-        "coverImg": "/images/blog/toys2.png",
-        "subImg": [
-            "/images/blog/toys1.png",
-            "/images/blog/toys3.png"
-        ],
-        "shortDesc": "Build a versatile and timeless wardrobe with our list of must-have toys-kid staples. From the classic little black dress to the perfect pair of jeans.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "toys-kid-news"
-    },
-    {
-        "id": "12",
-        "category": "toys-kid",
-        "tag": "body lotion",
-        "title": "toys kid and Beauty Tips for Busy Professionals",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/5.png",
-        "thumbImg": "/images/blog/toys3.png",
-        "coverImg": "/images/blog/toys3.png",
-        "subImg": [
-            "/images/blog/toys2.png",
-            "/images/blog/toys1.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "toys-kid-news"
-    },
-    {
-        "id": "13",
-        "category": "yoga",
-        "tag": "body lotion",
-        "title": "Mastering the Perfect Everyday Look",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/6.png",
-        "thumbImg": "/images/blog/yoga1.png",
-        "coverImg": "/images/blog/yoga1.png",
-        "subImg": [
-            "/images/blog/yoga2.png",
-            "/images/blog/yoga3.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "yoga-news"
-    },
-    {
-        "id": "14",
-        "category": "yoga",
-        "tag": "nourishing mask",
-        "title": "How to Build a Sustainable",
-        "date": "Dec 21, 2023",
-        "author": "Alex Balde",
-        "avatar": "/images/avatar/8.png",
-        "thumbImg": "/images/blog/yoga2.png",
-        "coverImg": "/images/blog/yoga2.png",
-        "subImg": [
-            "/images/blog/yoga1.png",
-            "/images/blog/yoga3.png"
-        ],
-        "shortDesc": "Build a versatile and timeless wardrobe with our list of must-have yoga staples. From the classic little black dress to the perfect pair of jeans.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "yoga-news"
-    },
-    {
-        "id": "15",
-        "category": "yoga",
-        "tag": "body lotion",
-        "title": "Beauty Tips for Busy Professionals",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/1.png",
-        "thumbImg": "/images/blog/yoga3.png",
-        "coverImg": "/images/blog/yoga3.png",
-        "subImg": [
-            "/images/blog/yoga2.png",
-            "/images/blog/yoga1.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "yoga-news"
-    },
-    {
-        "id": "16",
-        "category": "organic",
-        "tag": "body lotion",
-        "title": "The Art of Makeup: Mastering the Perfect Everyday Look",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/2.png",
-        "thumbImg": "/images/blog/organic1.png",
-        "coverImg": "/images/blog/organic1.png",
-        "subImg": [
-            "/images/blog/organic3.png",
-            "/images/blog/organic2.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "organic-news"
-    },
-    {
-        "id": "17",
-        "category": "organic",
-        "tag": "nourishing mask",
-        "title": "How to Build a Sustainable and Stylish Wardrobe",
-        "date": "Dec 21, 2023",
-        "author": "Alex Balde",
-        "avatar": "/images/avatar/3.png",
-        "thumbImg": "/images/blog/organic2.png",
-        "coverImg": "/images/blog/organic2.png",
-        "subImg": [
-            "/images/blog/organic1.png",
-            "/images/blog/organic3.png"
-        ],
-        "shortDesc": "Build a versatile and timeless wardrobe with our list of must-have organic staples. From the classic little black dress to the perfect pair of jeans.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "organic-news"
-    },
-    {
-        "id": "18",
-        "category": "organic",
-        "tag": "body lotion",
-        "title": "toys kid and Beauty Tips for Busy Professionals",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/4.png",
-        "thumbImg": "/images/blog/organic3.png",
-        "coverImg": "/images/blog/organic3.png",
-        "subImg": [
-            "/images/blog/organic2.png",
-            "/images/blog/organic1.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "organic-news"
-    },
-    {
-        "id": "19",
-        "category": "marketplace",
-        "tag": "Apple, headphone",
-        "title": "quality Headphone models worth buying in 2024",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/2.png",
-        "thumbImg": "/images/blog/marketplace1.png",
-        "coverImg": "/images/slider/watch1.png",
-        "subImg": [
-            "/images/blog/marketplace1.png",
-            "/images/blog/marketplace2.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "organic-news"
-    },
-    {
-        "id": "20",
-        "category": "marketplace",
-        "tag": "Samsung, S21",
-        "title": "Useful feature of S21 Ultra that you don’t know",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/2.png",
-        "thumbImg": "/images/blog/marketplace2.png",
-        "coverImg": "/images/slider/watch2.png",
-        "subImg": [
-            "/images/blog/marketplace1.png",
-            "/images/blog/marketplace2.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "organic-news"
-    },
-    {
-        "id": "21",
-        "category": "marketplace",
-        "tag": "Apple, iPhone",
-        "title": "Great performance of the new iPhone Generation",
-        "date": "Dec 22, 2023",
-        "author": "Leona Pablo",
-        "avatar": "/images/avatar/2.png",
-        "thumbImg": "/images/blog/marketplace3.png",
-        "coverImg": "/images/slider/watch3.png",
-        "subImg": [
-            "/images/blog/marketplace1.png",
-            "/images/blog/marketplace2.png"
-        ],
-        "shortDesc": "Explore the power of accessories and learn how to effortlessly transform your outfits. From statement jewelry to stylish handbags and chic scarves.",
-        "description": "The poblano yogurt is a key component here, but I totally understand if you want to skip out on it because of time, lack of poblanos, or you're anti-chile. No problem, just about any flavor-forward yogurt slather will do in its place. You could simply crush a clove of garlic into some paste with a pinch of salt, and stir that in your favorite plain yogurt - also delicious. Or, whisk a tablespoon of harissa paste into your yogurt.",
-        "slug": "organic-news"
-    }
+  {
+    "id": "1",
+    "category": "market",
+    "tag": "Gold Prices",
+    "title": "Gold Holds Near Record Highs - What That Means for PKR Shoppers",
+    "date": "Sep 19, 2026",
+    "author": "Mixenza Team",
+    "avatar": "/images/blog/gold-prices.png",
+    "thumbImg": "/images/blog/gold-prices.png",
+    "coverImg": "/images/blog/gold-prices.png",
+    "subImg": [
+      "/images/blog/gold-prices.png",
+      "/images/blog/china-shipping.png"
+    ],
+    "shortDesc": "International gold is sticky near record territory. That keeps imported gadgets, drinkware and cash tools priced in rupees under pressure.",
+    "description": "Gold is still trading near historic highs this week, which keeps the rupee under pressure and makes imported everyday goods more expensive to restock. Mixenza shoppers feel it on steel tumblers, UV money detectors and other China-sourced essentials — landed cost moves with bullion and the dollar, not just the product page. Fake-note checkers stay useful when cash volumes rise around Eid and wedding season. We keep prices visible in PKR and restock when freight and metal markets cool, instead of hiding a sudden jump behind a fake discount.",
+    "slug": "gold-prices-pkr-shoppers"
+  },
+  {
+    "id": "2",
+    "category": "market",
+    "tag": "China Shipping",
+    "title": "China Freight Is Slowing Again - How Long Marketplace Orders Take",
+    "date": "Sep 18, 2026",
+    "author": "Mixenza Team",
+    "avatar": "/images/blog/china-shipping.png",
+    "thumbImg": "/images/blog/china-shipping.png",
+    "coverImg": "/images/blog/china-shipping.png",
+    "subImg": [
+      "/images/blog/china-shipping.png",
+      "/images/blog/mobile-prices.png"
+    ],
+    "shortDesc": "Sea freight from South China is stretching again. Water pumps, fans and home gadgets on Mixenza follow that calendar, not overnight ads.",
+    "description": "South China to Karachi sea freight is stretching again after peak summer sailings, so restocks of water dispenser pumps, hand fans and similar home gadgets take longer than marketplace ads suggest. Mixenza only lists pieces we can actually ship from local stock or a confirmed inbound lot — that is why a bestseller can pause instead of showing a fake 2-day badge. If you need a bottle pump or fan this week, order from in-stock cards on the homepage. Backordered SKUs wait on the next container, not a promise we cannot keep.",
+    "slug": "china-shipping-marketplace-orders"
+  },
+  {
+    "id": "3",
+    "category": "market",
+    "tag": "Mobile Prices",
+    "title": "Phone Prices Stay Firm - Accessories Are Where Shoppers Save",
+    "date": "Sep 17, 2026",
+    "author": "Mixenza Team",
+    "avatar": "/images/blog/mobile-prices.png",
+    "thumbImg": "/images/blog/mobile-prices.png",
+    "coverImg": "/images/blog/mobile-prices.png",
+    "subImg": [
+      "/images/blog/mobile-prices.png",
+      "/images/blog/gold-prices.png"
+    ],
+    "shortDesc": "New phone tags in Pakistan are barely moving. USB fans, desk mats and small gadgets are the practical way to upgrade a setup without a new handset.",
+    "description": "Official smartphone prices in Pakistan have barely eased this month, so most buyers are holding the phone they already have and spending on small electronics instead. That is the Mixenza lane: USB rechargeable fans for load-shedding, shortcut desk mats for work-from-home, and compact wellness tools that sit next to a phone, not replace it. If a listing claims a flagship at last year’s rate, treat it as noise. We price accessories against live PKR landed cost and keep eight honest homepage picks in stock rather than a wall of repeated cards.",
+    "slug": "mobile-prices-accessories-pakistan"
+  }
 ]

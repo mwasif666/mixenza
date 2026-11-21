@@ -1,69 +1,51 @@
-'use client'
-import React from 'react'
-import Image from 'next/image';
-import TopNavOne from '@/components/Header/TopNav/TopNavOne'
-import MenuOne from '@/components/Header/Menu/MenuOne'
-import Breadcrumb from '@/components/Breadcrumb/Breadcrumb';
-import Benefit from '@/components/Home1/Benefit'
-import Newsletter from '@/components/Home4/Newsletter'
-import Brand from '@/components/Home1/Brand'
+import Link from 'next/link'
 import Footer from '@/components/Footer/Footer'
+import { BRAND } from '@/constants/brand'
+import type { Metadata } from 'next'
 
-const AboutUs = () => {
-    return (
-        <>
-            <TopNavOne props="style-one bg-black" slogan="New customers save 10% with the code GET10" />
-            <div id="header" className='relative w-full'>
-                <MenuOne props="bg-transparent" />
-                <Breadcrumb heading='About Us' subHeading='About Us' />
-            </div>
-            <div className='about md:pt-20 pt-10'>
-                <div className="about-us-block">
-                    <div className="container">
-                        <div className="text flex items-center justify-center">
-                            <div className="content md:w-5/6 w-full">
-                                <div className="heading3 text-center">I{String.raw`'m`} obsessed with the dress Pippa Middleton wore to her brother{String.raw`'s`} wedding.</div>
-                                <div className="body1 text-center md:mt-7 mt-5">Kim Kardashian West needs no introduction. In the 14 years since she first graced our screens in Keeping Up With The Kardashians, she has built her KKW beauty empire, filmed her show, wrapped her show, become a billionaire, studied law, campaigned for the rights of death row inmates, travelled the world to attend events such as Paris Fashion Week, raised four children and launched her wildly successful shapewear brand SKIMS.</div>
-                            </div>
-                        </div>
-                        <div className="list-img grid sm:grid-cols-3 gap-[30px] md:pt-20 pt-10">
-                            <div className="bg-img">
-                                <Image
-                                    src={'/images/other/about-us1.png'}
-                                    width={2000}
-                                    height={3000}
-                                    alt='bg-img'
-                                    className='w-full rounded-[30px]'
-                                />
-                            </div>
-                            <div className="bg-img">
-                                <Image
-                                    src={'/images/other/about-us2.png'}
-                                    width={2000}
-                                    height={3000}
-                                    alt='bg-img'
-                                    className='w-full rounded-[30px]'
-                                />
-                            </div>
-                            <div className="bg-img">
-                                <Image
-                                    src={'/images/other/about-us3.png'}
-                                    width={2000}
-                                    height={3000}
-                                    alt='bg-img'
-                                    className='w-full rounded-[30px]'
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Benefit props="md:pt-20 pt-10" />
-            <Newsletter props="bg-green md:mt-20 mt-10" />
-            <Brand />
-            <Footer />
-        </>
-    )
+export const metadata: Metadata = {
+  title: 'About Us',
+  description: 'Meet Mixenza, a Pakistan-based online store for everyday essentials, gadgets and home products.',
 }
-
-export default AboutUs
+const benefits = [
+  { title: 'Practical everyday finds', copy: 'Explore useful home products, personal care, gadgets and accessories in one place.' },
+  { title: 'Clear shopping information', copy: 'View product details and PKR prices before deciding what to buy.' },
+  { title: 'Pakistan-wide delivery', copy: 'Delivery and availability vary by item, supplier and destination.' },
+]
+export default function AboutUs() {
+  return (
+    <>
+      <main className="container py-10 md:py-16">
+        <nav aria-label="Breadcrumb" className="text-sm text-secondary"><Link href="/">Home</Link> / About us</nav>
+        <section className="mt-8 rounded-3xl border border-line bg-surface p-7 md:p-12">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">About {BRAND.name}</p>
+          <h1 className="heading2 mt-4">Everyday essentials. One convenient place.</h1>
+          <p className="body1 mt-5 max-w-3xl leading-8 text-secondary">
+            Mixenza is an online shopping destination for customers in Pakistan. We bring together useful
+            household products, practical gadgets, drinkware, personal care items and accessories, with
+            product prices shown in Pakistani Rupees.
+          </p>
+          <p className="body1 mt-4 max-w-3xl leading-8 text-secondary">
+            Products may be supplied by different sellers and fulfillment partners. Availability and delivery
+            times can vary, so an order may require stock confirmation before dispatch. We aim to make
+            shopping straightforward with clear product details and responsive support.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/shop" className="button-main inline-flex items-center justify-center">Browse products</Link>
+            <Link href="/pages/contact" className="inline-flex items-center rounded-full border border-black px-7 py-3 font-semibold hover:bg-black hover:text-white">Contact Mixenza</Link>
+          </div>
+        </section>
+        <section className="mt-12 grid gap-5 md:grid-cols-3" aria-label="Why shop with Mixenza">
+          {benefits.map(item => (
+            <article key={item.title} className="rounded-2xl border border-line bg-white p-6">
+              <h2 className="heading6">{item.title}</h2>
+              <p className="mt-3 leading-7 text-secondary">{item.copy}</p>
+            </article>
+          ))}
+        </section>
+        <p className="mt-9 text-sm text-secondary">Questions? Email <a className="underline" href={`mailto:${BRAND.email}`}>{BRAND.email}</a> or see our <Link href="/pages/shipping-policy" className="underline">shipping</Link> and <Link href="/pages/returns-refunds" className="underline">returns policies</Link>.</p>
+      </main>
+      <Footer />
+    </>
+  )
+}

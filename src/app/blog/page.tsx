@@ -7,8 +7,8 @@ import { BRAND } from '@/constants/brand'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: `News | ${BRAND.name}`,
-    description: 'Today worldwide stories for Mixenza shoppers — gold, shipping, mobile prices and more.',
+    title: 'Shopping guides',
+    description: 'Everyday shopping insights and product guides from Mixenza.',
 }
 
 export default function BlogPage() {
@@ -17,7 +17,7 @@ export default function BlogPage() {
         <>
             <section className="container py-10 md:py-16">
                 <p className="caption1 text-secondary">Home / News</p>
-                <h1 className="heading3 mt-2">Today worldwide stories</h1>
+                <h1 className="heading3 mt-2">Mixenza shopping guides</h1>
                 <div className="grid md:grid-cols-3 gap-7 mt-10">
                     {posts.slice(0, 12).map(post => (
                         <Link key={post.id} href={blogPath(post)} className="group block">
