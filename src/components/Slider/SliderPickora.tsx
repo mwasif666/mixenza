@@ -1,7 +1,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useCatalogProducts } from '@/hooks/useCatalogProducts'
+import { formatMoney } from '@/utils/currency'
 
-const SliderPickora = () => (
+'use client'
+
+const SliderPickora = () => {
+    const products = useCatalogProducts()
+    const price = (id: string) => {
+        const product = products.find(item => item.sku === 'DARAZ-' + id)
+        return product ? formatMoney(product.price) : null
+    }
+    return (
     <section className="slider-block w-full">
         <div className="container banner-block lg:pt-[30px] pt-5 grid lg:grid-cols-3 gap-5">
             <Link href="/product/1971845697" className="group lg:col-span-2 rounded-[28px] overflow-hidden bg-[#e7edf7] grid md:grid-cols-2 items-stretch">
@@ -11,9 +21,7 @@ const SliderPickora = () => (
                     <p className="body1 text-secondary mt-4 max-w-[420px]">40oz insulated stainless steel tumbler with handle, secure lid and reusable steel straw.</p>
                     <div className="mt-7">
                         <div className="flex items-baseline gap-3 flex-wrap">
-                            <span className="heading6">Rs. 2,699</span>
-                            <span className="text-sm text-secondary line-through">Rs. 2,999</span>
-                            <span className="rounded-full bg-white/70 px-2.5 py-1 text-xs font-semibold text-[#395997]">Save 10%</span>
+                            {price('1971845697') && <span className="heading6">{price('1971845697')}</span>}
                         </div>
                         <span className="inline-flex w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold uppercase text-white transition hover:bg-primary-dark mt-3">Shop Tumbler</span>
                     </div>
@@ -29,10 +37,10 @@ const SliderPickora = () => (
                         <Image src="/images/pickora/uv-money-detector.jpg" alt="ERITE UV fake note checker pen" fill priority sizes="(max-width: 1024px) 50vw, 20vw" className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" />
                     </div>
                     <div className="flex flex-col justify-center p-5 text-white">
-                        <span className="caption1 font-semibold uppercase">70% off</span>
+                        <span className="caption1 font-semibold uppercase">Everyday essential</span>
                         <h2 className="heading6 mt-1">UV Money Detector Pen</h2>
                         <div className="mt-3 flex flex-col items-start">
-                            <span className="caption1 font-semibold">Rs. 270</span>
+                            {price('1963263814') && <span className="caption1 font-semibold">{price('1963263814')}</span>}
                             <span className="inline-flex w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold uppercase text-white transition hover:bg-primary-dark mt-3">Shop now</span>
                         </div>
                     </div>
@@ -46,7 +54,7 @@ const SliderPickora = () => (
                         <span className="caption1 font-semibold uppercase text-secondary">Summer ready</span>
                         <h2 className="heading6 mt-1">5-Speed Digital Hand Fan</h2>
                         <div className="mt-3 flex flex-col items-start">
-                            <span className="caption1 font-semibold">Rs. 1,399</span>
+                            {price('1966895078') && <span className="caption1 font-semibold">{price('1966895078')}</span>}
                             <span className="button-main mt-3 inline-flex min-w-[118px] items-center justify-center">Shop now</span>
                         </div>
                     </div>
@@ -54,6 +62,7 @@ const SliderPickora = () => (
             </div>
         </div>
     </section>
-)
+    )
+}
 
 export default SliderPickora
