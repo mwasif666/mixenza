@@ -37,11 +37,13 @@ await Promise.all(Array.from({length:12},async()=>{
   while(next<products.length){
     const i=next++;const p=products[i],urls=(p.images||[]).map(img=>typeof img==='string'?img:(img?.url||img?.src||'')).filter(Boolean);
     const attempts=[];
-    const isMemon = group(p) === 'Memon Traders';
-    for(const url of (isMemon ? urls : urls.slice(0,5))){
+    const galleryCheck = group(p) === 'Memon Traders' ||
+        group(p) === 'Meem Traders' ||
+        (p.sku?.startsWith('TOS-') && urls[0]?.startsWith('https://cdn.shopify.com/'));
+    for(const url of (galleryCheck ? urls : urls.slice(0,5))){
       const testResult=await test(url);attempts.push({url,...testResult});
-      // For Memon, verify *every* thumbnail, not only the cover.
-      if(testResult.ok && !isMemon)break;
+      // Check all restored thumbnails, not just the cover.
+      if(testResult.ok && !galleryCheck)break;
     }
     results[i]={sku:p.sku,title:p.title,group:group(p),galleryCount:urls.length,
       validFirst:attempts[0]?.ok||false,anyValid:attempts.some(x=>x.ok),attempts};
@@ -56,9 +58,11 @@ for(const row of results){
 }
 console.log('AUDIT_SUMMARY_JSON',JSON.stringify({products:results.length,byGroup,totalBrokenCover:results.filter(x=>!x.validFirst).length,allFailed:results.filter(x=>!x.anyValid).length,
 memonGalleryChecked:results.filter(x=>x.group==='Memon Traders').reduce((sum,r)=>sum+r.attempts.length,0),
-memonBrokenGalleryImages:results.filter(x=>x.group==='Memon Traders').reduce((sum,r)=>sum+r.attempts.filter(a=>!a.ok).length,0)}));
-for(const row of results.filter(x=>x.group==='Memon Traders'&&x.attempts.some(a=>!a.ok))) {
-  console.log('BAD_MEMON_GALLERY',JSON.stringify({sku:row.sku,failed:row.attempts.filter(a=>!a.ok).map(a=>({url:a.url,status:a.status,type:a.type}))}));
+memonBrokenGalleryImages:results.filter(x=>x.group==='Memon Traders').reduce((sum,r)=>sum+r.attempts.filter(a=>!a.ok).length,0),
+galleryFilesTested:results.reduce((sum,r)=>sum+r.attempts.length,0),
+galleryBrokenFiles:results.reduce((sum,r)=>sum+r.attempts.filter(a=>!a.ok).length,0)}));
+for(const row of results.filter(x=>x.attempts.some(a=>!a.ok))) {
+  console.log('BAD_GALLERY',JSON.stringify({sku:row.sku,failed:row.attempts.filter(a=>!a.ok).map(a=>({url:a.url,status:a.status,type:a.type}))}));
 }
 const failures=results.filter(x=>!x.validFirst);
 for(const row of failures.slice(0,120)){
