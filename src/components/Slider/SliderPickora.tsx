@@ -1,9 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { formatMoney } from '@/utils/currency'
-
-'use client'
 
 const SliderPickora = () => {
     const products = useCatalogProducts()
