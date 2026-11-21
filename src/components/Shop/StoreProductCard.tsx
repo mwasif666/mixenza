@@ -25,7 +25,7 @@ export function StarRow({ rate = 0, count = 0 }: { rate?: number; count?: number
     )
 }
 
-export default function StoreProductCard({ product }: { product: ProductType }) {
+export default function StoreProductCard({ product, premium = false }: { product: ProductType; premium?: boolean }) {
     const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
     const { openQuickview } = useModalQuickviewContext()
@@ -49,8 +49,8 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
     }
 
     return (
-        <article className="group">
-            <div className="relative h-[300px] rounded-xl bg-[#f4f4f5] overflow-hidden">
+        <article className={premium ? "group mx-product-card" : "group"}>
+            <div className={premium ? "mx-product-photo relative h-[300px] rounded-xl bg-[#f4f4f5] overflow-hidden" : "relative h-[300px] rounded-xl bg-[#f4f4f5] overflow-hidden"}>
                 <Link href={productPath(product)} className="absolute inset-0">
                     {image ? (
                         <Image src={image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw"
@@ -93,7 +93,7 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
                     </button>
                 )}
             </div>
-            <div className="flex items-start justify-between gap-2 mt-2.5">
+            <div className={premium ? "mx-product-caption flex items-start justify-between gap-2 mt-2.5" : "flex items-start justify-between gap-2 mt-2.5"}>
                 <Link href={productPath(product)} className="text-[13px] font-medium leading-4 line-clamp-2">{product.name}</Link>
                 <strong className="shrink-0 text-[13px] leading-4">{formatMoney(product.price)}</strong>
             </div>

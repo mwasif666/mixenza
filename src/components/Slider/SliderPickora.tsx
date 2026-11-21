@@ -1,68 +1,68 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import * as Icon from '@phosphor-icons/react/dist/ssr'
 import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { formatMoney } from '@/utils/currency'
 
-const SliderPickora = () => {
-    const products = useCatalogProducts()
-    const price = (id: string) => {
-        const product = products.find(item => item.sku === 'DARAZ-' + id)
-        return product ? formatMoney(product.price) : null
-    }
-    return (
-    <section className="slider-block w-full">
-        <div className="container banner-block lg:pt-[30px] pt-5 grid lg:grid-cols-3 gap-5">
-            <Link href="/product/1971845697" className="group lg:col-span-2 rounded-[28px] overflow-hidden bg-[#e7edf7] grid md:grid-cols-2 items-stretch">
-                <div className="relative z-[2] flex flex-col justify-center md:pl-14 px-6 py-10">
-                    <span className="text-button-uppercase text-[#395997]">Mixenza everyday essential</span>
-                    <h1 className="heading2 mt-3">Sip in style,<br />all day long.</h1>
-                    <p className="body1 text-secondary mt-4 max-w-[420px]">40oz insulated stainless steel tumbler with handle, secure lid and reusable steel straw.</p>
-                    <div className="mt-7">
-                        <div className="flex items-baseline gap-3 flex-wrap">
-                            {price('1971845697') && <span className="heading6">{price('1971845697')}</span>}
-                        </div>
-                        <span className="inline-flex w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold uppercase text-white transition hover:bg-primary-dark mt-3">Shop Tumbler</span>
-                    </div>
-                </div>
-                <div className="relative m-4 aspect-square overflow-hidden rounded-[22px] bg-white/40 md:my-6 md:ml-0 md:mr-6 md:aspect-auto md:min-h-[472px]">
-                    <Image src="/images/pickora/steel-tumbler.png" alt="40oz insulated steel tumbler" fill priority sizes="(max-width: 1024px) 90vw, 40vw" className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]" />
-                </div>
-            </Link>
+const slides = [
+  { id: '1971845697', eyebrow: 'Mixenza essentials', first: 'Everyday Essentials', second: 'for a Smarter Life.', body: 'Discover practical, well-chosen products that make your everyday routine feel effortless.', image: '/images/pickora/steel-tumbler.png', alt: '40oz insulated tumbler with handle' },
+  { id: '1973702573', eyebrow: 'Everyday comfort', first: 'Little Upgrades.', second: 'Big Difference.', body: 'Useful finds for the home, your routine and everything in between.', image: '/images/pickora/massage-gun.png', alt: 'Rechargeable massage gun with accessories' },
+  { id: '1971400774', eyebrow: 'Made for your routine', first: 'Thoughtful Finds', second: 'for Every Day.', body: 'From clever gadgets to simple home essentials, discover more with Mixenza.', image: '/images/pickora/water-dispenser.png', alt: 'Automatic water dispenser' },
+]
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-5">
-                <Link href="/product/1963263814" className="group grid grid-cols-2 min-h-[220px] rounded-[24px] overflow-hidden bg-[#111647]">
-                    <div className="relative m-4 mr-0 overflow-hidden rounded-[18px] bg-white/5">
-                        <Image src="/images/pickora/uv-money-detector.jpg" alt="ERITE UV fake note checker pen" fill priority sizes="(max-width: 1024px) 50vw, 20vw" className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" />
-                    </div>
-                    <div className="flex flex-col justify-center p-5 text-white">
-                        <span className="caption1 font-semibold uppercase">Everyday essential</span>
-                        <h2 className="heading6 mt-1">UV Money Detector Pen</h2>
-                        <div className="mt-3 flex flex-col items-start">
-                            {price('1963263814') && <span className="caption1 font-semibold">{price('1963263814')}</span>}
-                            <span className="inline-flex w-fit items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold uppercase text-white transition hover:bg-primary-dark mt-3">Shop now</span>
-                        </div>
-                    </div>
-                </Link>
+const sideOffers = [
+  { id: '1963263814', name: 'UV Money Detector Pen', body: 'A handy everyday essential', image: '/images/pickora/uv-money-detector.jpg', alt: 'UV money detector pen', tone: 'violet' },
+  { id: '1966895078', name: '5-Speed Digital Hand Fan', body: 'Compact personal cooling', image: '/images/pickora/digital-hand-fan.png', alt: 'Digital rechargeable hand fan', tone: 'blue' },
+]
 
-                <Link href="/product/1966895078" className="group grid grid-cols-2 min-h-[220px] rounded-[24px] overflow-hidden bg-[#eef8fc]">
-                    <div className="relative m-4 mr-0 overflow-hidden rounded-[18px] bg-white/50">
-                        <Image src="/images/pickora/digital-hand-fan.png" alt="Digital rechargeable hand fan" fill priority sizes="(max-width: 1024px) 50vw, 20vw" className="object-cover transition-transform duration-500 ease-out group-hover:scale-105" />
-                    </div>
-                    <div className="flex flex-col justify-center p-5">
-                        <span className="caption1 font-semibold uppercase text-secondary">Summer ready</span>
-                        <h2 className="heading6 mt-1">5-Speed Digital Hand Fan</h2>
-                        <div className="mt-3 flex flex-col items-start">
-                            {price('1966895078') && <span className="caption1 font-semibold">{price('1966895078')}</span>}
-                            <span className="button-main mt-3 inline-flex min-w-[118px] items-center justify-center">Shop now</span>
-                        </div>
-                    </div>
-                </Link>
-            </div>
+export default function SliderPickora() {
+  const [active, setActive] = useState(0)
+  const products = useCatalogProducts()
+  const currentPrice = (id: string) => {
+    const value = products.find(item => item.sku === 'DARAZ-' + id)
+    return value ? formatMoney(value.price) : ''
+  }
+  const slide = slides[active]
+  const changeSlide = (direction: number) => setActive((value) => (value + direction + slides.length) % slides.length)
+
+  return (
+    <section className="mx-hero-section" aria-label="Featured Mixenza shopping offers">
+      <div className="container mx-hero-grid">
+        <div className="mx-hero-stage">
+          <div className="mx-hero-light" aria-hidden="true" />
+          <div className="mx-hero-copy" key={slide.id}>
+            <span className="mx-eyebrow mx-eyebrow-light">{slide.eyebrow}</span>
+            <h1>{slide.first}<br /><span>{slide.second}</span></h1>
+            <p>{slide.body}</p>
+            <Link className="mx-button mx-button-light" href={'/product/' + slide.id}>Shop now <Icon.ArrowRight size={17} weight="bold" /></Link>
+          </div>
+          <div className="mx-hero-art" key={slide.image}>
+            <span className="mx-hero-pedestal" aria-hidden="true" />
+            <Image src={slide.image} alt={slide.alt} fill priority sizes="(max-width: 767px) 90vw, (max-width: 1199px) 55vw, 42vw" className="mx-hero-product" />
+          </div>
+          <button type="button" className="mx-hero-arrow mx-hero-arrow-left" aria-label="Previous featured offer" onClick={() => changeSlide(-1)}><Icon.CaretLeft size={18} weight="bold" /></button>
+          <button type="button" className="mx-hero-arrow mx-hero-arrow-right" aria-label="Next featured offer" onClick={() => changeSlide(1)}><Icon.CaretRight size={18} weight="bold" /></button>
+          <div className="mx-hero-dots" aria-label="Choose featured offer">
+            {slides.map((entry, index) => <button key={entry.id} type="button" onClick={() => setActive(index)} className={index === active ? 'active' : ''} aria-label={'Go to offer ' + (index + 1)} aria-current={index === active ? 'true' : undefined} />)}
+          </div>
         </div>
+        <div className="mx-hero-side">
+          {sideOffers.map((offer) => (
+            <Link key={offer.id} href={'/product/' + offer.id} className={'mx-side-offer mx-side-' + offer.tone}>
+              <div className="mx-side-copy">
+                <span className="mx-side-kicker">Mixenza finds</span>
+                <h2>{offer.name}</h2>
+                <p>{offer.body}</p>
+                <div className="mx-side-meta">{currentPrice(offer.id) && <strong>{currentPrice(offer.id)}</strong>}<span className="mx-side-round" aria-hidden="true"><Icon.ArrowUpRight size={18}/></span></div>
+              </div>
+              <div className="mx-side-photo"><Image src={offer.image} alt={offer.alt} fill sizes="(max-width: 767px) 45vw, 18vw" className="object-contain" /></div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </section>
-    )
+  )
 }
-
-export default SliderPickora

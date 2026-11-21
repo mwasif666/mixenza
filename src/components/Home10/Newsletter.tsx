@@ -1,22 +1,16 @@
-import React from 'react'
 import NewsletterForm from '@/components/Newsletter/NewsletterForm'
+import * as Icon from '@phosphor-icons/react/dist/ssr'
 
-const Newsletter = () => {
-    return (
-        <>
-            <div className={`newsletter-block bg-green py-7`}>
-                <div className="container flex max-lg:flex-col items-center lg:justify-between justify-center gap-8 gap-y-4">
-                    <div className="text-content">
-                        <div className="heading3 max-lg:text-center">Sign up and get 10% off</div>
-                        <div className='mt-2 max-lg:text-center'>Sign up for early sale access, new in, promotions and more</div>
-                    </div>
-                    <div className="input-block xl:w-5/12 md:w-1/2 sm:w-3/5 w-full">
-                        <NewsletterForm source="homepage" variant="bar" />
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+export default function Newsletter() {
+  return (
+    <section className="container mx-newsletter-container" aria-labelledby="mx-newsletter-heading">
+      <div className="mx-newsletter-box">
+        <div className="mx-newsletter-head">
+          <Icon.EnvelopeSimple size={35} weight="light" aria-hidden="true" />
+          <div><h2 id="mx-newsletter-heading">Stay in the Mixenza Loop</h2><p>New arrivals, useful discoveries and exclusive updates, straight to your inbox.</p></div>
+        </div>
+        <div className="mx-newsletter-form"><NewsletterForm source="homepage" variant="bar" /></div>
+      </div>
+    </section>
+  )
 }
-
-export default Newsletter

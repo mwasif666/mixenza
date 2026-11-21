@@ -8,11 +8,11 @@ import { BRAND } from '@/constants/brand'
 const Footer = () => {
 
     return (
-        <footer id="footer" className="footer bg-surface">
+        <footer id="footer" className="footer mx-premium-footer">
             <div className="container">
                 <div className="grid gap-10 py-14 md:py-16 lg:grid-cols-[1.1fr_2fr_1.15fr] lg:gap-12">
                     <div>
-                        <Logo variant="color" height={34} priority />
+                        <Logo variant="light" height={34} priority />
                         <p className="caption1 mt-4 max-w-[310px] leading-6 text-secondary">
                             Everyday essentials, useful gadgets and marketplace finds delivered across Pakistan.
                         </p>

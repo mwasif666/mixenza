@@ -258,90 +258,62 @@ export default function DynamicMarketplaceHeader() {
     const featuredImage = categories[0]?.image || products[0]?.thumbImage?.[0] || ''
 
     return (
-        <header className="site-global-marketplace-header relative z-[100] w-full bg-white">
-            <div className="header-menu-main style-marketplace relative bg-brand w-full md:h-[74px] h-[56px]">
-                <div className="container mx-auto h-full">
-                    <div className="header-main flex items-center justify-between h-full gap-4">
-                        <button className="lg:hidden text-white" onClick={handleMenuMobile} aria-label="Open menu"><Icon.List size={24} /></button>
-                        <Logo variant="light" height={26} priority href="/" />
-                        <div ref={searchRef} className="relative flex-1 max-w-[640px] px-2 max-lg:hidden">
-                            <div className="flex items-center h-11 rounded-full bg-white overflow-hidden pl-4 shadow-sm">
-                                <Icon.MagnifyingGlass size={18} className="text-secondary shrink-0" />
-                                <input
-                                    className="h-full flex-1 border-0 bg-transparent px-3 outline-none text-sm"
-                                    placeholder="Search products, categories..."
-                                    value={keyword}
-                                    onFocus={() => setSearchOpen(true)}
-                                    onChange={event => { setKeyword(event.target.value); setSearchOpen(true) }}
-                                    onKeyDown={event => event.key === 'Enter' && search()}
-                                />
-                                <button type="button" onClick={() => search()} className="h-full px-6 bg-primary hover:bg-primary-dark text-white text-xs font-semibold tracking-wide uppercase">Search</button>
-                            </div>
-                            {searchOpen && keyword.trim() && (
-                                <div className="absolute left-2 right-2 top-[52px] z-[120] rounded-2xl bg-white p-4 shadow-2xl">
-                                    {suggestions.length ? suggestions.map(product => (
-                                        <Link
-                                            key={product.id}
-                                            href={productPath(product)}
-                                            onClick={() => setSearchOpen(false)}
-                                            className="flex items-center gap-3 py-3 border-b border-line last:border-0"
-                                        >
-                                            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-[#f4f4f5]">
-                                                {product.thumbImage?.[0] && <img src={product.thumbImage[0]} alt="" className="h-full w-full object-contain p-1" loading="lazy" />}
-                                            </div>
-                                            <div className="min-w-0 flex-1">
-                                                <div className="truncate text-sm font-medium">{product.name}</div>
-                                            </div>
-                                            <strong className="text-sm">Rs. {Number(product.price || 0).toLocaleString('en-PK')}</strong>
-                                        </Link>
-                                    )) : <button type="button" onClick={() => search()} className="w-full px-3 py-3 text-left text-sm text-secondary">Search for &ldquo;{keyword.trim()}&rdquo;</button>}
-                                </div>
-                            )}
-                        </div>
-                        <button className="lg:hidden text-white" onClick={openModalSearch} aria-label="Search"><Icon.MagnifyingGlass size={23} /></button>
-                        <div className="flex items-center gap-4 text-white">
-                            <button onClick={handleLoginPopup} aria-label="Account"><Icon.User weight="bold" size={23} /></button>
-                            <button onClick={openModalWishlist} aria-label="Wishlist" className="max-md:hidden"><Icon.Heart weight="bold" size={23} /></button>
-                            <button onClick={openModalCart} aria-label="Cart" className="relative"><Icon.Handbag weight="bold" size={23} /><span className="absolute -right-2 -top-2 text-[10px] text-white bg-red w-4 h-4 flex items-center justify-center rounded-full">{cartState.cartArray.length}</span></button>
-                        </div>
-                    </div>
-                </div>
+        <header className="site-global-marketplace-header mx-site-header relative z-[100] w-full bg-white">
+          <div className="mx-announcement">
+            <div className="container mx-announcement-inner">
+              <span><Icon.Truck size={17} /> Free Shipping on Orders Above Rs. 5,000</span>
+              <span><Icon.ArrowCounterClockwise size={17} /> Easy Returns Within 7 Days</span>
+              <span><Icon.ShieldCheck size={17} /> Secure &amp; Trusted Payments</span>
             </div>
-
-            {openMenuMobile && (
-                <div id="menu-mobile" className="lg:hidden bg-white border-b border-line px-6 py-4 flex flex-col gap-3">
-                    <Link href="/" onClick={handleMenuMobile} className="text-button-uppercase py-2">Home</Link>
-                    <Link href="/shop" onClick={handleMenuMobile} className="text-button-uppercase py-2">Shop</Link>
-                    <Link href="/blog" onClick={handleMenuMobile} className="text-button-uppercase py-2">Blog</Link>
-                    <Link href="/pages/contact" onClick={handleMenuMobile} className="text-button-uppercase py-2">Contact</Link>
+          </div>
+          <div className="mx-mainbar">
+            <div className="container mx-header-inner">
+              <button type="button" className="mx-mobile-menu-button" onClick={handleMenuMobile} aria-label="Toggle navigation"><Icon.List size={26} /></button>
+              <Logo variant="color" height={31} priority href="/" />
+              <nav className="mx-primary-nav" aria-label="Main navigation" onMouseLeave={() => setOpenShop(false)}>
+                <Link href="/" className="mx-nav-active">Home</Link>
+                <div className="mx-shop-entry" onMouseEnter={() => setOpenShop(true)}>
+                  <Link href="/shop">Shop <Icon.CaretDown size={12}/></Link>
                 </div>
-            )}
-
-            <div className="relative border-b border-line h-[52px] max-lg:hidden bg-white" onMouseLeave={() => setOpenShop(false)}>
-                <div className="container mx-auto h-full flex items-center justify-center">
-                    <nav className="flex items-center gap-8 h-full">
-                        <Link href="/" className="text-button-uppercase">Home</Link>
-                        {/* ─── SHOP: mega menu with category columns + products ─── */}
-                        <div
-                            className="h-full flex items-center"
-                            onMouseEnter={() => setOpenShop(true)}
-                        >
-                            <Link href="/shop" className="h-full flex items-center gap-1 text-button-uppercase">
-                                Shop <Icon.CaretDown size={14} />
-                            </Link>
-                        </div>
-                        <Link href="/shop" className="text-button-uppercase">Products</Link>
-                        <Link href="/blog" className="text-button-uppercase">Blog</Link>
-                        <Link href="/pages/contact" className="text-button-uppercase">Contact</Link>
-                    </nav>
-                </div>
-                {openShop && (
-                    <div className="container relative mx-auto h-0" onMouseEnter={() => setOpenShop(true)}>
-                        <ShopMegaMenu categories={categories} loading={catalogLoading} error={catalogError} onClose={() => setOpenShop(false)} />
-                    </div>
-                )}
+                <Link href="/shop">All Categories</Link>
+                <Link href="/shop">New Arrivals</Link>
+                <Link href="/shop">Best Sellers</Link>
+                <Link href="/blog">Blog</Link>
+                <Link href="/pages/contact">Contact</Link>
+                {openShop && <div className="mx-menu-popup" onMouseEnter={() => setOpenShop(true)} onMouseLeave={() => setOpenShop(false)}><ShopMegaMenu categories={categories} loading={catalogLoading} error={catalogError} onClose={() => setOpenShop(false)} /></div>}
+              </nav>
+              <div className="mx-header-actions">
+                <button type="button" aria-label="Search Mixenza" onClick={() => setSearchOpen(!searchOpen)}><Icon.MagnifyingGlass size={22}/></button>
+                <button type="button" aria-label="My account" onClick={handleLoginPopup}><Icon.User size={22}/></button>
+                <button type="button" aria-label="Wishlist" onClick={openModalWishlist} className="mx-wishlist-action"><Icon.Heart size={23}/></button>
+                <button type="button" aria-label="Shopping cart" onClick={openModalCart} className="mx-cart-action"><Icon.ShoppingCart size={23}/><span>{cartState.cartArray.length}</span></button>
+              </div>
             </div>
-
+          </div>
+          {searchOpen && <div className="mx-search-panel">
+            <div className="container">
+              <div className="mx-search-wrap" ref={searchRef}>
+                <Icon.MagnifyingGlass size={21} aria-hidden="true"/>
+                <input type="search" value={keyword} placeholder="Search for products and categories" aria-label="Search products" autoFocus
+                  onChange={event => setKeyword(event.target.value)} onKeyDown={event => {if(event.key === 'Enter')search()}} />
+                <button type="button" className="mx-search-submit" onClick={() => search()}>Search</button>
+                <button type="button" className="mx-search-close" aria-label="Close search" onClick={() => setSearchOpen(false)}><Icon.X size={20}/></button>
+              </div>
+              {keyword.trim() && <div className="mx-search-results">
+                {suggestions.length ? suggestions.map(product =>
+                  <Link href={productPath(product)} onClick={() => setSearchOpen(false)} key={product.id}>{product.name}</Link>
+                ) : <button type="button" onClick={() => search()}>Search for &ldquo;{keyword.trim()}&rdquo;</button>}
+              </div>}
+            </div>
+          </div>}
+          {openMenuMobile && <nav className="mx-mobile-nav" aria-label="Mobile navigation">
+            <Link href="/" onClick={handleMenuMobile}>Home</Link>
+            <Link href="/shop" onClick={handleMenuMobile}>Shop</Link>
+            <Link href="/shop" onClick={handleMenuMobile}>All Categories</Link>
+            <Link href="/shop" onClick={handleMenuMobile}>New Arrivals</Link>
+            <Link href="/blog" onClick={handleMenuMobile}>Blog</Link>
+            <Link href="/pages/contact" onClick={handleMenuMobile}>Contact</Link>
+          </nav>}
             <div className={`login-popup absolute top-[118px] right-8 w-[320px] p-7 rounded-xl bg-white box-shadow-sm ${openLoginPopup ? 'open' : ''}`}>
                 <Link href="/login" className="button-main w-full text-center">Login</Link>
                 <div className="text-secondary text-center mt-3 pb-4">Don&apos;t have an account? <Link href="/register" className="text-black pl-1 hover:underline">Register</Link></div>
