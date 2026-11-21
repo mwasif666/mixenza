@@ -9,6 +9,7 @@ import { CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { formatMoney } from '@/utils/currency'
 import StoreProductCard from '@/components/Shop/StoreProductCard'
+import { isBulkOnlyProduct } from '@/lib/bulkOrder'
 
 interface Props {
     products: SourceProduct[]
@@ -105,8 +106,9 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
     }, [products])
 
     const stockCounts = useMemo(() => ({
-        in: products.filter(product => product.quantity > 0).length,
-        out: products.filter(product => product.quantity === 0).length,
+        in: products.filter(product => product.quantity > 0 && !isBulkOnlyProduct(product.name)).length,
+        out: products.filter(product => product.quantity === 0 && !isBulkOnlyProduct(product.name)).length,
+        bulk: products.filter(product => isBulkOnlyProduct(product.name)).length,
     }), [products])
 
     const filtered = useMemo(() => {
@@ -116,8 +118,9 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
             const categoryMatch = !activeCategories.length || product.categories.some(name => activeCategories.includes(name))
             const brandMatch = !brands.length || brands.includes(product.brand || 'Mixenza')
             const stockMatch = !availability.length
-                || (availability.includes('in') && product.quantity > 0)
-                || (availability.includes('out') && product.quantity === 0)
+                || (availability.includes('in') && product.quantity > 0 && !isBulkOnlyProduct(product.name))
+                || (availability.includes('out') && product.quantity === 0 && !isBulkOnlyProduct(product.name))
+                || (availability.includes('bulk') && isBulkOnlyProduct(product.name))
             const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1]
             const queryMatch = !normalized || [product.name, product.category, product.description, ...product.tags].some(value => String(value || '').toLowerCase().includes(normalized))
             return categoryMatch && brandMatch && stockMatch && priceMatch && queryMatch
@@ -228,7 +231,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                                 <FilterRow
                                     checked={availability.includes('in')}
                                     onChange={() => { setAvailability(toggleValue(availability, 'in')); setPage(1) }}
-                                    label="In stock"
+                                    label="Available to order"
                                     count={stockCounts.in}
                                 />
                                 <FilterRow
@@ -236,6 +239,12 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                                     onChange={() => { setAvailability(toggleValue(availability, 'out')); setPage(1) }}
                                     label="Out of stock"
                                     count={stockCounts.out}
+                                />
+                                <FilterRow
+                                    checked={availability.includes('bulk')}
+                                    onChange={() => { setAvailability(toggleValue(availability, 'bulk')); setPage(1) }}
+                                    label="Bulk quote required"
+                                    count={stockCounts.bulk}
                                 />
                             </div>
 

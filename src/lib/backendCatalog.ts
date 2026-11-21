@@ -41,7 +41,8 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
     const images = imageUrls(product.images)
     const price = Number(product.discountPrice || product.price || 0)
     const originPrice = Number(product.price || price)
-    const categoryName = product.category?.name || 'General'
+    const rawCategory = product.category?.name?.trim() || 'General'
+    const categoryName = ['shop', 'general'].includes(rawCategory.toLowerCase()) ? 'General Merchandise' : rawCategory
     return {
         id: String(product._id || product.id),
         category: categoryName,

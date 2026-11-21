@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import Footer from '@/components/Footer/Footer'
 import SourceCatalog from '@/components/TheOnlineStore/SourceCatalog'
 import { getCatalog } from '@/lib/theOnlineStore'
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: { category: string 
 
 export default async function ShopCategoryPage({ params }: { params: { category: string } }) {
     if (reserved.has(params.category)) notFound()
+    if (params.category === 'shop' || params.category === 'general') redirect('/shop/general-merchandise')
     const { products, categories } = await getCatalog().catch(() => ({ products: [], categories: [] as Awaited<ReturnType<typeof getCatalog>>['categories'] }))
     const match = categories.find(item => item.slug === params.category)
     if (!match) notFound()

@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 
 export default async function ShopPage({ searchParams }: { searchParams: { category?: string; type?: string } }) {
     const products = await getSourceProducts().catch(() => [])
-    const category = searchParams.category || searchParams.type || null
+    const requestedCategory = searchParams.category || searchParams.type || null
+    const category = requestedCategory && ['shop', 'general'].includes(requestedCategory.toLowerCase()) ? 'General Merchandise' : requestedCategory
     return (
         <>
             <SourceCatalog products={products} initialCategory={category} title={category ? category : 'Shop'} />
