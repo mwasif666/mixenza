@@ -1,5 +1,5 @@
 import type { ProductType } from '@/type/ProductType'
-import { getBackendCatalogProducts } from './backendCatalog'
+import { getBackendCatalogProducts, getBackendSingleProduct } from './backendCatalog'
 
 // Compatibility names for existing pages. All product data now comes from
 // the admin database; importing the supplier catalog is an explicit backend job.
@@ -20,9 +20,8 @@ export type SourceProduct = ProductType & {
 export const getSourceProducts = getBackendCatalogProducts
 
 export async function getSourceProductById(id: string | number) {
-    const products = await getBackendCatalogProducts()
-    const value = String(id)
-    return products.find(product => product.id === value || product.sourceId === value || product.slug === value) || null
+    // Individual pages fetch just their own full description.
+    return getBackendSingleProduct(String(id))
 }
 
 export async function getCatalog() {
