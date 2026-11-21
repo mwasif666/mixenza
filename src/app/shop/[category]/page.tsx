@@ -12,7 +12,7 @@ const reserved = new Set(['breadcrumb1', 'breadcrumb2', 'collection', 'default-g
 export async function generateMetadata({ params }: { params: { category: string } }): Promise<Metadata> {
     const { categories } = await getCatalog()
     const match = categories.find(item => item.slug === params.category)
-    return { title: `${match?.name || 'Shop'} | ${BRAND.name}` }
+    return { title: match?.name || 'Shop' }
 }
 
 export default async function ShopCategoryPage({ params }: { params: { category: string } }) {

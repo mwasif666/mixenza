@@ -1,8 +1,9 @@
 'use client'
 
 import { formatMoney } from '@/utils/currency'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import * as Icon from '@phosphor-icons/react/dist/ssr'
 import { useModalQuickviewContext } from '@/context/ModalQuickviewContext'
 import { useCart } from '@/context/CartContext'
@@ -12,19 +13,21 @@ import { useModalWishlistContext } from '@/context/ModalWishlistContext'
 import Rate from '../Other/Rate'
 import ModalSizeguide from './ModalSizeguide'
 import { productPath } from '@/lib/storePaths'
-import { useLiveViewers } from '@/hooks/useLiveViewers'
+import { isBulkOnlyProduct } from '@/lib/bulkOrder'
 
 const ModalQuickview = () => {
     const [openSizeGuide, setOpenSizeGuide] = useState(false)
     const { selectedProduct, closeQuickview } = useModalQuickviewContext()
     const [activeColor, setActiveColor] = useState('')
     const [activeSize, setActiveSize] = useState('')
-    const { addToCart, updateCart, cartState } = useCart()
+    const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
     const { addToWishlist, removeFromWishlist, wishlistState } = useWishlist()
     const { openModalWishlist } = useModalWishlistContext()
     const percentSale = selectedProduct && Math.floor(100 - ((selectedProduct.price / selectedProduct.originPrice) * 100))
-    const viewers = useLiveViewers(Boolean(selectedProduct), selectedProduct ? Number(selectedProduct.id) % 60 + 20 : 38)
+    const [quickQty, setQuickQty] = useState(1)
+    const bulkOnly = isBulkOnlyProduct(selectedProduct?.name || '')
+    useEffect(() => { setQuickQty(1) }, [selectedProduct?.id])
 
     const handleOpenSizeGuide = () => setOpenSizeGuide(true)
     const handleCloseSizeGuide = () => setOpenSizeGuide(false)
@@ -32,27 +35,17 @@ const ModalQuickview = () => {
     const handleActiveSize = (item: string) => setActiveSize(item)
 
     const handleIncreaseQuantity = () => {
-        if (selectedProduct) {
-            selectedProduct.quantityPurchase += 1
-            updateCart(selectedProduct.id, selectedProduct.quantityPurchase + 1, activeSize, activeColor)
-        }
+        setQuickQty(value => Math.min(Math.max(1, selectedProduct?.quantity || 1), value + 1))
     }
 
     const handleDecreaseQuantity = () => {
-        if (selectedProduct && selectedProduct.quantityPurchase > 1) {
-            selectedProduct.quantityPurchase -= 1
-            updateCart(selectedProduct.id, selectedProduct.quantityPurchase - 1, activeSize, activeColor)
-        }
+        setQuickQty(value => Math.max(1, value - 1))
     }
 
     const handleAddToCart = () => {
-        if (!selectedProduct) return
-        if (!cartState.cartArray.find(item => item.id === selectedProduct.id)) {
-            addToCart({ ...selectedProduct })
-            updateCart(selectedProduct.id, selectedProduct.quantityPurchase, activeSize, activeColor)
-        } else {
-            updateCart(selectedProduct.id, selectedProduct.quantityPurchase, activeSize, activeColor)
-        }
+        if (!selectedProduct || selectedProduct.quantity <= 0 || bulkOnly) return
+        addToCart({ ...selectedProduct, quantityPurchase: quickQty })
+        updateCart(selectedProduct.id, quickQty, activeSize, activeColor)
         openModalCart()
         closeQuickview()
     }
@@ -115,7 +108,7 @@ const ModalQuickview = () => {
                                         height={2000}
                                         alt={selectedProduct?.name || 'Product'}
                                         priority={true}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                 </div>
                             ))}
@@ -148,10 +141,11 @@ const ModalQuickview = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="flex items-center mt-3">
-                                <Rate currentRate={selectedProduct?.rate} size={14} />
-                                <span className="caption1 text-secondary tabular-nums transition-all duration-500">({viewers} views)</span>
-                            </div>
+                            {!!selectedProduct?.rate && selectedProduct.rate > 0 && (
+                                <div className="flex items-center mt-3">
+                                    <Rate currentRate={selectedProduct.rate} size={14} />
+                                </div>
+                            )}
                             <div className="flex items-center gap-3 flex-wrap mt-5 pb-6 border-b border-line">
                                 <div className="product-price heading5">{formatMoney(selectedProduct?.price)}</div>
                                 {!!selectedProduct?.originPrice && selectedProduct.originPrice > (selectedProduct.price || 0) && (
@@ -222,24 +216,30 @@ const ModalQuickview = () => {
                                     <div className="quantity-block md:p-3 max-md:py-1.5 max-md:px-3 flex items-center justify-between rounded-lg border border-line sm:w-[180px] w-[120px] flex-shrink-0">
                                         <Icon.Minus
                                             onClick={handleDecreaseQuantity}
-                                            className={`${selectedProduct?.quantityPurchase === 1 ? 'disabled' : ''} cursor-pointer body1`}
+                                            className={`${quickQty === 1 ? 'disabled' : ''} cursor-pointer body1`}
                                         />
-                                        <div className="body1 font-semibold">{selectedProduct?.quantityPurchase}</div>
+                                        <div className="body1 font-semibold">{quickQty}</div>
                                         <Icon.Plus
                                             onClick={handleIncreaseQuantity}
                                             className="cursor-pointer body1"
                                         />
                                     </div>
-                                    <div onClick={handleAddToCart} className="button-main w-full text-center bg-white text-black border border-black">Add To Cart</div>
+                                    {bulkOnly ? (
+                                        <Link href="/pages/contact" onClick={closeQuickview} className="button-main w-full text-center bg-white text-black border border-black">Request bulk quote</Link>
+                                    ) : (
+                                        <button type="button" disabled={!selectedProduct?.quantity} onClick={handleAddToCart}
+                                            className="button-main w-full text-center bg-white text-black border border-black disabled:opacity-40">Add To Cart</button>
+                                    )}
                                 </div>
                                 <div className="button-block mt-5">
-                                    <div onClick={handleAddToCart} className="button-main w-full text-center cursor-pointer">Buy It Now</div>
+                                    {!bulkOnly && <button type="button" disabled={!selectedProduct?.quantity} onClick={handleAddToCart}
+                                        className="button-main w-full text-center cursor-pointer disabled:opacity-40">Buy It Now</button>}
                                 </div>
                                 <div className="more-infor mt-6">
                                     <div className="flex items-center flex-wrap gap-1">
                                         <Icon.Timer className="body1" />
-                                        <span className="text-title">Estimated Delivery:</span>
-                                        <span className="text-secondary">3 to 5 days</span>
+                                        <span className="text-title">Delivery:</span>
+                                        <Link href="/pages/shipping-policy" onClick={closeQuickview} className="text-secondary underline">Timing varies by supplier and location</Link>
                                     </div>
                                     <div className="flex items-center gap-1 mt-3">
                                         <div className="text-title">SKU:</div>
