@@ -15,7 +15,6 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
         ...(product.images || []),
         ...(product.thumbImage || []),
     ].filter(Boolean))), [product.images, product.thumbImage])
-    const galleryVideos = useMemo(() => Array.from(new Set(product.videos || [])), [product.videos])
     const [activeImage, setActiveImage] = useState(galleryImages[0] || '')
     const [failedImages, setFailedImages] = useState<string[]>([])
     const [quantity, setQuantity] = useState(1)
@@ -68,26 +67,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                             </button>
                         ))}
                     </div>
-                    {galleryVideos.length > 0 && (
-                        <section className="mt-7" aria-label="Product videos">
-                            <h2 className="text-base font-semibold">Product videos</h2>
-                            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                {galleryVideos.map((video, index) => (
-                                    <video
-                                        key={video}
-                                        src={video}
-                                        poster={galleryImages[0] || undefined}
-                                        controls
-                                        playsInline
-                                        preload="metadata"
-                                        aria-label={`${product.name} video ${index + 1}`}
-                                        className="aspect-video w-full rounded-xl bg-black object-contain"
-                                    />
-                                ))}
-                            </div>
-                        </section>
-                    )}
-                </div>
+               </div>
 
                 <div>
                     <h1 className="heading3">{product.name}</h1>
@@ -128,6 +108,12 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
             </div>
 
             <section className="mt-16">
+                <h2 className="heading5">Product description</h2>
+                <div className="mt-5 max-w-4xl whitespace-pre-line text-secondary leading-7">
+                    {product.description?.trim() || 'Please contact Mixenza for product details.'}
+                </div>
+            </section>
+            <section className="mt-14">
                 <h2 className="heading5">{product.name} specifications</h2>
                 <div className="grid md:grid-cols-2 gap-6 mt-6">
                     <dl className="rounded-3xl bg-[#f7f7f8] divide-y divide-white">
