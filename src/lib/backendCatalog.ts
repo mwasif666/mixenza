@@ -39,7 +39,7 @@ type BackendProductsResponse = {
 const imageUrls = (images: BackendProduct['images'] = []) =>
     images.map(image => typeof image === 'string' ? image : image.url || image.src || '').filter(Boolean) as string[]
 
-const mapProduct = (product: BackendProduct): SourceProduct => {
+export const mapProduct = (product: BackendProduct): SourceProduct => {
     const images = imageUrls(product.images)
     const price = Number(product.discountPrice || product.price || 0)
     const originPrice = Number(product.price || price)
@@ -87,7 +87,7 @@ const fallbackCatalog = bundledCatalog.length ? bundledCatalog : pickoraFallback
 export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
     try {
         const backendUrl = (process.env.BACKEND_API_URL || apiPath('')).trim().replace(/\/+$/, '')
-        const first = await fetch(`${backendUrl}/products?page=1&limit=100&sort=newest`, {
+        const first = await fetch(`${backendUrl}/products?page=1&limit=100&sort=newest&compact=true`, {
             cache: 'no-store',
             signal: AbortSignal.timeout(15000),
             headers: { Accept: 'application/json' },
@@ -99,7 +99,7 @@ export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
 
         const remaining = await Promise.all(Array.from({ length: Math.max(0, (firstPage.pages || 1) - 1) }, async (_, index) => {
             const page = index + 2
-            const response = await fetch(`${backendUrl}/products?page=${page}&limit=100&sort=newest`, {
+            const response = await fetch(`${backendUrl}/products?page=${page}&limit=100&sort=newest&compact=true`, {
                 cache: 'no-store',
                 signal: AbortSignal.timeout(15000),
                 headers: { Accept: 'application/json' },
@@ -116,5 +116,26 @@ export async function getBackendCatalogProducts(): Promise<SourceProduct[]> {
     } catch (error) {
         console.warn('Backend catalog unavailable; using the bundled full catalog.', error)
         return fallbackCatalog
+    }
+}
+
+
+/** Fetch only the requested product with its complete description. */
+export async function getBackendSingleProduct(slugOrId: string): Promise<SourceProduct | null> {
+    try {
+        const backendUrl = (process.env.BACKEND_API_URL || apiPath('')).trim().replace(/\/+$/, '')
+        const response = await fetch(backendUrl + '/products/' + encodeURIComponent(slugOrId), {
+            cache: 'no-store',
+            signal: AbortSignal.timeout(15000),
+            headers: { Accept: 'application/json' },
+        })
+        if (response.status === 404) return null
+        if (!response.ok) throw new Error('Single product lookup failed: ' + response.status)
+        const result = await response.json() as { success: boolean; data?: BackendProduct }
+        if (!result.success || !result.data) return null
+        return mapProduct(result.data)
+    } catch (error) {
+        console.warn('Single product lookup failed:', error)
+        return null
     }
 }
