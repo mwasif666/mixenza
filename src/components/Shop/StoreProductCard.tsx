@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import Logo from '@/components/Brand/Logo'
 import { Eye, Heart } from '@phosphor-icons/react/dist/ssr'
 import { formatMoney } from '@/utils/currency'
 import { productPath } from '@/lib/storePaths'
@@ -57,7 +58,7 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
                             className="object-contain p-3 transition-transform duration-300 ease-out group-hover:scale-[1.03]" />
                     ) : (
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#f1f3f9] via-[#f7f8fc] to-[#ebeef7] px-5 text-center">
-                            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl border border-white bg-white/80 text-2xl text-[#9fa8ba] shadow-sm" aria-hidden="true">▧</div>
+                            <div className="mb-4 rounded-2xl border border-white bg-white/90 px-5 py-4 shadow-sm"><Logo href={null} height={28} /></div>
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-[#657188]">Photo unavailable</span>
                             <span className="mt-2 line-clamp-2 max-w-[200px] text-xs leading-5 text-secondary">{product.name}</span>
                         </div>
