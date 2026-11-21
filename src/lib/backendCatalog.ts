@@ -63,6 +63,7 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
         variation: [],
         thumbImage: images.slice(0, 2),
         images,
+        videos: imageUrls(product.videos),
         description: product.description || product.shortDescription || '',
         action: 'add to cart',
         slug: product.slug,
