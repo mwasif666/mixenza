@@ -73,7 +73,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                             <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#f1f3f9] to-[#e9edf5] px-6 text-center">
                                 <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl border border-white bg-white/80 text-4xl text-[#9ba7b9] shadow-sm" aria-hidden="true">▧</div>
                                 <p className="max-w-sm text-base font-semibold text-[#344054]">Product image temporarily unavailable</p>
-                                <p className="mt-2 max-w-sm text-sm leading-6 text-secondary">We are restoring the original supplier photos. Contact Mixenza if you need pictures before ordering.</p>
+                                <p className="mt-2 max-w-sm text-sm leading-6 text-secondary">This Mixenza product photo is being restored. Contact us if you need pictures before ordering.</p>
                                 <Link href="/pages/contact" className="mt-5 rounded-full border border-[#aab2c1] bg-white px-5 py-2 text-sm font-semibold text-[#344054] transition hover:bg-[#eef2f7]">Request product photos</Link>
                             </div>
                         )}
@@ -96,7 +96,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                     <h1 className="heading3">{product.name}</h1>
                     <p className="text-secondary mt-3">{descriptionSummary.slice(0, 230) || 'See product details and contact Mixenza with any questions before ordering.'}</p>
                     {bulkOnly && <p className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
-                        This is a supplier bulk/carton listing. {bulkMinimum && bulkMinimum > 1 ? `The supplier-listed minimum is ${bulkMinimum} pieces.` : ''}
+                        This product is available in bulk quantities. {bulkMinimum && bulkMinimum > 1 ? `The minimum order is ${bulkMinimum} pieces.` : ''}
                         {' '}The displayed price is a reference unit price, not a confirmed carton total. Please request a quote and stock confirmation before ordering.
                     </p>}
                     <div className="flex items-end gap-3 mt-6">
