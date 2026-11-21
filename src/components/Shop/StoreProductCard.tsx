@@ -30,9 +30,13 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
     const { openQuickview } = useModalQuickviewContext()
     const { wishlistState, addToWishlist, removeFromWishlist } = useWishlist()
     const wished = wishlistState.wishlistArray.some(item => item.id === product.id)
-    const image = product.thumbImage?.[0] || product.images?.[0] || ''
-    const [imageFailed, setImageFailed] = useState(false)
-    useEffect(() => setImageFailed(false), [image])
+    // Try every real photo in the gallery before showing an unavailable state.
+    // This handles an expired first Cloudinary URL without discarding valid media.
+    const candidates = Array.from(new Set([...(product.thumbImage || []), ...(product.images || [])].filter(Boolean)))
+    const [imageIndex, setImageIndex] = useState(0)
+    const image = candidates[imageIndex] || ''
+    const galleryKey = candidates.join('|')
+    useEffect(() => setImageIndex(0), [product.id, galleryKey])
     const bulkOnly = isBulkOnlyProduct(product.name)
     const soldOut = product.quantity === 0
 
@@ -47,9 +51,9 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
         <article className="group">
             <div className="relative h-[300px] rounded-xl bg-[#f4f4f5] overflow-hidden">
                 <Link href={productPath(product)} className="absolute inset-0">
-                    {image && !imageFailed ? (
+                    {image ? (
                         <Image src={image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 50vw, 25vw"
-                            onError={() => setImageFailed(true)}
+                            onError={() => setImageIndex(index => Math.min(index + 1, candidates.length))}
                             className="object-contain p-3 transition-transform duration-300 ease-out group-hover:scale-[1.03]" />
                     ) : (
                         <span className="absolute inset-0 flex items-center justify-center px-5 text-center text-secondary text-sm">
