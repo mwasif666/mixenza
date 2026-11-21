@@ -24,6 +24,7 @@ export interface ProductType {
     variation: Variation[],
     thumbImage: Array<string>,
     images: Array<string>,
+    videos?: Array<string>,
     description: string,
     action: string,
     slug: string
