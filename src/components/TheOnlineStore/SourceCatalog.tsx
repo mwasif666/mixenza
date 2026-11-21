@@ -292,7 +292,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
 
                         <div className="grid md:grid-cols-2 gap-4 mt-6">
                             {[
-                                { title: 'Online Payment Process', copy: 'Pay securely at checkout.', image: '/images/blog/mobile-prices.jpg', href: '/pages/faqs' },
+                                { title: 'Payment options', copy: 'Cash on Delivery is currently available.', image: '/images/blog/mobile-prices.jpg', href: '/pages/faqs' },
                                 { title: 'Home Delivery Options', copy: 'We ship across Pakistan.', image: '/images/blog/china-shipping.jpg', href: '/pages/faqs' },
                             ].map(card => (
                                 <Link key={card.title} href={card.href} className="rounded-2xl bg-[#f7f7f8] overflow-hidden hover:shadow-md duration-200">

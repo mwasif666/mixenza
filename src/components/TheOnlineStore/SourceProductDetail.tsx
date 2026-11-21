@@ -8,6 +8,7 @@ import { shopPath } from '@/lib/storePaths'
 import { formatMoney } from '@/utils/currency'
 import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
+import { getBulkMinimum } from '@/lib/bulkOrder'
 
 export default function SourceProductDetail({ product }: { product: SourceProduct }) {
     const galleryImages = useMemo(() => Array.from(new Set([
@@ -20,8 +21,11 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
     const { openModalCart } = useModalCartContext()
     const salePercent = product.originPrice > product.price ? Math.round((1 - product.price / product.originPrice) * 100) : 0
     const category = product.categories[0] || 'Shop'
+    const bulkMinimum = getBulkMinimum(product.name)
+    const bulkOnly = bulkMinimum !== null
 
     const add = () => {
+        if (bulkOnly || product.quantity === 0) return
         addToCart({ ...product, quantityPurchase: quantity })
         updateCart(product.id, quantity, '', '')
         openModalCart()
@@ -53,30 +57,38 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
 
                 <div>
                     <h1 className="heading3">{product.name}</h1>
-                    <p className="text-secondary mt-3">{product.description?.slice(0, 140) || 'A Mixenza everyday essential, priced in PKR.'}</p>
+                    <p className="text-secondary mt-3">{product.description?.slice(0, 230) || 'See product details and contact Mixenza with any questions before ordering.'}</p>
+                    {bulkOnly && <p className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
+                        This is a supplier bulk/carton listing. {bulkMinimum && bulkMinimum > 1 ? `The supplier-listed minimum is ${bulkMinimum} pieces.` : ''}
+                        {' '}The displayed price is a reference unit price, not a confirmed carton total. Please request a quote and stock confirmation before ordering.
+                    </p>}
                     <div className="flex items-end gap-3 mt-6">
                         <span className="heading4">{formatMoney(product.price)}</span>
                         {product.originPrice > product.price && <del className="text-secondary">{formatMoney(product.originPrice)}</del>}
                         {salePercent > 0 && <span className="text-sm text-[#16a34a]">-{salePercent}%</span>}
                     </div>
 
-                    <div className="flex items-center gap-3 mt-8">
+                    {!bulkOnly && <div className="flex items-center gap-3 mt-8">
                         <div className="flex items-center rounded-full border border-line h-12">
                             <button type="button" onClick={() => setQuantity(value => Math.max(1, value - 1))} className="w-12 h-12">−</button>
                             <span className="w-8 text-center">{quantity}</span>
                             <button type="button" onClick={() => setQuantity(value => Math.min(product.quantity || 99, value + 1))} className="w-12 h-12">+</button>
                         </div>
-                        {product.quantity > 0 && <span className="text-sm text-secondary">Only {product.quantity} items left</span>}
-                    </div>
+                        {product.quantity > 0 && <span className="text-sm text-secondary">Available quantity: {product.quantity} (subject to confirmation)</span>}
+                    </div>}
 
-                    <div className="grid sm:grid-cols-2 gap-3 mt-6">
-                        <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
-                        <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full border border-black disabled:opacity-40">Add to Cart</button>
-                    </div>
+                    {bulkOnly ? (
+                        <Link href="/pages/contact" className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-black px-7 text-white">Request bulk quote</Link>
+                    ) : (
+                        <div className="grid sm:grid-cols-2 gap-3 mt-6">
+                            <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
+                            <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full border border-black disabled:opacity-40">Add to Cart</button>
+                        </div>
+                    )
 
                     <div className="mt-8 space-y-4 text-sm">
-                        <div className="flex gap-3"><span>🚚</span><div><strong>Free delivery</strong><p className="text-secondary">Enter your city for delivery availability</p></div></div>
-                        <div className="flex gap-3"><span>↩</span><div><strong>Return delivery</strong><p className="text-secondary">Free 14-day returns. Details on FAQs.</p></div></div>
+                        <div className="flex gap-3"><span>🚚</span><div><strong>Delivery within Pakistan</strong><p className="text-secondary">Standard shipping is calculated at checkout. <Link href="/pages/shipping-policy" className="underline">Shipping policy</Link></p></div></div>
+                        <div className="flex gap-3"><span>↩</span><div><strong>Return eligibility varies</strong><p className="text-secondary">Product condition and seller terms apply. <Link href="/pages/returns-refunds" className="underline">Returns policy</Link></p></div></div>
                     </div>
                 </div>
             </div>
@@ -90,7 +102,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                         ))}
                     </dl>
                     <dl className="rounded-3xl bg-[#f7f7f8] divide-y divide-white">
-                        {[['Type', product.type || 'General'], ['Tags', product.tags.slice(0, 4).join(', ') || 'Everyday'], ['Price', formatMoney(product.price)], ['Stock', String(product.quantity)]].map(([label, value]) => (
+                        {[['Type', product.type || 'General'], ['Tags', product.tags.slice(0, 4).join(', ') || 'Everyday'], ['Price', formatMoney(product.price)], ['Stock', bulkOnly ? 'Confirm bulk availability' : String(product.quantity)]].map(([label, value]) => (
                             <div key={label} className="grid grid-cols-2 px-5 py-3 text-sm"><dt className="text-secondary">{label}</dt><dd>{value}</dd></div>
                         ))}
                     </dl>
