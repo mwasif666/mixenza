@@ -15,6 +15,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
         ...(product.images || []),
         ...(product.thumbImage || []),
     ].filter(Boolean))), [product.images, product.thumbImage])
+    const galleryVideos = useMemo(() => Array.from(new Set(product.videos || [])), [product.videos])
     const [activeImage, setActiveImage] = useState(galleryImages[0] || '')
     const [quantity, setQuantity] = useState(1)
     const { addToCart, updateCart } = useCart()
