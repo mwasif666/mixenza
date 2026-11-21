@@ -56,9 +56,11 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
                             onError={() => setImageIndex(index => Math.min(index + 1, candidates.length))}
                             className="object-contain p-3 transition-transform duration-300 ease-out group-hover:scale-[1.03]" />
                     ) : (
-                        <span className="absolute inset-0 flex items-center justify-center px-5 text-center text-secondary text-sm">
-                            Product image temporarily unavailable
-                        </span>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#f1f3f9] via-[#f7f8fc] to-[#ebeef7] px-5 text-center">
+                            <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl border border-white bg-white/80 text-2xl text-[#9fa8ba] shadow-sm" aria-hidden="true">▧</div>
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#657188]">Photo unavailable</span>
+                            <span className="mt-2 line-clamp-2 max-w-[200px] text-xs leading-5 text-secondary">{product.name}</span>
+                        </div>
                     )}
                 </Link>
                 <div className="absolute top-2 right-2 z-[1] flex flex-col gap-1.5">
