@@ -77,7 +77,7 @@ export default function StoreProductCard({ product }: { product: ProductType }) 
                         className="absolute inset-x-2 bottom-2 z-[1] h-9 rounded-full bg-black text-xs font-medium text-white opacity-100 transition-all duration-200 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-40">
                         {soldOut ? 'Out of stock' : 'Add to Cart'}
                     </button>
-                )
+                )}
             </div>
             <div className="flex items-start justify-between gap-2 mt-2.5">
                 <Link href={productPath(product)} className="text-[13px] font-medium leading-4 line-clamp-2">{product.name}</Link>
