@@ -149,7 +149,7 @@ export default function MeemMediaUploadPage() {
                 list.push(img)
                 grouped.set(img.sku, list)
             }
-            const remaining = [...grouped.values()]
+            const remaining: PendingImage[][] = Array.from(grouped.values())
             let completed = 0
             let failed = 0
             let cancelled = false
@@ -162,7 +162,7 @@ export default function MeemMediaUploadPage() {
             const worker = async () => {
                 while (nextGroup < remaining.length && !cancelled) {
                     const group = remaining[nextGroup++]
-                    group.sort((a, b) => a.index.localeCompare(b.index))
+                    group.sort((a: PendingImage, b: PendingImage) => a.index.localeCompare(b.index))
                     for (const img of group) {
                         if (cancelled) return
                         try {
