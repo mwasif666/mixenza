@@ -15,6 +15,18 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
         ...(product.images || []),
         ...(product.thumbImage || []),
     ].filter(Boolean))), [product.images, product.thumbImage])
+    const descriptionSections = useMemo(() => {
+        const raw = (product.description || '').trim()
+        const sectionNames = 'Product overview|Where this product fits|Choosing the right version|Features and information to check|Using and looking after the item|Understanding the product gallery|Size, quantity and compatibility|Comparing value beyond the price|Ordering and after-delivery checks'
+        const sections = raw.split(new RegExp('\\n\\n(?=(?:' + sectionNames + ')\\n)', 'g'))
+        if (sections.length <= 1) return [{ heading: 'Product information', body: raw }]
+        return sections.map(section => {
+            const line = section.indexOf('\n')
+            return line < 0 ? { heading: 'Product information', body: section }
+                : { heading: section.slice(0, line), body: section.slice(line + 1).trim() }
+        })
+    }, [product.description])
+    const descriptionSummary = (descriptionSections[0]?.body || '').split('\n\n')[0].trim()
     const [activeImage, setActiveImage] = useState(galleryImages[0] || '')
     const [failedImages, setFailedImages] = useState<string[]>([])
     const [quantity, setQuantity] = useState(1)
@@ -71,7 +83,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
 
                 <div>
                     <h1 className="heading3">{product.name}</h1>
-                    <p className="text-secondary mt-3">{product.description?.slice(0, 230) || 'See product details and contact Mixenza with any questions before ordering.'}</p>
+                    <p className="text-secondary mt-3">{descriptionSummary.slice(0, 230) || 'See product details and contact Mixenza with any questions before ordering.'}</p>
                     {bulkOnly && <p className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
                         This is a supplier bulk/carton listing. {bulkMinimum && bulkMinimum > 1 ? `The supplier-listed minimum is ${bulkMinimum} pieces.` : ''}
                         {' '}The displayed price is a reference unit price, not a confirmed carton total. Please request a quote and stock confirmation before ordering.
@@ -107,10 +119,26 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                 </div>
             </div>
 
-            <section className="mt-16">
-                <h2 className="heading5">Product description</h2>
-                <div className="mt-5 max-w-4xl whitespace-pre-line text-secondary leading-7">
-                    {product.description?.trim() || 'Please contact Mixenza for product details.'}
+            <section className="mt-16" aria-labelledby="product-description-heading">
+                <div className="mb-7 max-w-3xl">
+                    <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#667194]">Product information</span>
+                    <h2 id="product-description-heading" className="heading4 mt-2">Description &amp; Buying Guide</h2>
+                    <p className="mt-3 text-sm leading-6 text-secondary">Product details, practical usage information and helpful points to check before ordering.</p>
+                </div>
+                <div className="grid max-w-5xl gap-5">
+                    {descriptionSections.map((section, index) => (
+                        <article key={section.heading + index} className="rounded-[24px] border border-line/70 bg-white px-6 py-6 shadow-[0_8px_28px_rgba(28,32,66,0.035)] md:px-8 md:py-7">
+                            <div className="flex items-start gap-4">
+                                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f1f4ff] text-xs font-semibold tabular-nums text-[#485384]">
+                                    {String(index + 1).padStart(2, '0')}
+                                </span>
+                                <div className="min-w-0">
+                                    <h3 className="text-lg font-semibold leading-snug text-black">{section.heading}</h3>
+                                    <p className="mt-3 whitespace-pre-line text-sm leading-7 text-secondary md:text-[15px]">{section.body || 'See product information above.'}</p>
+                                </div>
+                            </div>
+                        </article>
+                    ))}
                 </div>
             </section>
             <section className="mt-14">
