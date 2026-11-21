@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import PolicyPage from '@/components/Other/PolicyPage'
 
 export const metadata: Metadata = {
-    title: 'Terms & Conditions | Mixenza',
+    title: 'Terms & Conditions',
     description: 'Terms and conditions for browsing and shopping on Mixenza in Pakistan.',
 }
 

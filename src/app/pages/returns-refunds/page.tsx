@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import PolicyPage from '@/components/Other/PolicyPage'
 
 export const metadata: Metadata = {
-    title: 'Returns & Refunds Policy | Mixenza',
+    title: 'Returns & Refunds Policy',
     description: 'Read the Mixenza return, exchange, cancellation and refund process for orders in Pakistan.',
 }
 

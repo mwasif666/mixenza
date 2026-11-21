@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import PolicyPage from '@/components/Other/PolicyPage'
 
 export const metadata: Metadata = {
-    title: 'Privacy Policy | Mixenza',
+    title: 'Privacy Policy',
     description: 'Learn how Mixenza collects, uses and protects customer information when you shop on mixenza.com.',
 }
 

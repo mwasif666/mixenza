@@ -88,7 +88,7 @@ export const BRAND_LOGO_SIZE = {
 export const BRAND = {
     name: 'Mixenza',
     tagline: 'Your everyday marketplace',
-    description: 'Mixenza — shop thousands of products from trusted sellers, all in one marketplace.',
+    description: 'Shop practical everyday essentials, home products, useful gadgets and accessories in Pakistan. Prices in PKR.',
     email: 'mixenza@gmail.com',
     phone: '+92 301 3769247',
     phoneHref: '+923013769247',
