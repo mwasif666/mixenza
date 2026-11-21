@@ -82,9 +82,9 @@ export default function LiveCatalog() {
           <div className="pointer-events-none absolute -bottom-20 left-20 h-56 w-56 rounded-full bg-[#ffe5e6]/60 blur-3xl" />
           <div className="relative flex flex-wrap items-end justify-between gap-5">
             <div className="max-w-xl">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#6b7196]">Curated by Pickora</p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#6b7196]">Curated by Mixenza</p>
               <h2 id="pickora-featured-title" className="heading3 mt-2">Featured Products</h2>
-              <p className="mt-2 text-sm leading-6 text-secondary md:text-base">Explore our favourite everyday finds, from clever gadgets to little home upgrades.</p>
+              <p className="mt-2 text-sm leading-6 text-secondary md:text-base">Discover Mixenza's favourite everyday finds, from clever gadgets to little home upgrades.</p>
             </div>
             <div className="flex items-center gap-3">
               <Link href="/shop" className="mr-1 hidden text-sm font-semibold underline underline-offset-4 transition-opacity hover:opacity-70 sm:inline">Shop all</Link>
@@ -119,13 +119,13 @@ export default function LiveCatalog() {
                   900: { slidesPerView: 3, spaceBetween: 20 },
                   1280: { slidesPerView: 4, spaceBetween: 22 },
                 }}
-                aria-label="Pickora featured product carousel"
+                aria-label="Mixenza featured products carousel"
               >
                 {pickoraProducts.map((product, index) => (
                   <SwiperSlide key={product.id} className="!h-auto">
                     <div className="h-full rounded-[22px] border border-white/90 bg-white p-3 shadow-[0_8px_25px_rgba(28,32,66,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(28,32,66,0.13)] md:p-4">
                       <div className="mb-3 flex items-center justify-between gap-2 px-1">
-                        <span className="rounded-full bg-[#eef1ff] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#4d5594]">Pickora select</span>
+                        <span className="rounded-full bg-[#eef1ff] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#4d5594]">Mixenza Select</span>
                         <span className="text-xs font-medium tabular-nums text-secondary">{String(index + 1).padStart(2, "0")} / {String(pickoraProducts.length).padStart(2, "0")}</span>
                       </div>
                       <StoreProductCard product={product} />
@@ -137,7 +137,7 @@ export default function LiveCatalog() {
               <Link href="/shop" className="mt-4 block text-center text-sm font-semibold underline underline-offset-4 sm:hidden">Browse the full collection</Link>
             </div>
           ) : (
-            <p className="relative mt-7 text-sm text-secondary">Featured Pickora products will appear here when available.</p>
+            <p className="relative mt-7 text-sm text-secondary">Mixenza featured products will appear here when available.</p>
           )}
         </section>
         <div className="flex items-end justify-between gap-4 flex-wrap md:mt-20 mt-12">
