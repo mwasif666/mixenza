@@ -11,6 +11,7 @@ export type SourceProduct = ProductType & {
     categories: string[]
     tags: string[]
     sku?: string
+    createdAt?: string
     stockStatus: string
     isFeatured?: boolean
     isNewArrival?: boolean

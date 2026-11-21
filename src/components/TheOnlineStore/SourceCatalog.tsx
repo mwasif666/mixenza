@@ -61,7 +61,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
     const [brands, setBrands] = useState<string[]>([])
     const [page, setPage] = useState(1)
     const [query, setQuery] = useState('')
-    const [sort, setSort] = useState('featured')
+    const [sort, setSort] = useState('newest')
 
     const priceBounds = useMemo(() => {
         if (!products.length) return { min: 0, max: 10000 }
@@ -128,7 +128,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
         return [...result].sort((a, b) => {
             if (sort === 'price-low') return a.price - b.price
             if (sort === 'price-high') return b.price - a.price
-            if (sort === 'newest') return Number(b.new) - Number(a.new)
+            if (sort === 'newest') return (Date.parse(b.createdAt || '') || 0) - (Date.parse(a.createdAt || '') || 0)
             return Number(b.sale) - Number(a.sale)
         })
     }, [availability, brands, category, checkedCategories, priceRange, products, query, sort])

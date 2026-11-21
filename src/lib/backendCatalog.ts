@@ -73,6 +73,7 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
         categories: [categoryName],
         tags: product.tags || [],
         sku: product.sku,
+        createdAt: product.createdAt,
         stockStatus: Number(product.stock || 0) > 0 ? 'instock' : 'outofstock',
         isFeatured: Boolean(product.isFeatured),
         isNewArrival: Boolean(product.isNewArrival),
