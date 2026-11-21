@@ -15,6 +15,7 @@ type BackendProduct = {
     description?: string
     shortDescription?: string
     images?: Array<{ url?: string; src?: string; alt?: string } | string>
+    videos?: Array<{ url?: string; src?: string } | string>
     category?: { _id?: string; id?: string; name?: string; slug?: string }
     tags?: string[]
     sizes?: string[]
