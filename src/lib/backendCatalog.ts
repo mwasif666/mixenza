@@ -14,6 +14,7 @@ type BackendProduct = {
     stock: number
     description?: string
     shortDescription?: string
+    longDescription?: string
     images?: Array<{ url?: string; src?: string; alt?: string } | string>
     videos?: Array<{ url?: string; src?: string } | string>
     category?: { _id?: string; id?: string; name?: string; slug?: string }
@@ -64,7 +65,7 @@ const mapProduct = (product: BackendProduct): SourceProduct => {
         thumbImage: images.slice(0, 2),
         images,
         videos: imageUrls(product.videos),
-        description: product.description || product.shortDescription || '',
+        description: product.longDescription || product.description || product.shortDescription || '',
         action: 'add to cart',
         slug: product.slug,
         sourceId: product.sku?.match(/^(?:TOS|DARAZ)-(\d+)/i)?.[1] || String(product._id || product.id),
