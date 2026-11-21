@@ -40,17 +40,9 @@ const imageUrls = (images: BackendProduct['images'] = []) =>
     images.map(image => typeof image === 'string' ? image : image.url || image.src || '').filter(Boolean) as string[]
 
 export const mapProduct = (product: BackendProduct): SourceProduct => {
-    const originalImages = imageUrls(product.images)
-    // Cloudinary currently returns HTTP 401 for Meem Traders. Supplier media is
-    // stored in the existing 01.webp, 02.webp... SKU folders of the verified ZIP.
-    // Once the admin repository's public assets are deployed, these URLs
-    // recover the correct gallery without re-uploading or duplicating products.
-    const meemSku = /^MEEM-20261121-\d{3}$/.test(product.sku || '') ? product.sku : ''
-    const localMeemImages = meemSku ? originalImages.map((_, index) =>
-        'https://admin.mixenza.com/images/meem/' + meemSku + '/' +
-        String(index + 1).padStart(2, '0') + '.webp'
-    ) : []
-    const images = localMeemImages.length ? [...localMeemImages, ...originalImages] : originalImages
+    // SKU-mapped photos now point to working Mixenza public assets in the database.
+    // Never derive fictitious gallery paths from a supplier SKU.
+    const images = imageUrls(product.images)
     const price = Number(product.discountPrice || product.price || 0)
     const originPrice = Number(product.price || price)
     const rawCategory = product.category?.name?.trim() || 'General'
@@ -66,7 +58,7 @@ export const mapProduct = (product: BackendProduct): SourceProduct => {
         rate: Number(product.ratingsAverage || 0),
         price,
         originPrice,
-        brand: /^DARAZ-/i.test(product.sku || '') ? 'Pickora.pk' : 'Mixenza',
+        brand: 'Mixenza',
         sold: 0,
         quantity: Math.max(0, Number(product.stock || 0)),
         quantityPurchase: 1,
