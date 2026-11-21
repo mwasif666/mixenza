@@ -34,7 +34,7 @@ const MenFashion: React.FC<Props> = ({ data, start, limit }) => {
                     <div className="flex items-center justify-between gap-5 flex-wrap">
                         <div>
                             <div className="heading3">Featured Products</div>
-                            <p className="text-secondary mt-2">Fresh picks from the Pickora.pk Daraz store</p>
+                            <p className="text-secondary mt-2">Fresh picks from Mixenza</p>
                         </div>
                         <Link href="/homepages/fashion11/catalog" className="text-button-uppercase underline underline-offset-4">View all products</Link>
                     </div>
