@@ -39,8 +39,8 @@ export default function LiveCatalog() {
     };
   }, [attempt]);
 
-  const pickoraProducts = useMemo(() => {
-    // Only authentic Pickora catalog entries, not unrelated products flagged featured.
+  const featuredProducts = useMemo(() => {
+    // The nine curated Mixenza picks are tracked by their stable import SKU.
     const seen = new Set<string>();
     return products.filter(product => {
       if (!product?.id || !/^DARAZ-/i.test(product.sku || '') || !product.isFeatured || seen.has(product.id)) return false;
@@ -77,21 +77,21 @@ export default function LiveCatalog() {
   return (
     <section className="md:pt-20 pt-10">
       <div className="container">
-        <section aria-labelledby="pickora-featured-title" className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#f2f6ff] via-[#fafaff] to-[#fff5f1] px-5 pb-8 pt-8 shadow-[0_18px_55px_rgba(24,32,65,0.06)] md:px-9 md:pt-11">
+        <section aria-labelledby="mixenza-featured-title" className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#f2f6ff] via-[#fafaff] to-[#fff5f1] px-5 pb-8 pt-8 shadow-[0_18px_55px_rgba(24,32,65,0.06)] md:px-9 md:pt-11">
           <div className="pointer-events-none absolute -right-24 -top-28 h-80 w-80 rounded-full bg-[#dbe6ff]/60 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 left-20 h-56 w-56 rounded-full bg-[#ffe5e6]/60 blur-3xl" />
           <div className="relative flex flex-wrap items-end justify-between gap-5">
             <div className="max-w-xl">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#6b7196]">Curated by Mixenza</p>
-              <h2 id="pickora-featured-title" className="heading3 mt-2">Featured Products</h2>
-              <p className="mt-2 text-sm leading-6 text-secondary md:text-base">Discover Mixenza's favourite everyday finds, from clever gadgets to little home upgrades.</p>
+              <h2 id="mixenza-featured-title" className="heading3 mt-2">Featured Products</h2>
+              <p className="mt-2 text-sm leading-6 text-secondary md:text-base">Discover our favourite everyday finds, from clever gadgets to little home upgrades.</p>
             </div>
             <div className="flex items-center gap-3">
               <Link href="/shop" className="mr-1 hidden text-sm font-semibold underline underline-offset-4 transition-opacity hover:opacity-70 sm:inline">Shop all</Link>
-              <button type="button" aria-label="Previous featured product" className="pickora-featured-prev flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-xl shadow-sm transition hover:bg-black hover:text-white disabled:opacity-30">
+              <button type="button" aria-label="Previous featured product" className="mixenza-featured-prev flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-xl shadow-sm transition hover:bg-black hover:text-white disabled:opacity-30">
                 <span aria-hidden="true">←</span>
               </button>
-              <button type="button" aria-label="Next featured product" className="pickora-featured-next flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-xl shadow-sm transition hover:bg-black hover:text-white disabled:opacity-30">
+              <button type="button" aria-label="Next featured product" className="mixenza-featured-next flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-xl shadow-sm transition hover:bg-black hover:text-white disabled:opacity-30">
                 <span aria-hidden="true">→</span>
               </button>
             </div>
@@ -102,12 +102,12 @@ export default function LiveCatalog() {
                 <div key={index} className="h-[380px] animate-pulse rounded-[24px] bg-white/70" />
               ))}
             </div>
-          ) : pickoraProducts.length ? (
+          ) : featuredProducts.length ? (
             <div className="relative mt-7 md:mt-9">
               <Swiper
                 modules={[Navigation, Autoplay, Pagination, A11y]}
-                navigation={{ prevEl: ".pickora-featured-prev", nextEl: ".pickora-featured-next" }}
-                pagination={{ clickable: true, dynamicBullets: true, el: ".pickora-featured-pagination" }}
+                navigation={{ prevEl: ".mixenza-featured-prev", nextEl: ".mixenza-featured-next" }}
+                pagination={{ clickable: true, dynamicBullets: true, el: ".mixenza-featured-pagination" }}
                 autoplay={{ delay: 4400, disableOnInteraction: false, pauseOnMouseEnter: true }}
                 speed={650}
                 spaceBetween={16}
@@ -121,19 +121,19 @@ export default function LiveCatalog() {
                 }}
                 aria-label="Mixenza featured products carousel"
               >
-                {pickoraProducts.map((product, index) => (
+                {featuredProducts.map((product, index) => (
                   <SwiperSlide key={product.id} className="!h-auto">
                     <div className="h-full rounded-[22px] border border-white/90 bg-white p-3 shadow-[0_8px_25px_rgba(28,32,66,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(28,32,66,0.13)] md:p-4">
                       <div className="mb-3 flex items-center justify-between gap-2 px-1">
                         <span className="rounded-full bg-[#eef1ff] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#4d5594]">Mixenza Select</span>
-                        <span className="text-xs font-medium tabular-nums text-secondary">{String(index + 1).padStart(2, "0")} / {String(pickoraProducts.length).padStart(2, "0")}</span>
+                        <span className="text-xs font-medium tabular-nums text-secondary">{String(index + 1).padStart(2, "0")} / {String(featuredProducts.length).padStart(2, "0")}</span>
                       </div>
                       <StoreProductCard product={product} />
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <div className="pickora-featured-pagination mt-7 flex min-h-4 items-center justify-center" />
+              <div className="mixenza-featured-pagination mt-7 flex min-h-4 items-center justify-center" />
               <Link href="/shop" className="mt-4 block text-center text-sm font-semibold underline underline-offset-4 sm:hidden">Browse the full collection</Link>
             </div>
           ) : (
