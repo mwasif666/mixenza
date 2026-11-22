@@ -16,6 +16,7 @@ export default function Home() {
       <PremiumServices />
       <PremiumPromise />
       <Newsletter />
+      <div className="mx-newsletter-footer-gap" aria-hidden="true" style={{ height: 42, background: '#fff' }} />
       <Footer />
     </main>
   )
