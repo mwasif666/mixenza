@@ -9,7 +9,6 @@ import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
 import { formatMoney } from '@/utils/currency'
 import { productPath } from '@/lib/storePaths'
-import { isBulkOnlyProduct } from '@/lib/bulkOrder'
 import BulkInquiryModal from './BulkInquiryModal'
 
 /** One consistent card for featured products, new arrivals and the Shop grid. */
@@ -29,7 +28,6 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
   const currentPrice = Number(product.price) || 0
   const originalPrice = Number(product.originPrice) || 0
   const discounted = currentPrice > 0 && originalPrice > currentPrice
-  const bulkOnly = isBulkOnlyProduct(product.name)
   const inStock = Number(product.quantity) > 0
   const reviewCount = Number(product.ratingsCount || 0)
   const hasReviews = reviewCount > 0 && Number(product.rate) > 0
@@ -71,14 +69,9 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
           {discounted && <del>{formatMoney(originalPrice)}</del>}
         </div>
         <div className="mx-v2-product-meta">
-          {bulkOnly ? (
-            <span className={'mx-v2-stock ' + (inStock ? 'is-available' : 'is-unavailable')}><span className="mx-v2-stock-dot" aria-hidden="true" />{inStock ? 'In stock' : 'Out of stock'}</span>
-          ) : (
-            <span className={'mx-v2-stock ' + (inStock ? 'is-available' : 'is-unavailable')}>
-              <span className="mx-v2-stock-dot" aria-hidden="true" />{inStock ? 'In stock' : 'Out of stock'}
-            </span>
-          )}
-          {bulkOnly && <span className="mx-v2-bulk-note">Bulk savings available</span>}
+          <span className={'mx-v2-stock ' + (inStock ? 'is-available' : 'is-unavailable')}>
+            <span className="mx-v2-stock-dot" aria-hidden="true" />{inStock ? 'In stock' : 'Out of stock'}
+          </span>
         </div>
         <div className="mx-v2-thumbnails" aria-label={'Product gallery for ' + product.name}>
           {photos.length > 1 && photos.slice(0, 2).map((photo, index) => (
