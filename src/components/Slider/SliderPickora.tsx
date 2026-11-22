@@ -4,121 +4,145 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import * as Icon from '@phosphor-icons/react/dist/ssr'
+import { useCatalogProducts } from '@/hooks/useCatalogProducts'
+import { formatMoney } from '@/utils/currency'
+import { shopPath } from '@/lib/storePaths'
 
-const heroProducts = [
+// These are real catalog SKUs. Product visuals come from existing GitHub images;
+// the transparent copies are derived from those exact originals.
+const slides = [
   {
     id: '1971845697',
-    image: '/images/pickora/steel-tumbler.png',
-    alt: 'Mixenza insulated 40oz stainless steel tumbler with handle and straw',
-    headline: 'Everyday Products',
-    preHighlight: 'For a',
-    highlight: 'Smarter Life',
-    description: 'Discover practical, high-quality and trending items for your home, lifestyle and daily needs.',
+    name: '40oz Insulated Tumbler',
+    eyebrow: 'Mixenza Everyday Essentials',
+    title: 'Everyday comfort,',
+    subtitle: 'in every sip.',
+    description: 'Practical drinkware for busy days, your desk and everyday adventures.',
+    file: 'steel-tumbler',
+    original: '/images/pickora/steel-tumbler.png',
   },
   {
     id: '1973702573',
-    image: '/images/pickora/massage-gun.png',
-    alt: 'Mixenza rechargeable body massage gun with attachments',
-    headline: 'Thoughtful Essentials',
-    preHighlight: 'For Everyday',
-    highlight: 'Comfort',
-    description: 'Useful, modern finds that make your daily routine simpler and more comfortable.',
+    name: 'Rechargeable Massage Gun',
+    eyebrow: 'Mixenza Personal Care',
+    title: 'Small upgrades.',
+    subtitle: 'More comfort.',
+    description: 'Discover useful accessories designed for your everyday routine.',
+    file: 'massage-gun',
+    original: '/images/pickora/massage-gun.png',
   },
   {
     id: '1971400774',
-    image: '/images/pickora/water-dispenser.png',
-    alt: 'Mixenza automatic water dispenser',
-    headline: 'Simple Solutions',
-    preHighlight: 'For Better',
-    highlight: 'Living',
-    description: 'Make room for convenient home and lifestyle essentials chosen for everyday use.',
+    name: 'Automatic Water Dispenser',
+    eyebrow: 'Mixenza Home Essentials',
+    title: 'Refresh your space.',
+    subtitle: 'Simplify your day.',
+    description: 'Everyday home finds that make the little things more convenient.',
+    file: 'water-dispenser',
+    original: '/images/pickora/water-dispenser.png',
   },
 ]
 
-const sideOffers = [
-  {
-    id: '1963263814',
-    name: 'UV Money Detector Pen',
-    description: 'Check & verify instantly',
-    image: '/images/pickora/uv-money-detector.jpg',
-    type: 'uv',
-  },
-  {
-    id: '1966895078',
-    name: '5-Speed Digital Hand Fan',
-    description: 'Stay cool anywhere',
-    image: '/images/pickora/digital-hand-fan.png',
-    type: 'fan',
-  },
+type CutoutPhotoProps = {
+  file: string
+  original: string
+  alt: string
+  sizes: string
+  priority?: boolean
+  className?: string
+}
+
+function CutoutPhoto({ file, original, alt, sizes, priority = false, className = '' }: CutoutPhotoProps) {
+  const [attempt, setAttempt] = useState(0)
+  const source = attempt === 0 ? '/images/mixenza/cutouts/' + file + '.png' : original
+  if (attempt >= 2) return <span className="mx-mkt-photo-fallback" aria-label={alt}>Mixenza</span>
+  return <Image
+    src={source}
+    alt={alt}
+    fill
+    sizes={sizes}
+    priority={priority}
+    unoptimized
+    onError={() => setAttempt(v => Math.min(v + 1, 2))}
+    className={'mx-mkt-transparent-photo ' + className}
+  />
+}
+
+const departments = [
+  { name: 'Home & Cleaning', category: 'Home, Cleaning & Storage' },
+  { name: 'Kitchen & Drinkware', category: 'Kitchen & Drinkware' },
+  { name: 'Electronics & Gadgets', category: 'Electronics & Gadgets' },
+  { name: 'Beauty & Personal Care', category: 'Beauty & Personal Care' },
+  { name: 'Health & Wellness', category: 'Health, Fitness & Wellness' },
+  { name: 'Lighting & Electronics', category: 'Lighting & Electronics' },
+  { name: 'Baby & Kids', category: 'Baby & Kids' },
+  { name: 'Fashion & Accessories', category: 'Accessories & Fashion' },
+  { name: 'Tools & Automotive', category: 'Tools & Automotive' },
+  { name: 'Home & Lifestyle', category: 'Home & Lifestyle' },
+  { name: 'Office Accessories', category: 'Office Accessories' },
 ]
 
-export default function MixenzaHero() {
+export default function SliderPickora() {
   const [active, setActive] = useState(0)
-  const selected = heroProducts[active]
-  const move = (direction: number) =>
-    setActive(current => (current + direction + heroProducts.length) % heroProducts.length)
-
+  const products = useCatalogProducts()
+  const slide = slides[active]
+  const priceFor = (id: string) => {
+    const product = products.find(p => p.sku === 'DARAZ-' + id)
+    return product ? formatMoney(product.price) : ''
+  }
+  const change = (delta: number) => setActive(index => (index + delta + slides.length) % slides.length)
   return (
-    <section className="mx-hero-section mx-fullwidth-hero mx-built-hero-section" aria-label="Mixenza featured products">
-      <div className="mx-built-hero">
-        <div className="mx-built-main">
-          <div className="mx-built-ambient" aria-hidden="true" />
-          <div className="mx-built-copy" key={selected.id}>
-            <span className="mx-built-eyebrow">Mixenza Essentials</span>
-            <h1>
-              <span className="mx-built-headline">{selected.headline}</span>
-              <span className="mx-built-headline">{selected.preHighlight} <em>{selected.highlight}</em></span>
-            </h1>
-            <p>{selected.description}</p>
-            <Link href={'/product/' + selected.id} className="mx-built-shop">
-              Shop Now <Icon.ArrowRight size={18} weight="bold" aria-hidden="true" />
+    <section className="mx-mkt-stage" aria-label="Shop Mixenza featured collections">
+      <div className="mx-mkt-market-grid">
+        <aside className="mx-mkt-sidebar" aria-label="Shop by category">
+          <div className="mx-mkt-sidebar-head"><Icon.SquaresFour size={18} weight="fill" aria-hidden="true" /> Explore Categories</div>
+          <nav>
+            {departments.map(dept => <Link key={dept.category} href={shopPath(dept.category)}>{dept.name}<Icon.CaretRight size={14} aria-hidden="true" /></Link>)}
+          </nav>
+          <Link href="/shop" className="mx-mkt-sidebar-all">Browse all products <Icon.ArrowRight size={15} /></Link>
+        </aside>
+
+        <div className="mx-mkt-center">
+          <div className="mx-mkt-feature" aria-label="Main product promotion">
+            <div className="mx-mkt-feature-shape" aria-hidden="true" />
+            <div className="mx-mkt-feature-text" key={slide.id}>
+              <span className="mx-mkt-kicker">{slide.eyebrow}</span>
+              <h1>{slide.title}<br /><span>{slide.subtitle}</span></h1>
+              <p>{slide.description}</p>
+              {priceFor(slide.id) && <strong className="mx-mkt-feature-price">{priceFor(slide.id)}</strong>}
+              <Link href={'/product/' + slide.id} className="mx-mkt-feature-cta">Shop now <Icon.ArrowRight size={16} weight="bold" /></Link>
+            </div>
+            <Link className="mx-mkt-feature-product" href={'/product/' + slide.id} aria-label={'Shop ' + slide.name}>
+              <CutoutPhoto key={slide.file} file={slide.file} original={slide.original} alt={slide.name} priority={active === 0} sizes="(max-width: 700px) 55vw, (max-width: 1050px) 40vw, 32vw" />
             </Link>
+            <div className="mx-mkt-feature-pagination">
+              <button type="button" aria-label="Previous product" onClick={() => change(-1)}><Icon.CaretLeft size={15}/></button>
+              <span>{active+1} / {slides.length}</span>
+              <button type="button" aria-label="Next product" onClick={() => change(1)}><Icon.CaretRight size={15}/></button>
+            </div>
           </div>
-          <div className="mx-built-product-stage" key={selected.image}>
-            <div className="mx-built-product-light" aria-hidden="true" />
-            <div className="mx-built-product-pedestal" aria-hidden="true" />
-            <Image
-              src={selected.image}
-              alt={selected.alt}
-              fill
-              priority={active === 0}
-              sizes="(max-width: 600px) 88vw, (max-width: 900px) 60vw, 36vw"
-              className="mx-built-product-image"
-            />
-          </div>
-          <button type="button" className="mx-built-nav mx-built-nav-prev" onClick={() => move(-1)} aria-label="Previous featured product">
-            <Icon.CaretLeft size={18} weight="bold" />
-          </button>
-          <button type="button" className="mx-built-nav mx-built-nav-next" onClick={() => move(1)} aria-label="Next featured product">
-            <Icon.CaretRight size={18} weight="bold" />
-          </button>
-          <div className="mx-built-pagination" aria-label="Featured products carousel">
-            {heroProducts.map((item, index) => (
-              <button
-                type="button"
-                key={item.id}
-                className={index === active ? 'active' : ''}
-                onClick={() => setActive(index)}
-                aria-label={'Show featured product ' + (index + 1)}
-                aria-current={index === active ? 'true' : undefined}
-              />
-            ))}
+
+          <div className="mx-mkt-mini-grid">
+            <Link href="/product/1973702573" className="mx-mkt-mini mx-mkt-mini-peach">
+              <span className="mx-mkt-mini-copy"><span className="mx-mkt-mini-title">Rechargeable<br />Massage Gun</span><span className="mx-mkt-mini-price">{priceFor('1973702573') || 'Explore product'}</span><span className="mx-mkt-mini-link">Shop now <Icon.ArrowRight size={13} /></span></span>
+              <span className="mx-mkt-mini-image"><CutoutPhoto file="massage-gun" original="/images/pickora/massage-gun.png" alt="Rechargeable massage gun" sizes="(max-width: 700px) 30vw, 16vw" /></span>
+            </Link>
+            <Link href="/product/1971400774" className="mx-mkt-mini mx-mkt-mini-grey">
+              <span className="mx-mkt-mini-copy"><span className="mx-mkt-mini-title">Automatic Water<br />Dispenser</span><span className="mx-mkt-mini-price">{priceFor('1971400774') || 'Explore product'}</span><span className="mx-mkt-mini-link">Shop now <Icon.ArrowRight size={13} /></span></span>
+              <span className="mx-mkt-mini-image"><CutoutPhoto file="water-dispenser" original="/images/pickora/water-dispenser.png" alt="Automatic water dispenser" sizes="(max-width: 700px) 30vw, 16vw" /></span>
+            </Link>
           </div>
         </div>
 
-        <div className="mx-built-side" aria-label="More Mixenza essentials">
-          {sideOffers.map(offer => (
-            <Link href={'/product/' + offer.id} key={offer.id} className={'mx-built-offer mx-built-offer-' + offer.type}>
-              <div className="mx-built-offer-text">
-                <h2>{offer.name}</h2>
-                <p>{offer.description}</p>
-                <span className="mx-built-offer-arrow" aria-hidden="true"><Icon.ArrowRight size={18} weight="bold" /></span>
-              </div>
-              <div className="mx-built-offer-visual">
-                <Image src={offer.image} alt="" fill sizes="(max-width: 600px) 50vw, 18vw" className="mx-built-offer-image" />
-              </div>
-            </Link>
-          ))}
+        <div className="mx-mkt-right">
+          <Link href="/product/1963263814" className="mx-mkt-vertical mx-mkt-vertical-light">
+            <div className="mx-mkt-vertical-copy"><span className="mx-mkt-vertical-kicker">Mixenza picks</span><h2>UV Money<br />Detector Pen</h2><p>Check and verify notes with UV light.</p>{priceFor('1963263814') && <strong>{priceFor('1963263814')}</strong>}<span className="mx-mkt-vertical-button">Shop now <Icon.ArrowRight size={14}/></span></div>
+            <div className="mx-mkt-vertical-product"><CutoutPhoto file="uv-money-detector" original="/images/pickora/uv-money-detector.jpg" alt="UV money detector pen" sizes="(max-width: 700px) 50vw, 19vw"/></div>
+          </Link>
+          <Link href="/product/1966895078" className="mx-mkt-vertical mx-mkt-vertical-dark">
+            <div className="mx-mkt-vertical-copy"><span className="mx-mkt-vertical-kicker">Everyday tech</span><h2>5-Speed<br />Digital Hand Fan</h2><p>Stay cool anywhere.</p>{priceFor('1966895078') && <strong>{priceFor('1966895078')}</strong>}<span className="mx-mkt-vertical-button">Shop now <Icon.ArrowRight size={14}/></span></div>
+            <div className="mx-mkt-vertical-product"><CutoutPhoto file="digital-hand-fan" original="/images/pickora/digital-hand-fan.png" alt="Digital rechargeable hand fan" sizes="(max-width: 700px) 50vw, 19vw"/></div>
+          </Link>
         </div>
       </div>
     </section>

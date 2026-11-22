@@ -1,3 +1,4 @@
+import MarketSearchStrip from '@/components/Home11/MarketSearchStrip'
 import SliderPickora from '@/components/Slider/SliderPickora'
 import TrendingNow from '@/components/Home11/TrendingNow'
 import LiveCatalog from '@/components/Home11/LiveCatalog'
@@ -8,10 +9,11 @@ import Footer from '@/components/Footer/Footer'
 export default function Home() {
   return (
     <main className="mixenza-premium-home">
+      <MarketSearchStrip />
       <SliderPickora />
-      <PremiumServices />
       <TrendingNow />
       <LiveCatalog />
+      <PremiumServices />
       <PremiumPromise />
       <Newsletter />
       <Footer />
