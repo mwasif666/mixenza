@@ -335,3 +335,123 @@
  .mx-built-offer-text h2{font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){.mx-built-product-image,.mx-built-copy{animation:none}}
+
+
+
+/* 5-up New Arrivals with more comfortable product widths at every breakpoint. */
+.mx-new-arrivals .mx-arrival-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:16px;
+  align-items:stretch;
+}
+.mx-new-arrivals .mx-v2-item{min-width:0;height:100%}
+.mx-new-arrivals .mx-v2-photo-shell{height:225px}
+@media(max-width:1199px){
+  .mx-new-arrivals .mx-arrival-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .mx-new-arrivals .mx-v2-photo-shell{height:235px}
+}
+@media(max-width:767px){
+  .mx-new-arrivals .mx-arrival-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+  .mx-new-arrivals .mx-v2-photo-shell{height:185px}
+}
+@media(max-width:420px){
+  .mx-new-arrivals .mx-v2-photo-shell{height:155px}
+}
+
+/* Keep the newsletter as a complete, free-standing editorial panel above the footer. */
+.mx-newsletter-container{
+  position:relative;
+  z-index:1;
+  margin-top:28px;
+  margin-bottom:32px;
+}
+.mx-newsletter-box{
+  min-height:152px;
+  padding:28px clamp(24px,3.1vw,48px);
+  grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);
+  gap:clamp(24px,3vw,52px);
+  align-items:center;
+  border-radius:24px;
+  overflow:visible;
+  box-shadow:0 15px 38px rgba(15,16,19,.13);
+  background:radial-gradient(ellipse at 4% 5%,rgba(252,89,1,.14),transparent 32%),linear-gradient(110deg,#1a1b20,#27262c 65%,#15161b);
+}
+.mx-newsletter-head{display:flex;align-items:center;gap:19px;min-width:0}
+.mx-newsletter-head>svg{
+  width:44px;
+  height:44px;
+  padding:5px;
+  flex-shrink:0;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.23);
+  border-radius:12px;
+}
+.mx-newsletter-head>div{min-width:0}
+.mx-newsletter-head h2{
+  font-size:clamp(23px,2vw,30px);
+  line-height:1.16;
+  letter-spacing:-.047em;
+  font-weight:750;
+}
+.mx-newsletter-head p{
+  margin-top:8px;
+  max-width:450px;
+  color:rgba(255,255,255,.77);
+  font-size:13px!important;
+  line-height:1.55;
+}
+.mx-newsletter-form{width:100%;min-width:0}
+.mx-newsletter-form form{
+  position:relative;
+  display:block;
+  width:100%;
+  height:62px;
+  min-height:62px;
+}
+.mx-newsletter-form form input[name="email"]{
+  width:100%;
+  height:100%;
+  min-width:0;
+  padding:0 183px 0 20px;
+  border:1px solid rgba(255,255,255,.75);
+  border-radius:16px!important;
+  background:#fff;
+  font-size:14px!important;
+  line-height:1.4;
+  color:#202129;
+}
+.mx-newsletter-form form input[name="email"]::placeholder{color:#888d99}
+.mx-newsletter-form form button{
+  position:absolute;
+  top:6px;
+  bottom:6px;
+  right:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:160px;
+  padding:0 20px;
+  border-radius:12px!important;
+  background:var(--primary,#fc5901)!important;
+  font-size:13px!important;
+  font-weight:750;
+  white-space:nowrap;
+}
+.mx-newsletter-form form button:hover{background:var(--primary-dark,#d64a00)!important}
+.mx-newsletter-form p[role]{font-size:12px!important;line-height:1.5;margin-top:9px}
+@media(max-width:1000px){
+  .mx-newsletter-box{grid-template-columns:1fr;gap:22px;padding:28px 30px}
+  .mx-newsletter-form{max-width:680px}
+}
+@media(max-width:767px){
+  .mx-newsletter-container{margin-top:22px;margin-bottom:24px}
+  .mx-newsletter-box{grid-template-columns:1fr;padding:25px 21px;border-radius:20px;gap:20px}
+  .mx-newsletter-head{gap:13px;align-items:flex-start}
+  .mx-newsletter-head>svg{width:39px;height:39px}
+  .mx-newsletter-head h2{font-size:22px}
+  .mx-newsletter-head p{font-size:12px!important}
+  .mx-newsletter-form form{height:54px;min-height:54px}
+  .mx-newsletter-form form input[name="email"]{padding:0 117px 0 14px;font-size:12px!important}
+  .mx-newsletter-form form button{min-width:106px;top:5px;bottom:5px;right:5px;padding:0 10px;font-size:11px!important}
+}
