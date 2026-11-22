@@ -240,3 +240,37 @@
   .mx-lifestyle-v2-k206 .mx-lifestyle-v2-product{inset:-2% 3% -3% 4%}
   .mx-lifestyle-v2-k206 .mx-lifestyle-v2-spec{left:5%;bottom:9%}
 }
+
+
+/* K-206 crop protection: keep the entire transparent pen and package within the scene. */
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-scene{
+  min-height:355px;
+  overflow:hidden;
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-product{
+  inset:4% 7% 5% 5%;
+  filter:drop-shadow(0 18px 21px rgba(5,9,28,.5));
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-product-image{
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:0!important;
+  transform:scale(.86);
+  transform-origin:center center;
+}
+.mx-lifestyle-v2-k206:hover .mx-lifestyle-v2-product-image{transform:scale(.89)}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-tag{right:5%;top:9%}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-spec{left:5%;bottom:10%}
+@media(max-width:1023px){
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-scene{min-height:330px}
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-product{inset:5% 4% 5% 3%}
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-product-image{transform:scale(.84)}
+  .mx-lifestyle-v2-k206:hover .mx-lifestyle-v2-product-image{transform:scale(.86)}
+}
+@media(max-width:767px){
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-scene{height:290px;min-height:290px}
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-product{inset:4% 5% 5% 5%}
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-product-image{transform:scale(.79)}
+  .mx-lifestyle-v2-k206:hover .mx-lifestyle-v2-product-image{transform:scale(.81)}
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-spec{left:6%;bottom:9%}
+}
