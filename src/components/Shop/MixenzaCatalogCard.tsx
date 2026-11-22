@@ -97,10 +97,10 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
             disabled={!inStock}
             title={!inStock ? 'Currently unavailable' : 'Add a single item to your cart'}
           >
-            <span className="mx-v2-action-copy"><strong>Add to cart</strong><small>Buy a single piece</small></span> <ArrowRight size={15} aria-hidden="true" />
+            <span>Add to cart</span> <ArrowRight size={15} aria-hidden="true" />
           </button>
           <button type="button" className="mx-v2-action mx-v2-action-bulk" onClick={() => setShowEnquiry(true)}>
-            <span className="mx-v2-action-copy"><strong>Bulk order</strong><small>Ask for a discount</small></span> <ArrowRight size={15} aria-hidden="true" />
+            <span>Bulk order</span> <ArrowRight size={15} aria-hidden="true" />
           </button>
         </div>
       </div>
