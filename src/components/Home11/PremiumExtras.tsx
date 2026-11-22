@@ -24,16 +24,34 @@ export function PremiumServices() {
 
 export function PremiumLifestyleBanner() {
   return (
-    <section className="mx-lifestyle" aria-label="Mixenza lifestyle collection">
-      <div className="mx-lifestyle-content">
-        <span className="mx-eyebrow mx-eyebrow-light">Mixenza picks</span>
-        <h2>Smart Living<br />Essentials</h2>
-        <p>Practical, modern and everyday solutions for your home and lifestyle.</p>
-        <Link href="/shop" className="mx-button mx-button-light">Explore collection <Icon.ArrowRight size={16} /></Link>
+    <section className="mx-lifestyle mx-lifestyle-v2" aria-labelledby="mx-lifestyle-v2-title">
+      <div className="mx-lifestyle-v2-luminous" aria-hidden="true" />
+      <div className="mx-lifestyle-v2-copy">
+        <div className="mx-lifestyle-v2-eyebrow"><span className="mx-lifestyle-v2-dash" /> The Mixenza Edit <span className="mx-lifestyle-v2-number">01 / BEAUTY</span></div>
+        <h2 id="mx-lifestyle-v2-title">Little Rituals.<br /><span>Better Days.</span></h2>
+        <p>Discover the 2-in-1 Mist Spray Detangling Hair Brush. A fine-mist nozzle and removable 30ml water tank make everyday styling feel effortless.</p>
+        <Link href="/product/1970697444" className="mx-lifestyle-v2-button">
+          Explore the hair brush <Icon.ArrowUpRight size={18} weight="bold" aria-hidden="true" />
+        </Link>
+        <div className="mx-lifestyle-v2-details" aria-label="Product features">
+          <span><Icon.Drops size={16} aria-hidden="true" /> Fine mist</span>
+          <span><Icon.Sparkle size={16} aria-hidden="true" /> Easy detangling</span>
+        </div>
       </div>
-      <div className="mx-lifestyle-display" aria-hidden="true">
-        <div className="mx-lifestyle-arch" />
-        <Image src="/images/pickora/water-dispenser.png" alt="" fill sizes="(max-width: 767px) 60vw, 38vw" className="object-contain" />
+      <div className="mx-lifestyle-v2-scene">
+        <div className="mx-lifestyle-v2-halo" aria-hidden="true" />
+        <div className="mx-lifestyle-v2-pedestal" aria-hidden="true" />
+        <div className="mx-lifestyle-v2-product">
+          <Image
+            src="/images/mixenza/cutouts/mist-hair-brush.png"
+            alt="2-in-1 Mist Spray Detangling Hair Brush"
+            fill
+            unoptimized
+            sizes="(max-width: 767px) 85vw, (max-width: 1199px) 47vw, 38vw"
+            className="mx-lifestyle-v2-product-image"
+          />
+        </div>
+        <span className="mx-lifestyle-v2-tag">2-IN-1 <Icon.ArrowUpRight size={14} aria-hidden="true" /></span>
       </div>
     </section>
   )

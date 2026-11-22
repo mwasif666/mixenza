@@ -1,0 +1,141 @@
+/* Mixenza editorial product highlight: real local transparent product photo, not an infographic rectangle. */
+.mx-lifestyle.mx-lifestyle-v2{
+  position:relative;
+  isolation:isolate;
+  display:grid;
+  grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
+  align-items:stretch;
+  min-height:332px;
+  margin-top:34px;
+  background:
+    radial-gradient(ellipse at 67% 37%,#6e55674a,transparent 54%),
+    linear-gradient(113deg,#191a1e 3%,#29272d 58%,#383038 100%);
+  color:#fff;
+  border:1px solid #ffffff0d;
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 18px 42px #15131a12;
+}
+.mx-lifestyle-v2::after{display:none!important}
+.mx-lifestyle-v2-luminous{
+  position:absolute;z-index:-1;inset:0;
+  pointer-events:none;
+  opacity:.48;
+  background:
+    radial-gradient(ellipse at 84% 8%,#fac6d61e,transparent 31%),
+    radial-gradient(ellipse at 99% 100%,#fc590116,transparent 26%);
+}
+.mx-lifestyle-v2-copy{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  padding:43px 12px 43px clamp(32px,4.2vw,69px);
+}
+.mx-lifestyle-v2-eyebrow{
+  display:flex;align-items:center;gap:12px;
+  color:#ece4e8;font-size:10px!important;font-weight:800;
+  letter-spacing:.20em;line-height:1.5;text-transform:uppercase;
+}
+.mx-lifestyle-v2-dash{width:23px;height:2px;background:var(--primary,#fc5901);flex-shrink:0}
+.mx-lifestyle-v2-number{
+  margin-left:8px;color:#bbaab5;font-size:9px;letter-spacing:.13em;font-weight:650;
+}
+.mx-lifestyle-v2-copy h2{
+  font-size:clamp(38px,3.65vw,58px)!important;
+  line-height:1.03!important;
+  letter-spacing:-.055em!important;
+  font-weight:650!important;
+  margin:19px 0 14px!important;
+  color:#fff;
+}
+.mx-lifestyle-v2-copy h2 span{color:#f6b5a2}
+.mx-lifestyle-v2-copy p{
+  max-width:390px;
+  margin:0 0 21px!important;
+  color:#d4d0d6;
+  font-size:13px!important;
+  line-height:1.7!important;
+}
+.mx-lifestyle-v2-button{
+  display:inline-flex;align-items:center;justify-content:center;gap:22px;
+  border-radius:9px;padding:12px 19px;min-height:43px;
+  font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.055em;background:var(--primary,#fc5901);
+  color:#fff!important;transition:transform .25s,background .25s;
+}
+.mx-lifestyle-v2-button:hover{background:#d9480b;transform:translateY(-2px)}
+.mx-lifestyle-v2-details{
+  display:flex;gap:23px;align-items:center;flex-wrap:wrap;
+  margin-top:22px;color:#c5c0c8;
+}
+.mx-lifestyle-v2-details span{display:inline-flex;align-items:center;gap:7px;font-size:11px!important}
+.mx-lifestyle-v2-details svg{color:#f5b3a2}
+.mx-lifestyle-v2-scene{
+  position:relative;min-width:0;min-height:332px;isolation:isolate;
+  overflow:hidden;
+}
+.mx-lifestyle-v2-halo{
+  position:absolute;z-index:-2;
+  width:min(90%,480px);height:125%;left:12%;top:-16%;
+  border-radius:50%;
+  background:radial-gradient(ellipse at 45% 45%,#e1c6dd90,#a982ac4f 35%,#5b445b29 63%,transparent 75%);
+  filter:blur(5px);
+}
+.mx-lifestyle-v2-scene::before{
+  position:absolute;content:"";z-index:-1;left:9%;right:2%;top:12%;bottom:12%;
+  border:1px solid #f5ecf020;border-radius:50% 50% 47% 53%;
+  transform:rotate(-22deg);
+}
+.mx-lifestyle-v2-scene::after{
+  position:absolute;content:"";left:19%;right:13%;bottom:10%;
+  height:1px;background:linear-gradient(90deg,transparent,#eac9d9a6,transparent);
+  box-shadow:0 4px 29px 9px #cda2be23;pointer-events:none;
+}
+.mx-lifestyle-v2-pedestal{
+  position:absolute;left:20%;bottom:8%;width:62%;height:45px;border-radius:50%;
+  z-index:0;
+  background:radial-gradient(ellipse at 45% 38%,#d9b1cc8c,#8b65874f 55%,transparent 70%);
+  filter:blur(12px);
+}
+.mx-lifestyle-v2-product{
+  position:absolute;z-index:2;inset:-3% 1% -3% 7%;
+  filter:drop-shadow(0 24px 19px #08050d7d);
+}
+.mx-lifestyle-v2-product-image{
+  object-fit:contain!important;object-position:center center;
+  padding:2px!important;
+  transition:transform .5s ease;
+}
+.mx-lifestyle-v2:hover .mx-lifestyle-v2-product-image{transform:scale(1.035)}
+.mx-lifestyle-v2-tag{
+  position:absolute;z-index:3;right:9%;top:14%;
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid #ffffff55;
+  border-radius:999px;background:#ffffff18;
+  backdrop-filter:blur(12px);
+  padding:8px 12px;color:#fff;
+  font-size:10px;font-weight:750;letter-spacing:.12em;
+}
+.mx-lifestyle-v2 a:focus-visible{outline:3px solid var(--primary,#fc5901);outline-offset:4px}
+@media(max-width:1023px){
+  .mx-lifestyle.mx-lifestyle-v2{grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:320px}
+  .mx-lifestyle-v2-copy{padding:35px 0 35px 32px}
+  .mx-lifestyle-v2-copy h2{font-size:clamp(34px,4.3vw,46px)!important}
+  .mx-lifestyle-v2-copy p{font-size:12px!important}
+  .mx-lifestyle-v2-scene{min-height:320px}
+}
+@media(max-width:767px){
+  .mx-lifestyle.mx-lifestyle-v2{display:flex;flex-direction:column;min-height:0;margin-top:26px;border-radius:24px}
+  .mx-lifestyle-v2-copy{padding:28px 24px 0;min-width:0}
+  .mx-lifestyle-v2-eyebrow{font-size:9px!important;gap:9px}
+  .mx-lifestyle-v2-number{font-size:8px}
+  .mx-lifestyle-v2-copy h2{font-size:clamp(35px,8.1vw,44px)!important;margin:15px 0 11px!important}
+  .mx-lifestyle-v2-copy p{font-size:12px!important;max-width:360px}
+  .mx-lifestyle-v2-details{margin-top:17px;gap:17px}
+  .mx-lifestyle-v2-scene{min-height:285px;height:285px}
+  .mx-lifestyle-v2-product{inset:-4% 9% -5% 5%}
+  .mx-lifestyle-v2-tag{right:9%;top:8%}
+  .mx-lifestyle-v2-halo{left:16%;top:-35%;height:150%}
+}
+@media(prefers-reduced-motion:reduce){
+  .mx-lifestyle-v2-product-image,.mx-lifestyle-v2-button{transition:none}
+}
