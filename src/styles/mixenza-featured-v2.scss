@@ -391,3 +391,122 @@
   .mx-v2-action-copy strong{font-size:10px!important}
   .mx-v2-action-copy small{font-size:9px!important}
 }
+
+
+/* 2026-11-22: compact one-line purchase actions. Avoid the global span font rules
+   enlarging button labels and pushing the arrow outside the card. */
+.mx-v2-actions .mx-v2-action{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:42px;
+  padding:10px 13px;
+  gap:8px;
+  white-space:nowrap;
+}
+.mx-v2-actions .mx-v2-action > span{
+  display:block;
+  min-width:0;
+  font-size:12px!important;
+  line-height:1.25!important;
+  font-weight:750;
+  letter-spacing:0;
+  white-space:nowrap;
+}
+.mx-v2-actions .mx-v2-action > svg{flex-shrink:0}
+
+/* Discount information belongs below the featured product cards, not inside
+   the small cart buttons. Two identical segments keep the animation seamless. */
+.mx-bulk-marquee{
+  position:relative;
+  width:min(1540px,calc(100% - 32px));
+  margin:16px auto 0;
+  border:1px solid #f9ccad;
+  border-radius:16px;
+  background:linear-gradient(105deg,#fffaf5,#fff0e4 55%,#fff7ef);
+  overflow:hidden;
+  box-shadow:0 8px 24px rgba(252,89,1,.075);
+}
+.mx-bulk-marquee-track{
+  display:flex;
+  align-items:center;
+  width:max-content;
+  animation:mx-bulk-marquee-scroll 33s linear infinite;
+  will-change:transform;
+}
+.mx-bulk-marquee-segment{
+  display:flex;
+  flex-shrink:0;
+  align-items:center;
+  gap:clamp(25px,3vw,52px);
+  min-height:55px;
+  padding:0 28px;
+  white-space:nowrap;
+}
+.mx-bulk-marquee-segment span{
+  display:inline-flex;
+  flex-shrink:0;
+  align-items:center;
+  gap:9px;
+  font-size:12px!important;
+  line-height:1.3!important;
+  font-weight:750;
+  letter-spacing:.06em;
+  color:#9e4013;
+}
+.mx-bulk-marquee-segment svg{color:var(--primary,#fc5901);flex-shrink:0}
+@keyframes mx-bulk-marquee-scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+@media(hover:hover){
+  .mx-bulk-marquee:hover .mx-bulk-marquee-track{animation-play-state:paused}
+}
+@media(prefers-reduced-motion:reduce){
+  .mx-bulk-marquee-track{animation:none;will-change:auto}
+}
+
+/* Five genuinely full-width columns; previously an old six-column layout left
+   a blank sixth slot on the right. */
+.mixenza-premium-home .mx-arrivals-full-width{
+  width:min(1540px,calc(100% - 32px));
+  margin:0 auto;
+  min-width:0;
+}
+.mixenza-premium-home .mx-arrivals-full-width .mx-new-arrivals{
+  width:100%;
+  margin:38px 0 0;
+}
+.mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:16px;
+  width:100%;
+  align-items:stretch;
+}
+.mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid .mx-v2-item{height:100%;min-width:0}
+.mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid .mx-v2-photo-shell{height:232px}
+@media(max-width:1150px){
+  .mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:13px;
+  }
+}
+@media(max-width:750px){
+  .mixenza-premium-home .mx-arrivals-full-width{width:calc(100% - 20px)}
+  .mixenza-premium-home .mx-arrivals-full-width .mx-new-arrivals{margin-top:27px}
+  .mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:9px;
+  }
+  .mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid .mx-v2-photo-shell{height:190px}
+  .mx-v2-actions .mx-v2-action{min-height:39px;padding:9px 10px}
+  .mx-v2-actions .mx-v2-action > span{font-size:11px!important}
+  .mx-bulk-marquee{width:calc(100% - 20px);border-radius:12px;margin-top:12px}
+  .mx-bulk-marquee-segment{min-height:47px;padding:0 18px;gap:24px}
+  .mx-bulk-marquee-segment span{font-size:10px!important}
+}
+@media(max-width:420px){
+  .mixenza-premium-home .mx-arrivals-full-width .mx-arrival-grid .mx-v2-photo-shell{height:160px}
+  .mx-v2-actions .mx-v2-action > span{font-size:10px!important}
+}
