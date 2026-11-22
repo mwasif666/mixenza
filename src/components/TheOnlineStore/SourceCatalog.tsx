@@ -106,8 +106,8 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
     }, [products])
 
     const stockCounts = useMemo(() => ({
-        in: products.filter(product => product.quantity > 0 && !isBulkOnlyProduct(product.name)).length,
-        out: products.filter(product => product.quantity === 0 && !isBulkOnlyProduct(product.name)).length,
+        in: products.filter(product => product.quantity > 0).length,
+        out: products.filter(product => product.quantity === 0).length,
         bulk: products.filter(product => isBulkOnlyProduct(product.name)).length,
     }), [products])
 
@@ -118,8 +118,8 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
             const categoryMatch = !activeCategories.length || product.categories.some(name => activeCategories.includes(name))
             const brandMatch = !brands.length || brands.includes(product.brand || 'Mixenza')
             const stockMatch = !availability.length
-                || (availability.includes('in') && product.quantity > 0 && !isBulkOnlyProduct(product.name))
-                || (availability.includes('out') && product.quantity === 0 && !isBulkOnlyProduct(product.name))
+                || (availability.includes('in') && product.quantity > 0)
+                || (availability.includes('out') && product.quantity === 0)
                 || (availability.includes('bulk') && isBulkOnlyProduct(product.name))
             const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1]
             const queryMatch = !normalized || [product.name, product.category, product.description, ...product.tags].some(value => String(value || '').toLowerCase().includes(normalized))
@@ -243,7 +243,7 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
                                 <FilterRow
                                     checked={availability.includes('bulk')}
                                     onChange={() => { setAvailability(toggleValue(availability, 'bulk')); setPage(1) }}
-                                    label="Bulk quote required"
+                                    label="Bulk discounts"
                                     count={stockCounts.bulk}
                                 />
                             </div>
