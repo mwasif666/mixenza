@@ -22,20 +22,20 @@ export function PremiumServices() {
   )
 }
 
-export function PremiumLifestyleBanner() {
+export function PremiumLifestyleBanner({ productHref = '/shop' }: { productHref?: string }) {
   return (
-    <section className="mx-lifestyle mx-lifestyle-v2" aria-labelledby="mx-lifestyle-v2-title">
+    <section className="mx-lifestyle mx-lifestyle-v2 mx-lifestyle-v2-k206" aria-labelledby="mx-lifestyle-v2-title">
       <div className="mx-lifestyle-v2-luminous" aria-hidden="true" />
       <div className="mx-lifestyle-v2-copy">
-        <div className="mx-lifestyle-v2-eyebrow"><span className="mx-lifestyle-v2-dash" /> The Mixenza Edit <span className="mx-lifestyle-v2-number">01 / BEAUTY</span></div>
-        <h2 id="mx-lifestyle-v2-title">Little Rituals.<br /><span>Better Days.</span></h2>
-        <p>Discover the 2-in-1 Mist Spray Detangling Hair Brush. A fine-mist nozzle and removable 30ml water tank make everyday styling feel effortless.</p>
-        <Link href="/product/1970697444" className="mx-lifestyle-v2-button">
-          Explore the hair brush <Icon.ArrowUpRight size={18} weight="bold" aria-hidden="true" />
+        <div className="mx-lifestyle-v2-eyebrow"><span className="mx-lifestyle-v2-dash" /> The Mixenza Edit <span className="mx-lifestyle-v2-number">02 / EVERYDAY TECH</span></div>
+        <h2 id="mx-lifestyle-v2-title">A Smarter Check.<br /><span>Every Day.</span></h2>
+        <p>Meet the K-206 rechargeable UV detection pen. A compact everyday tool for convenient UV checks at the counter, the office or on the go.</p>
+        <Link href={productHref} className="mx-lifestyle-v2-button">
+          Explore the K-206 pen <Icon.ArrowUpRight size={18} weight="bold" aria-hidden="true" />
         </Link>
         <div className="mx-lifestyle-v2-details" aria-label="Product features">
-          <span><Icon.Drop size={16} aria-hidden="true" /> Fine mist</span>
-          <span><Icon.Sparkle size={16} aria-hidden="true" /> Easy detangling</span>
+          <span><Icon.Lightning size={16} aria-hidden="true" /> UV detection</span>
+          <span><Icon.ShieldCheck size={16} aria-hidden="true" /> Compact design</span>
         </div>
       </div>
       <div className="mx-lifestyle-v2-scene">
@@ -43,16 +43,16 @@ export function PremiumLifestyleBanner() {
         <div className="mx-lifestyle-v2-pedestal" aria-hidden="true" />
         <div className="mx-lifestyle-v2-product">
           <Image
-            src="/images/mixenza/cutouts/mist-hair-brush.png"
-            alt="2-in-1 Mist Spray Detangling Hair Brush"
+            src="/images/mixenza/cutouts/k-206.png"
+            alt="K-206 rechargeable UV detection pen and its retail box"
             fill
             unoptimized
             sizes="(max-width: 767px) 85vw, (max-width: 1199px) 47vw, 38vw"
             className="mx-lifestyle-v2-product-image"
           />
         </div>
-        <span className="mx-lifestyle-v2-tag">2-IN-1 <Icon.ArrowUpRight size={14} aria-hidden="true" /></span>
-        <div className="mx-lifestyle-v2-spec"><strong>30ML</strong><span>Refillable mist tank</span></div>
+        <span className="mx-lifestyle-v2-tag">UV DETECTOR <Icon.ArrowUpRight size={14} aria-hidden="true" /></span>
+        <div className="mx-lifestyle-v2-spec"><strong>K-206</strong><span>Rechargeable UV pen</span></div>
       </div>
     </section>
   )
