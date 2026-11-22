@@ -1,0 +1,41 @@
+name: Install approved Mixenza hero reference
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/install-approved-hero.yml"]
+permissions:
+  contents: write
+jobs:
+  install-hero:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and validate uploaded approved Mixenza hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/images/mixenza
+          curl --fail --location --retry 2 --max-time 40 --silent --show-error \
+            'https://at.adobe.com/AX0c2PyGrmJpGaI0' -o /tmp/mixenza-approved-hero
+          file /tmp/mixenza-approved-hero
+          python - <<'PY'
+          from pathlib import Path
+          f=Path('/tmp/mixenza-approved-hero')
+          content=f.read_bytes()
+          assert content[:8] == b'\x89PNG\r\n\x1a\n', f'Unexpected file signature: {content[:20]!r}'
+          assert len(content)<5_000_000, f'Unexpected image size: {len(content)}'
+          width=int.from_bytes(content[16:20],"big")
+          height=int.from_bytes(content[20:24],"big")
+          assert width == 1667 and height == 476, f'Unexpected image dimensions: {width}x{height}'
+          Path('public/images/mixenza/approved-hero-banner.png').write_bytes(content)
+          print(f'Validated approved image: {width}x{height}, {len(content)} bytes')
+          PY
+      - name: Commit exact approved hero artwork
+        run: |
+          git config user.name "Mixenza Design Deployment"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/images/mixenza/approved-hero-banner.png
+          git diff --cached --quiet && exit 0
+          git commit -m "Add exact approved full-width Mixenza hero banner artwork"
+          git push
