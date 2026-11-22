@@ -49,7 +49,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
     const bulkOnly = bulkMinimum !== null
 
     const add = () => {
-        if (bulkOnly || product.quantity === 0) return
+        if (product.quantity === 0) return
         addToCart({ ...product, quantityPurchase: quantity })
         updateCart(product.id, quantity, '', '')
         openModalCart()
@@ -99,8 +99,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                     <h1 className="heading3">{product.name}</h1>
                     <p className="text-secondary mt-3">{descriptionSummary.slice(0, 230) || 'See product details and contact Mixenza with any questions before ordering.'}</p>
                     {bulkOnly && <p className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
-                        This product is available in bulk quantities. {bulkMinimum && bulkMinimum > 1 ? `The minimum order is ${bulkMinimum} pieces.` : ''}
-                        {' '}The displayed price is a reference unit price, not a confirmed carton total. Please request a quote and stock confirmation before ordering.
+                        Single-item checkout is available at the displayed price while stock lasts. For larger quantities, request a discounted wholesale quote. {bulkMinimum && bulkMinimum > 1 ? `Supplier carton quantities may apply to bulk pricing (listed MOQ: ${bulkMinimum} pieces).` : ''}
                     </p>}
                     <div className="flex items-end gap-3 mt-6">
                         <span className="heading4">{formatMoney(product.price)}</span>
@@ -108,23 +107,22 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                         {salePercent > 0 && <span className="text-sm text-[#16a34a]">-{salePercent}%</span>}
                     </div>
 
-                    {!bulkOnly && <div className="flex items-center gap-3 mt-8">
+                    <div className="flex items-center gap-3 mt-8">
                         <div className="flex items-center rounded-full border border-line h-12">
                             <button type="button" onClick={() => setQuantity(value => Math.max(1, value - 1))} className="w-12 h-12">−</button>
                             <span className="w-8 text-center">{quantity}</span>
                             <button type="button" onClick={() => setQuantity(value => Math.min(product.quantity || 99, value + 1))} className="w-12 h-12">+</button>
                         </div>
                         {product.quantity > 0 && <span className="text-sm text-secondary">Available quantity: {product.quantity} (subject to confirmation)</span>}
-                    </div>}
+                    </div>
 
-                    {bulkOnly ? (
-                        <button type="button" onClick={() => setShowEnquiry(true)} className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 font-semibold text-white transition hover:bg-primary-dark">Bulk order · Request quote</button>
-                    ) : (
-                        <div className="grid sm:grid-cols-2 gap-3 mt-6">
-                            <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
-                            <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full border border-black disabled:opacity-40">Add to Cart</button>
-                        </div>
-                    )}
+                    <div className="grid sm:grid-cols-2 gap-3 mt-6">
+                        <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
+                        <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full border border-black disabled:opacity-40">Add to Cart</button>
+                    </div>
+                    <button type="button" onClick={() => setShowEnquiry(true)} className="mt-3 flex h-12 w-full items-center justify-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-5 font-semibold text-[#a13a0c] transition hover:border-primary hover:bg-primary hover:text-white">
+                        Request bulk discount <span className="text-xs font-normal">Custom quote for larger quantities</span>
+                    </button>
 
                     <div className="mt-8 space-y-4 text-sm">
                         <div className="flex gap-3"><span>🚚</span><div><strong>Delivery within Pakistan</strong><p className="text-secondary">Standard shipping is calculated at checkout. <Link href="/pages/shipping-policy" className="underline">Shipping policy</Link></p></div></div>
