@@ -91,8 +91,20 @@ export default function LiveCatalog() {
         </div>
       </section>
 
+      <div className="mx-bulk-marquee" role="note" aria-label="Ask about discounts on larger bulk orders">
+        <div className="mx-bulk-marquee-track" aria-hidden="true">
+          {[0, 1].map(index => (
+            <div className="mx-bulk-marquee-segment" key={index}>
+              <span><Icon.Tag size={17} weight="fill" /> BULK ORDER DISCOUNTS</span>
+              <span><Icon.Sparkle size={17} weight="fill" /> BETTER PRICES FOR LARGER QUANTITIES</span>
+              <span><Icon.ArrowRight size={17} weight="bold" /> REQUEST A CUSTOM QUOTE</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <PremiumLifestyleBanner productHref={k206Product ? productPath(k206Product) : '/shop'} />
-      <div className="container">
+      <div className="mx-arrivals-full-width">
         <section className="mx-section mx-new-arrivals" aria-labelledby="mx-new-heading">
           <div className="mx-section-head">
             <div><span className="mx-eyebrow">Just arrived</span><h2 id="mx-new-heading">New Arrivals</h2></div>
