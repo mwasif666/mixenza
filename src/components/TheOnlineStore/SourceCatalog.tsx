@@ -8,7 +8,7 @@ import 'rc-slider/assets/index.css'
 import { CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr'
 import { SourceProduct } from '@/lib/theOnlineStore'
 import { formatMoney } from '@/utils/currency'
-import StoreProductCard from '@/components/Shop/StoreProductCard'
+import MixenzaCatalogCard from '@/components/Shop/MixenzaCatalogCard'
 import { isBulkOnlyProduct } from '@/lib/bulkOrder'
 
 interface Props {
@@ -265,8 +265,8 @@ export default function SourceCatalog({ products, initialCategory, title = 'Shop
 
                     <div>
                         {visible.length ? (
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-6">
-                                {visible.map(product => <StoreProductCard key={product.id} product={product} />)}
+                            <div className="mx-shop-catalog-grid grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-6">
+                                {visible.map(product => <MixenzaCatalogCard key={product.id} product={product} />)}
                             </div>
                         ) : (
                             <div className="rounded-2xl bg-[#f7f7f8] px-6 py-16 text-center">
