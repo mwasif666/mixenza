@@ -34,7 +34,7 @@ export function PremiumLifestyleBanner() {
           Explore the hair brush <Icon.ArrowUpRight size={18} weight="bold" aria-hidden="true" />
         </Link>
         <div className="mx-lifestyle-v2-details" aria-label="Product features">
-          <span><Icon.Drops size={16} aria-hidden="true" /> Fine mist</span>
+          <span><Icon.Drop size={16} aria-hidden="true" /> Fine mist</span>
           <span><Icon.Sparkle size={16} aria-hidden="true" /> Easy detangling</span>
         </div>
       </div>
