@@ -10,6 +10,7 @@ import { formatMoney } from '@/utils/currency'
 import { useCart } from '@/context/CartContext'
 import { useModalCartContext } from '@/context/ModalCartContext'
 import { getBulkMinimum } from '@/lib/bulkOrder'
+import BulkInquiryModal from '@/components/Shop/BulkInquiryModal'
 
 export default function SourceProductDetail({ product }: { product: SourceProduct }) {
     const galleryImages = useMemo(() => Array.from(new Set([
@@ -39,6 +40,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
         }
     }, [activeImage, failedImages, galleryImages])
     const [quantity, setQuantity] = useState(1)
+    const [showEnquiry, setShowEnquiry] = useState(false)
     const { addToCart, updateCart } = useCart()
     const { openModalCart } = useModalCartContext()
     const salePercent = product.originPrice > product.price ? Math.round((1 - product.price / product.originPrice) * 100) : 0
@@ -116,7 +118,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                     </div>}
 
                     {bulkOnly ? (
-                        <Link href="/pages/contact" className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-black px-7 text-white">Request bulk quote</Link>
+                        <button type="button" onClick={() => setShowEnquiry(true)} className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 font-semibold text-white transition hover:bg-primary-dark">Bulk order · Request quote</button>
                     ) : (
                         <div className="grid sm:grid-cols-2 gap-3 mt-6">
                             <button type="button" onClick={add} disabled={product.quantity === 0} className="h-12 rounded-full bg-black text-white disabled:opacity-40">Buy Now</button>
@@ -168,6 +170,7 @@ export default function SourceProductDetail({ product }: { product: SourceProduc
                     </dl>
                 </div>
             </section>
+            {bulkOnly && <BulkInquiryModal open={showEnquiry} onClose={() => setShowEnquiry(false)} productName={product.name} productSku={product.sku} />}
         </main>
     )
 }
