@@ -36,6 +36,7 @@ jobs:
             "digital-hand-fan.png",
             "massage-gun.png",
             "water-dispenser.png",
+            "mist-hair-brush.png",
           ]
           target = Path("public/images/mixenza/cutouts")
           target.mkdir(parents=True, exist_ok=True)
