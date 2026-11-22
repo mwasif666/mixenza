@@ -35,7 +35,7 @@
 .mx-mkt-feature-text{position:relative;z-index:4;width:54%;padding:clamp(35px,4.7vw,74px) 0 26px clamp(24px,2.65vw,48px)}
 .mx-mkt-kicker{display:block;color:#6a6670;text-transform:uppercase;letter-spacing:.2em;font-size:10px!important;font-weight:750}
 .mx-mkt-feature-text h1{font-size:clamp(24px,2.75vw,41px);line-height:1.13;letter-spacing:-.055em;color:#202126;font-weight:800;margin:16px 0 12px}
-.mx-mkt-feature-text h1 span{font-weight:500;color:#414248}
+.mx-mkt-feature-text h1 > span{display:block;font-size:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;font-weight:500!important;color:#414248}
 .mx-mkt-feature-text p{color:#56575d;font-size:clamp(11px,.87vw,14px)!important;line-height:1.55;max-width:330px;margin-bottom:12px}
 .mx-mkt-feature-price{display:block;color:var(--primary,#fc5901);font-size:17px;line-height:1.35;font-weight:850;margin-bottom:12px}
 .mx-mkt-feature-cta{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:37px;padding:9px 17px;border-radius:7px;background:#1d1e21;color:#fff!important;font-size:11px;font-weight:750;text-transform:uppercase;transition:background .2s,transform .2s}
