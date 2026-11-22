@@ -139,3 +139,49 @@
 @media(prefers-reduced-motion:reduce){
   .mx-lifestyle-v2-product-image,.mx-lifestyle-v2-button{transition:none}
 }
+
+
+/* Refreshed product editorial banner: stronger hierarchy, light and depth. */
+.mx-lifestyle.mx-lifestyle-v2{
+  min-height:365px;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  background:
+    radial-gradient(ellipse at 81% 48%,rgba(162,98,150,.36),transparent 49%),
+    radial-gradient(ellipse at 100% 100%,rgba(252,89,1,.12),transparent 38%),
+    linear-gradient(115deg,#171821 0%,#24232d 54%,#3a293a 100%);
+  box-shadow:0 24px 60px rgba(19,14,31,.14);
+}
+.mx-lifestyle-v2-copy{padding-block:48px;padding-right:30px}
+.mx-lifestyle-v2-copy h2{font-weight:750!important;letter-spacing:-.058em!important;font-size:clamp(40px,3.9vw,62px)!important}
+.mx-lifestyle-v2-copy p{max-width:425px;font-size:13px!important;line-height:1.75!important;color:#e4dfe8}
+.mx-lifestyle-v2-button{border-radius:14px;min-height:49px;padding:14px 20px;box-shadow:0 10px 24px #fc59012e}
+.mx-lifestyle-v2-details{margin-top:25px}
+.mx-lifestyle-v2-details span{font-size:12px!important;color:#e8d7e3}
+.mx-lifestyle-v2-scene{min-height:365px}
+.mx-lifestyle-v2-halo{background:radial-gradient(ellipse at 48% 43%,#e0c7df8c,#ad77ac63 40%,#5b445b00 76%);filter:blur(14px)}
+.mx-lifestyle-v2-product{inset:-6% 1% -5% 4%;filter:drop-shadow(0 26px 26px #08050d99)}
+.mx-lifestyle-v2-tag{right:7%;top:10%;padding:10px 15px;font-size:11px;border-color:#ffffff61}
+.mx-lifestyle-v2-spec{
+  position:absolute;z-index:4;left:6%;bottom:11%;
+  display:flex;flex-direction:column;gap:2px;
+  min-width:135px;padding:12px 15px;
+  border:1px solid #ffffff2e;border-radius:16px;
+  background:#241e29a8;backdrop-filter:blur(12px);
+  box-shadow:0 14px 35px #09060d33;
+}
+.mx-lifestyle-v2-spec strong{font-size:16px;letter-spacing:.04em;color:#fff}
+.mx-lifestyle-v2-spec span{font-size:10px!important;color:#d9ced9}
+@media(max-width:1023px){
+  .mx-lifestyle.mx-lifestyle-v2{min-height:330px}
+  .mx-lifestyle-v2-copy{padding:35px 12px 35px 32px}
+  .mx-lifestyle-v2-scene{min-height:330px}
+  .mx-lifestyle-v2-spec{left:2%;bottom:8%;padding:10px 12px;min-width:120px}
+}
+@media(max-width:767px){
+  .mx-lifestyle.mx-lifestyle-v2{min-height:0}
+  .mx-lifestyle-v2-copy{padding:30px 25px 0}
+  .mx-lifestyle-v2-copy h2{font-size:clamp(35px,8vw,45px)!important}
+  .mx-lifestyle-v2-scene{min-height:300px;height:300px}
+  .mx-lifestyle-v2-product{inset:-3% 4% -4% 5%}
+  .mx-lifestyle-v2-spec{left:6%;bottom:11%}
+}
