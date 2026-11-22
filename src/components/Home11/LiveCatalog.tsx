@@ -54,7 +54,7 @@ export default function LiveCatalog() {
   const arrivals = useMemo(() => {
     const filtered = products.filter(p => p.id && !/^DARAZ-/i.test(p.sku || ''))
     const marked = filtered.filter(p => p.isNewArrival)
-    return (marked.length >= 6 ? marked : filtered).slice(0, 6)
+    return (marked.length >= 5 ? marked : filtered).slice(0, 5)
   }, [products])
 
   return (
