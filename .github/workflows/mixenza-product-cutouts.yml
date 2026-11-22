@@ -31,11 +31,6 @@ jobs:
           from PIL import Image, ImageFilter
           from rembg import remove, new_session
           sources = [
-            "steel-tumbler.png",
-            "rechargeable-uv-detector.png",
-            "digital-hand-fan.png",
-            "massage-gun.png",
-            "water-dispenser.png",
             "mist-hair-brush.png",
           ]
           target = Path("public/images/mixenza/cutouts")
@@ -74,5 +69,6 @@ jobs:
             echo "Processed images already current"
             exit 0
           fi
-          git commit -m "Add transparent cutouts of original Mixenza banner products"
-          git push
+          git commit -m "Add transparent cutout of Mixenza mist hair brush"
+          git pull --rebase origin main
+          git push origin HEAD:main
