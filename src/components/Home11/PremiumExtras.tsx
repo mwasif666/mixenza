@@ -52,6 +52,7 @@ export function PremiumLifestyleBanner() {
           />
         </div>
         <span className="mx-lifestyle-v2-tag">2-IN-1 <Icon.ArrowUpRight size={14} aria-hidden="true" /></span>
+        <div className="mx-lifestyle-v2-spec"><strong>30ML</strong><span>Refillable mist tank</span></div>
       </div>
     </section>
   )
