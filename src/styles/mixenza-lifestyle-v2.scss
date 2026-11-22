@@ -185,3 +185,58 @@
   .mx-lifestyle-v2-product{inset:-3% 4% -4% 5%}
   .mx-lifestyle-v2-spec{left:6%;bottom:11%}
 }
+
+
+/* K-206 editorial: match the outer edges of the featured products section. */
+.mx-lifestyle.mx-lifestyle-v2.mx-lifestyle-v2-k206 {
+  width:min(1540px,calc(100% - 32px));
+  margin:34px auto 0;
+  min-height:355px;
+  background:
+    radial-gradient(ellipse at 74% 47%,rgba(42,124,203,.36),transparent 48%),
+    radial-gradient(ellipse at 100% 95%,rgba(252,89,1,.12),transparent 38%),
+    linear-gradient(114deg,#101723 0%,#19253a 53%,#25344e 100%);
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-luminous {
+  background:radial-gradient(ellipse at 75% 46%,rgba(107,171,255,.18),transparent 55%);
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-halo {
+  background:radial-gradient(ellipse at 48% 44%,rgba(115,171,235,.6),rgba(40,94,163,.32) 43%,transparent 76%);
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-copy h2 > span {
+  color:#bad9ff!important;
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-details svg {
+  color:#a1ceff;
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-product {
+  inset:-4% 1% -4% 1%;
+  filter:drop-shadow(0 27px 22px rgba(5,9,28,.65));
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-product-image {
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:0!important;
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-tag {
+  background:rgba(19,35,61,.62);
+  border-color:rgba(189,216,255,.42);
+}
+.mx-lifestyle-v2-k206 .mx-lifestyle-v2-spec {
+  left:5%;
+  bottom:10%;
+  background:rgba(17,29,51,.77);
+  border-color:rgba(175,203,242,.32);
+}
+@media(max-width:1023px){
+  .mx-lifestyle.mx-lifestyle-v2.mx-lifestyle-v2-k206{min-height:330px}
+}
+@media(max-width:767px){
+  .mx-lifestyle.mx-lifestyle-v2.mx-lifestyle-v2-k206{
+    width:calc(100% - 20px);
+    margin-top:26px;
+    min-height:0;
+  }
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-product{inset:-2% 3% -3% 4%}
+  .mx-lifestyle-v2-k206 .mx-lifestyle-v2-spec{left:5%;bottom:9%}
+}
