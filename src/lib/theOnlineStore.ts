@@ -15,6 +15,9 @@ export type SourceProduct = ProductType & {
     stockStatus: string
     isFeatured?: boolean
     isNewArrival?: boolean
+    isBestSeller?: boolean
+    isRecommended?: boolean
+    ratingsCount?: number
 }
 
 export const getSourceProducts = getBackendCatalogProducts

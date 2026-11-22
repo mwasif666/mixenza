@@ -1,0 +1,225 @@
+/* Mixenza product tabs — compact five-product marketplace reference, with real catalog metadata. */
+.mx-featured-v2{
+  width:min(1540px,calc(100% - 32px));
+  margin:30px auto 0;
+  padding:12px;
+  border-radius:18px;
+  background:#eff1f6;
+}
+.mx-featured-v2-inner{
+  border-radius:13px;
+  background:#fff;
+  padding:24px 25px 25px;
+  min-height:405px;
+}
+.mx-featured-v2-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  margin-bottom:18px;
+}
+.mx-featured-v2-tabs{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.mx-featured-v2-tabs button{
+  border:0;
+  border-bottom:2px solid transparent;
+  background:transparent;
+  color:#85868b;
+  padding:0 0 11px;
+  font-size:12px;
+  line-height:1.4;
+  font-weight:650;
+  letter-spacing:.018em;
+  text-transform:uppercase;
+  transition:color .2s,border-color .2s;
+}
+.mx-featured-v2-tabs button:hover{color:#272831}
+.mx-featured-v2-tabs button.is-active{
+  color:#181a1e;
+  border-color:var(--primary,#fc5901);
+  font-weight:800;
+}
+.mx-featured-v2-viewall{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  flex-shrink:0;
+  font-size:11px;
+  color:#6d6f75;
+  font-weight:600;
+}
+.mx-featured-v2-viewall:hover{color:var(--primary,#fc5901)}
+.mx-featured-v2-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:15px;
+  min-height:325px;
+}
+.mx-v2-item{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  padding:8px 9px 11px;
+  background:#fff;
+  border:1px solid transparent;
+  border-radius:11px;
+  transition:box-shadow .2s,border-color .2s,transform .2s;
+}
+.mx-v2-item:hover{
+  box-shadow:0 10px 25px #191a2410;
+  border-color:#f0f0f0;
+  transform:translateY(-2px);
+}
+.mx-v2-photo-shell{
+  position:relative;
+  height:183px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border-bottom:1px solid #f4f4f5;
+  margin-bottom:8px;
+}
+.mx-v2-photo-link{
+  display:block;
+  position:absolute;
+  inset:0;
+}
+.mx-v2-product-image{
+  object-fit:contain!important;
+  object-position:center;
+  padding:10px 8px 8px!important;
+  transition:transform .25s;
+}
+.mx-v2-item:hover .mx-v2-product-image{transform:scale(1.035)}
+.mx-v2-saving{
+  position:absolute;
+  z-index:3;
+  top:2px;left:3px;
+  padding:5px 7px;
+  border-radius:4px;
+  background:#1ab441;
+  color:#fff;
+  font-size:9px!important;
+  font-weight:750;
+  letter-spacing:.005em;
+  box-shadow:0 2px 6px #11442318;
+}
+.mx-v2-photo-placeholder{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  position:absolute;
+  inset:0;
+  text-align:center;
+  color:#747780;
+  font-size:11px;
+  line-height:1.7;
+  background:#f7f7f8;
+}
+.mx-v2-card-detail{display:flex;flex-direction:column;align-items:flex-start;flex:1;min-width:0;padding:0 4px}
+.mx-v2-review{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:650;color:#c5791b;margin:1px 0 6px}
+.mx-v2-review span{color:#8a8b91;font-weight:500}
+.mx-v2-product-title{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  overflow:hidden;
+  min-height:50px;
+  max-height:58px;
+  color:#222329;
+  font-size:12px;
+  line-height:1.38;
+  font-weight:700;
+  transition:color .2s;
+}
+.mx-v2-product-title:hover{color:var(--primary,#fc5901)}
+.mx-v2-prices{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  min-height:21px;
+}
+.mx-v2-prices strong{font-size:14px;font-weight:800;color:#191a1e;line-height:1.25}
+.mx-v2-prices strong.mx-v2-sale-price{color:var(--primary,#fc5901)}
+.mx-v2-prices del{font-size:10px;color:#a6a7ac}
+.mx-v2-product-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:5px;
+  margin-top:12px;
+}
+.mx-v2-stock{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:#57595f;
+  font-size:10px;
+  font-weight:550;
+}
+.mx-v2-stock-dot{width:7px;height:7px;border-radius:50%;display:block;background:#aaaaaf}
+.mx-v2-stock.is-available .mx-v2-stock-dot{background:#23ad43}
+.mx-v2-stock.is-unavailable .mx-v2-stock-dot{background:#d44a4a}
+.mx-v2-bulk-note{font-size:10px;color:#8b6b30}
+.mx-v2-thumbnails{display:flex;align-items:center;gap:6px;margin-top:9px;min-height:32px}
+.mx-v2-thumb{
+  position:relative;
+  display:block;
+  height:29px;
+  width:29px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid #ededed;
+  border-radius:5px;
+  flex-shrink:0;
+}
+.mx-v2-thumb.is-active{border-color:var(--primary,#fc5901)}
+.mx-v2-action{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:auto;
+  padding:12px 0 0;
+  background:transparent;
+  color:#505158;
+  font-size:10px;
+  font-weight:700;
+  transition:color .2s;
+}
+.mx-v2-action:hover{color:var(--primary,#fc5901)}
+.mx-v2-action:disabled{color:#a2a2a2;cursor:not-allowed}
+.mx-featured-v2-empty{grid-column:1/-1;padding:80px 15px;text-align:center;color:#777;font-size:13px}
+.mx-featured-v2 a:focus-visible,.mx-featured-v2 button:focus-visible{
+  outline:2px solid var(--primary,#fc5901);outline-offset:3px;
+}
+@media(max-width:1150px){
+  .mx-featured-v2-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+  .mx-v2-photo-shell{height:205px}
+}
+@media(max-width:750px){
+  .mx-featured-v2{width:calc(100% - 20px);margin-top:23px;padding:8px;border-radius:14px}
+  .mx-featured-v2-inner{padding:17px 15px 18px;border-radius:11px}
+  .mx-featured-v2-head{gap:12px;margin-bottom:13px}
+  .mx-featured-v2-tabs{gap:15px}
+  .mx-featured-v2-tabs button{font-size:11px;padding-bottom:8px}
+  .mx-featured-v2-viewall{font-size:10px}
+  .mx-featured-v2-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .mx-v2-item{padding:6px}
+  .mx-v2-photo-shell{height:165px}
+  .mx-v2-product-title{font-size:11px}
+  .mx-v2-prices strong{font-size:12px}
+  .mx-v2-saving{font-size:8px!important}
+}
+@media(max-width:380px){
+  .mx-featured-v2-tabs{gap:10px}
+  .mx-featured-v2-tabs button{font-size:10px}
+  .mx-featured-v2-inner{padding:15px 10px}
+  .mx-v2-photo-shell{height:135px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mx-v2-item,.mx-v2-product-image{transition:none}
+}

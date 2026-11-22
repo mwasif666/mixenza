@@ -80,6 +80,9 @@ export const mapProduct = (product: BackendProduct): SourceProduct => {
         stockStatus: Number(product.stock || 0) > 0 ? 'instock' : 'outofstock',
         isFeatured: Boolean(product.isFeatured),
         isNewArrival: Boolean(product.isNewArrival),
+        isBestSeller: Boolean(product.isBestSeller),
+        isRecommended: Boolean(product.isRecommended),
+        ratingsCount: Number(product.ratingsCount || 0),
     }
 }
 
