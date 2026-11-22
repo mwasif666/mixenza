@@ -229,3 +229,91 @@
 @media(prefers-reduced-motion:reduce){
   .mx-v2-item,.mx-v2-product-image{transition:none}
 }
+
+
+/* Shared cards: identical image/title/price/action slots on Home and Shop. */
+.mx-v2-item { height:100%; width:100%; }
+.mx-v2-card-detail { width:100%; align-items:stretch; }
+.mx-v2-review-slot { flex-shrink:0; }
+.mx-v2-product-title { width:100%; }
+.mx-v2-prices { min-height:30px; align-items:center; }
+.mx-v2-product-meta { min-height:42px; justify-content:flex-start; }
+.mx-v2-thumbnails { min-height:38px; flex-shrink:0; }
+.mx-v2-action {
+  display:flex;
+  width:100%;
+  min-height:44px;
+  justify-content:space-between;
+  margin-top:auto;
+  padding:11px 15px;
+  border-radius:14px;
+  background:#202128;
+  border-color:#202128;
+  color:#fff;
+  font-size:12px;
+  line-height:1.2;
+  white-space:nowrap;
+}
+.mx-v2-action svg{flex-shrink:0}
+.mx-v2-action-bulk{background:#fff6f0;border-color:#f5c7ac;color:#b33d07}
+.mx-v2-action-bulk:hover{background:var(--primary,#fc5901);color:#fff}
+.mx-shop-catalog-grid{align-items:stretch}
+.mx-shop-catalog-grid .mx-v2-photo-shell{height:250px}
+.mx-shop-catalog-grid .mx-v2-item{box-shadow:0 6px 22px rgba(20,21,29,.035)}
+@media(max-width:750px){
+  .mx-shop-catalog-grid .mx-v2-photo-shell{height:190px}
+  .mx-v2-action{min-height:40px;padding:9px 11px;font-size:11px}
+  .mx-v2-card-detail{padding:0 5px 3px}
+}
+@media(max-width:420px){
+  .mx-shop-catalog-grid .mx-v2-photo-shell{height:155px}
+  .mx-v2-action{font-size:10px;min-height:39px;padding:8px}
+  .mx-v2-product-meta{min-height:43px}
+}
+
+/* Shared bulk enquiry overlay, portalled above all storefront cards. */
+.mx-bulk-overlay{
+  position:fixed;inset:0;z-index:99999;
+  display:flex;align-items:center;justify-content:center;
+  padding:18px;background:rgba(16,18,26,.72);
+  backdrop-filter:blur(8px);
+}
+.mx-bulk-dialog{
+  position:relative;width:min(100%,650px);max-height:min(92vh,850px);
+  overflow-y:auto;background:#fff;border-radius:26px;
+  padding:clamp(22px,3.5vw,38px);
+  box-shadow:0 35px 100px rgba(7,9,22,.3);
+}
+.mx-bulk-close{
+  position:absolute;right:19px;top:17px;
+  display:flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:50%;
+  background:#f3f4f6;color:#292c34;
+}
+.mx-bulk-close:hover{background:#e7e8ed}
+.mx-bulk-eyebrow{font-size:11px!important;font-weight:800;letter-spacing:.16em;color:var(--primary,#fc5901)}
+.mx-bulk-dialog h2{font-size:clamp(24px,4vw,32px);font-weight:750;letter-spacing:-.045em;line-height:1.15;margin:10px 35px 10px 0}
+.mx-bulk-description{max-width:520px;font-size:13px!important;line-height:1.6!important;color:#676a75}
+.mx-bulk-product-name{margin-top:18px;margin-bottom:20px;border-radius:13px;padding:12px 14px;background:#f6f7f9;font-size:13px;font-weight:700;line-height:1.45}
+.mx-bulk-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.mx-bulk-fields label{display:flex;flex-direction:column;gap:7px;color:#333842;font-size:12px;font-weight:700}
+.mx-bulk-fields .mx-bulk-full{grid-column:1/-1}
+.mx-bulk-fields input,.mx-bulk-fields textarea{
+  display:block;width:100%;min-width:0;
+  padding:12px 13px;border:1px solid #dfe0e6;
+  border-radius:11px;background:#fff;color:#1d2028;
+  font-size:14px;line-height:1.5;outline:0;
+}
+.mx-bulk-fields input:focus,.mx-bulk-fields textarea:focus{border-color:var(--primary,#fc5901);box-shadow:0 0 0 3px #fc590115}
+.mx-bulk-minimum{margin-top:12px;font-size:12px;color:#886139}
+.mx-bulk-error{margin-top:12px;font-size:13px;color:#b42318}
+.mx-bulk-submit{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px;width:100%;min-height:48px;padding:12px 20px;border-radius:12px;background:var(--primary,#fc5901);color:#fff;font-size:13px;font-weight:750}
+.mx-bulk-submit:hover{background:var(--primary-dark,#d64a00)}
+.mx-bulk-submit:disabled{opacity:.65;cursor:wait}
+.mx-bulk-success{display:flex;flex-direction:column;align-items:flex-start;gap:10px;color:#16803a}
+.mx-bulk-success p{font-size:14px;color:#30343b}
+.mx-bulk-overlay button:focus-visible{outline:3px solid var(--primary,#fc5901);outline-offset:3px}
+@media(max-width:550px){
+  .mx-bulk-fields{grid-template-columns:1fr}
+  .mx-bulk-dialog{border-radius:20px}
+}
