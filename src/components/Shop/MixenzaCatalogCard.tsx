@@ -89,24 +89,27 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
             </button>
           ))}
         </div>
-        {bulkOnly ? (
+        <div className="mx-v2-actions">
+          <button
+            type="button"
+            className="mx-v2-action mx-v2-action-cart"
+            onClick={add}
+            disabled={bulkOnly || !inStock}
+            title={bulkOnly ? 'This product requires a bulk quote before checkout' : undefined}
+          >
+            Add to cart <ArrowRight size={15} aria-hidden="true" />
+          </button>
           <button type="button" className="mx-v2-action mx-v2-action-bulk" onClick={() => setShowEnquiry(true)}>
             Bulk order <ArrowRight size={15} aria-hidden="true" />
           </button>
-        ) : (
-          <button type="button" className="mx-v2-action" onClick={add} disabled={!inStock}>
-            {inStock ? 'Add to cart' : 'Unavailable'} <ArrowRight size={15} aria-hidden="true" />
-          </button>
-        )}
+        </div>
       </div>
-      {bulkOnly && (
-        <BulkInquiryModal
-          open={showEnquiry}
-          onClose={() => setShowEnquiry(false)}
-          productName={product.name}
-          productSku={product.sku}
-        />
-      )}
+      <BulkInquiryModal
+        open={showEnquiry}
+        onClose={() => setShowEnquiry(false)}
+        productName={product.name}
+        productSku={product.sku}
+      />
     </article>
   )
 }
