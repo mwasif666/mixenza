@@ -362,3 +362,32 @@
 @media(max-width:380px){
   .mx-v2-actions .mx-v2-action{min-height:33px;padding:7px 8px;font-size:10px}
 }
+
+
+/* Readable stacked retail and wholesale actions, matching card bottoms. */
+.mx-v2-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:auto}
+.mx-v2-actions .mx-v2-action{
+  min-height:49px;
+  padding:9px 13px;
+  align-items:center;
+  justify-content:space-between;
+  white-space:normal;
+  gap:8px;
+  text-align:left;
+}
+.mx-v2-action-copy{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.mx-v2-action-copy strong{font-size:12px!important;line-height:1.2;font-weight:750}
+.mx-v2-action-copy small{font-size:10px!important;line-height:1.3;font-weight:500;opacity:.82}
+.mx-v2-actions .mx-v2-action svg{flex-shrink:0}
+.mx-v2-bulk-note{color:#a54e21}
+@media(max-width:750px){
+  .mx-v2-actions{gap:6px}
+  .mx-v2-actions .mx-v2-action{min-height:47px;padding:8px 10px}
+  .mx-v2-action-copy strong{font-size:11px!important}
+  .mx-v2-action-copy small{font-size:9px!important}
+}
+@media(max-width:420px){
+  .mx-v2-actions .mx-v2-action{min-height:44px;padding:7px 8px;gap:5px}
+  .mx-v2-action-copy strong{font-size:10px!important}
+  .mx-v2-action-copy small{font-size:9px!important}
+}
