@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import * as Icon from '@phosphor-icons/react/dist/ssr'
 import type { SourceProduct } from '@/lib/theOnlineStore'
+import { productPath } from '@/lib/storePaths'
 import { useCatalogProducts } from '@/hooks/useCatalogProducts'
 import { PremiumLifestyleBanner } from './PremiumExtras'
 import MixenzaCatalogCard from '@/components/Shop/MixenzaCatalogCard'
@@ -45,6 +46,11 @@ export default function LiveCatalog() {
     }
   }, [products])
 
+  const k206Product = useMemo(
+    () => products.find(product => /\\bk[\\s-]?206\\b/i.test([product.name, product.sku || ''].join(' '))),
+    [products],
+  )
+
   const arrivals = useMemo(() => {
     const filtered = products.filter(p => p.id && !/^DARAZ-/i.test(p.sku || ''))
     const marked = filtered.filter(p => p.isNewArrival)
@@ -85,8 +91,8 @@ export default function LiveCatalog() {
         </div>
       </section>
 
+      <PremiumLifestyleBanner productHref={k206Product ? productPath(k206Product) : '/shop'} />
       <div className="container">
-        <PremiumLifestyleBanner />
         <section className="mx-section mx-new-arrivals" aria-labelledby="mx-new-heading">
           <div className="mx-section-head">
             <div><span className="mx-eyebrow">Just arrived</span><h2 id="mx-new-heading">New Arrivals</h2></div>
