@@ -36,7 +36,7 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
   const image = photos[photoIndex] || ''
 
   const add = () => {
-    if (bulkOnly || !inStock) return
+    if (!inStock) return
     addToCart({ ...product })
     updateCart(product.id, 1, '', '')
     openModalCart()
@@ -72,13 +72,13 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
         </div>
         <div className="mx-v2-product-meta">
           {bulkOnly ? (
-            <span className="mx-v2-stock is-available"><span className="mx-v2-stock-dot" aria-hidden="true" /> Stock on request</span>
+            <span className={'mx-v2-stock ' + (inStock ? 'is-available' : 'is-unavailable')}><span className="mx-v2-stock-dot" aria-hidden="true" />{inStock ? 'In stock' : 'Out of stock'}</span>
           ) : (
             <span className={'mx-v2-stock ' + (inStock ? 'is-available' : 'is-unavailable')}>
               <span className="mx-v2-stock-dot" aria-hidden="true" />{inStock ? 'In stock' : 'Out of stock'}
             </span>
           )}
-          {bulkOnly && <span className="mx-v2-bulk-note">Bulk quote required</span>}
+          {bulkOnly && <span className="mx-v2-bulk-note">Bulk savings available</span>}
         </div>
         <div className="mx-v2-thumbnails" aria-label={'Product gallery for ' + product.name}>
           {photos.length > 1 && photos.slice(0, 2).map((photo, index) => (
@@ -94,13 +94,13 @@ export default function MixenzaCatalogCard({ product }: { product: SourceProduct
             type="button"
             className="mx-v2-action mx-v2-action-cart"
             onClick={add}
-            disabled={bulkOnly || !inStock}
-            title={bulkOnly ? 'This product requires a bulk quote before checkout' : undefined}
+            disabled={!inStock}
+            title={!inStock ? 'Currently unavailable' : 'Add a single item to your cart'}
           >
-            Add to cart <ArrowRight size={15} aria-hidden="true" />
+            <span className="mx-v2-action-copy"><strong>Add to cart</strong><small>Buy a single piece</small></span> <ArrowRight size={15} aria-hidden="true" />
           </button>
           <button type="button" className="mx-v2-action mx-v2-action-bulk" onClick={() => setShowEnquiry(true)}>
-            Bulk order <ArrowRight size={15} aria-hidden="true" />
+            <span className="mx-v2-action-copy"><strong>Bulk order</strong><small>Ask for a discount</small></span> <ArrowRight size={15} aria-hidden="true" />
           </button>
         </div>
       </div>
