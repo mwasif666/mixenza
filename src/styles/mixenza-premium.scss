@@ -244,3 +244,109 @@
 .mx-product-card .mx-premium-cart-button{position:absolute;right:11px;bottom:10px;height:32px;width:32px;border-radius:9px;display:grid;place-items:center;background:var(--primary);color:white;font-size:22px;font-weight:400;box-shadow:0 4px 10px #fc590124;transition:background .2s,transform .2s}
 .mx-product-card .mx-premium-cart-button:hover{background:var(--primary-dark);transform:translateY(-1px)}
 .mx-product-card .mx-premium-cart-button:disabled{background:#a0a0a0;cursor:not-allowed}
+
+
+/* Exact approved full-width Mixenza hero — overrides previous boxed layout */
+.mixenza-premium-home > .mx-fullwidth-hero {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #18191a;
+}
+.mx-approved-hero {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1667 / 476;
+  overflow: hidden;
+  background: #171819;
+}
+.mx-approved-hero-image {
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+}
+.mx-hero-hotspot {
+  position: absolute;
+  z-index: 5;
+  display: block;
+  border-radius: 6px;
+}
+.mx-hero-hotspot:focus-visible {
+  outline: 3px solid #fc5901 !important;
+  outline-offset: 2px;
+  background: #fc59011a;
+}
+.mx-hero-hotspot-primary { left: 9.8%; top: 70.6%; width: 16.2%; height: 13.3%; }
+.mx-hero-hotspot-uv { left: 68.9%; top: 6.1%; width: 28.4%; height: 43.2%; }
+.mx-hero-hotspot-fan { left: 68.9%; top: 52%; width: 28.4%; height: 43.5%; }
+.mx-approved-hero-mobile { display: none; }
+.mx-fullwidth-hero + .mx-services-container { padding-top: 0; }
+@media (min-width: 769px) {
+  .mx-approved-hero { min-height: 295px; }
+}
+@media (max-width: 768px) {
+  .mx-approved-hero { display: none; }
+  .mx-approved-hero-mobile { display: block; padding: 13px 14px 17px; }
+  .mx-approved-mobile-feature {
+    position: relative;
+    min-height: 515px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: radial-gradient(ellipse at 75% 70%,#58504a 0%,#28282a 45%,#151618 100%);
+    color: white;
+    padding: 26px 25px 0;
+  }
+  .mx-approved-mobile-eyebrow {
+    display: block; color: #e8e3df; font-size: 10px; letter-spacing: .24em;
+    font-weight: 600; margin-bottom: 13px;
+  }
+  .mx-approved-mobile-feature h1 {
+    position: relative; z-index: 3; margin: 0;
+    font-size: clamp(27px, 7.3vw, 39px); line-height: 1.11;
+    letter-spacing: -.035em; text-transform: uppercase; font-weight: 730;
+    color: white;
+  }
+  .mx-approved-mobile-feature h1 span { color: #fc5901; }
+  .mx-approved-mobile-feature p {
+    position: relative; z-index: 3; margin-top: 13px; max-width: 345px;
+    font-size: 12px !important; line-height: 1.55; color: #e5e3df;
+  }
+  .mx-approved-mobile-button {
+    position: relative; z-index: 4; display: inline-flex; align-items: center;
+    justify-content: center; gap: 15px; margin-top: 17px;
+    min-height: 39px; padding: 9px 17px; background: #fc5901;
+    color: white !important; border-radius: 6px; font-size: 11px;
+    font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .mx-approved-mobile-product {
+    position: absolute; right: 0; left: 20%; bottom: -13px; height: 270px;
+    background: radial-gradient(ellipse at 58% 55%,#ffffff20,transparent 65%);
+  }
+  .mx-approved-mobile-product img {
+    mix-blend-mode: normal; filter: drop-shadow(0 20px 28px #0006);
+    padding: 0 10px 0 30px;
+  }
+  .mx-approved-mobile-offers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 11px; }
+  .mx-approved-mobile-offer {
+    display: grid; grid-template-rows: 1fr 120px; min-height: 270px;
+    overflow: hidden; background: linear-gradient(130deg,#b9b3b9,#e1dfe2);
+    border-radius: 14px; padding: 16px; color: #18181b;
+  }
+  .mx-approved-mobile-offer:nth-child(2) { background: linear-gradient(125deg,#c9e4e9,#ecf2f3); }
+  .mx-approved-mobile-offer-copy { position: relative; z-index: 2; }
+  .mx-approved-mobile-offer h2 { color: #151517; font-size: 15px; line-height: 1.2; letter-spacing: -.02em; font-weight: 750; }
+  .mx-approved-mobile-offer p { color: #555; font-size: 10px !important; margin-top: 5px; line-height: 1.4; }
+  .mx-approved-mobile-price { display: block; font-size: 11px; margin-top: 7px; font-weight: 750; }
+  .mx-approved-mobile-offer-cta { display: grid; place-items: center; width: 27px; height: 27px; margin-top: 9px; border-radius: 50%; color: white; background: #fc5901; }
+  .mx-approved-mobile-offer-image { position: relative; width: 100%; min-height: 118px; }
+  .mx-approved-mobile-offer-image img { filter: drop-shadow(0 6px 10px #0002); }
+}
+@media (max-width: 380px) {
+  .mx-approved-mobile-feature { min-height: 480px; padding: 22px 20px 0; }
+  .mx-approved-mobile-product { height: 235px; }
+  .mx-approved-mobile-offer { padding: 12px; }
+  .mx-approved-mobile-offer h2 { font-size: 13px; }
+}
