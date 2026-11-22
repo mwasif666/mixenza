@@ -32,7 +32,7 @@ jobs:
           from rembg import remove, new_session
           sources = [
             "steel-tumbler.png",
-            "uv-money-detector.jpg",
+            "rechargeable-uv-detector.png",
             "digital-hand-fan.png",
             "massage-gun.png",
             "water-dispenser.png",
