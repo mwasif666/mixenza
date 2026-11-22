@@ -130,3 +130,10 @@
  .mx-mkt-vertical-copy{width:73%}
  .mx-mkt-vertical-product{width:49%}
 }
+
+/* K-206: preserve clean product/text separation in the compact right-hand banner */
+.mx-mkt-vertical-k206 .mx-mkt-vertical-copy{width:55%;padding-right:7px}
+.mx-mkt-vertical-k206 .mx-mkt-vertical-product{width:43%;right:1%;top:5%;bottom:5%}
+.mx-mkt-vertical-k206 .mx-mkt-transparent-photo{object-fit:contain!important;object-position:center right;filter:drop-shadow(0 9px 13px #17141426)}
+.mx-mkt-vertical-k206 h2{font-size:clamp(16px,1.43vw,23px);line-height:1.13;letter-spacing:-.03em;overflow-wrap:normal}
+@media(max-width:700px){.mx-mkt-vertical-k206 .mx-mkt-vertical-copy{width:59%;padding-right:2px}.mx-mkt-vertical-k206 .mx-mkt-vertical-product{width:39%;right:2%}.mx-mkt-vertical-k206 h2{font-size:clamp(13px,3.7vw,18px)}}
