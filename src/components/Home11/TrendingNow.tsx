@@ -36,14 +36,6 @@ const categoryPromotions = [
   },
 ]
 
-const moreCategories = [
-  { label: 'Home & Cleaning', category: 'Home, Cleaning & Storage' },
-  { label: 'Kitchen & Drinkware', category: 'Kitchen & Drinkware' },
-  { label: 'Beauty & Personal Care', category: 'Beauty & Personal Care' },
-  { label: 'Electronics & Gadgets', category: 'Electronics & Gadgets' },
-  { label: 'Health & Wellness', category: 'Health, Fitness & Wellness' },
-  { label: 'Lighting & Electronics', category: 'Lighting & Electronics' },
-]
 
 export default function TrendingNow() {
   return (
@@ -87,14 +79,6 @@ export default function TrendingNow() {
             </Link>
           ))}
         </div>
-        <nav className="mx-editorial-category-links" aria-label="Browse more Mixenza categories">
-          <span className="mx-editorial-links-label">Browse more</span>
-          {moreCategories.map(item => (
-            <Link href={shopPath(item.category)} key={item.category}>
-              {item.label}<Icon.ArrowUpRight size={13} aria-hidden="true" />
-            </Link>
-          ))}
-        </nav>
       </div>
     </section>
   )
