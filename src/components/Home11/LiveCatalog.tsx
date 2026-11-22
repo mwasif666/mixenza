@@ -47,7 +47,7 @@ export default function LiveCatalog() {
   }, [products])
 
   const k206Product = useMemo(
-    () => products.find(product => /\\bk[\\s-]?206\\b/i.test([product.name, product.sku || ''].join(' '))),
+    () => products.find(product => /\bk[\s-]?206\b/i.test([product.name, product.sku || ''].join(' '))),
     [products],
   )
 
