@@ -1,0 +1,59 @@
+name: Install K-206 product gallery
+on:
+  push:
+    paths:
+      - ".github/workflows/install-k206-product-photos.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-k206-gallery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Fetch user-provided K-206 product photos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/images/mixenza/products/k-206 public/images/mixenza/cutouts
+          curl -fLSs --retry 3 --max-time 80 'https://photoshop-api.adobe.io/v2/short-url/urn:aaid:ps:US:1937e3e4-831e-41b6-935e-91f58028d5ee' -o public/images/mixenza/products/k-206/01.png
+          curl -fLSs --retry 3 --max-time 80 'https://at.adobe.com/KanORfPj9NJLUBld' -o public/images/mixenza/products/k-206/02.png
+          curl -fLSs --retry 3 --max-time 80 'https://at.adobe.com/qmDXWlcM3qM4TFTh' -o public/images/mixenza/products/k-206/03.png
+          curl -fLSs --retry 3 --max-time 80 'https://at.adobe.com/snvRepyL1wdHDbsR' -o public/images/mixenza/products/k-206/04.png
+          curl -fLSs --retry 3 --max-time 80 'https://at.adobe.com/cHPqvqFvVkXYwv7t' -o public/images/mixenza/products/k-206/05.png
+      - name: Validate photos and alpha transparency
+        shell: bash
+        run: |
+          python -m pip -q install 'Pillow>=10,<12'
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          gallery=Path('public/images/mixenza/products/k-206')
+          paths=[gallery / f'{i:02}.png' for i in range(1,6)]
+          for i,p in enumerate(paths,1):
+              if not p.exists() or p.stat().st_size < 15000:
+                  raise RuntimeError(f'Invalid or missing image {p}')
+              with Image.open(p) as im:
+                  im.verify()
+              with Image.open(p) as im:
+                  if i==1:
+                      rgba=im.convert('RGBA')
+                      a=rgba.getchannel('A')
+                      if a.getextrema()[0] == 255:
+                          raise RuntimeError('Adobe background removal produced opaque image; aborting to avoid black banner backdrop')
+                      rgba.save('public/images/mixenza/cutouts/k-206.png', optimize=True)
+                  print(f'K-206 image {i}: {im.width}x{im.height}, {p.stat().st_size} bytes')
+          PY
+      - name: Publish photos in GitHub
+        shell: bash
+        run: |
+          git config user.name "Mixenza Catalog Media"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/images/mixenza/products/k-206 public/images/mixenza/cutouts/k-206.png
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish original K-206 product gallery and transparent hero image"
+          git push
