@@ -135,9 +135,9 @@ export default function SliderPickora() {
         </div>
 
         <div className="mx-mkt-right">
-          <Link href="/product/1972612611" className="mx-mkt-vertical mx-mkt-vertical-light">
-            <div className="mx-mkt-vertical-copy"><span className="mx-mkt-vertical-kicker">Mixenza picks</span><h2>JC-205 Rechargeable<br />UV Money Detector</h2><p>365nm UV inspection light.</p>{priceFor('1972612611') && <strong>{priceFor('1972612611')}</strong>}<span className="mx-mkt-vertical-button">Shop now <Icon.ArrowRight size={14}/></span></div>
-            <div className="mx-mkt-vertical-product"><CutoutPhoto file="rechargeable-uv-detector" original="/images/pickora/rechargeable-uv-detector.png" alt="JC-205 Rechargeable 365nm UV Money Detector" sizes="(max-width: 700px) 50vw, 19vw"/></div>
+          <Link href="/product/1972612611" className="mx-mkt-vertical mx-mkt-vertical-light mx-mkt-vertical-k206">
+            <div className="mx-mkt-vertical-copy"><span className="mx-mkt-vertical-kicker">Mixenza picks</span><h2>K-206 UV<br />Money Detector</h2><p>365/405 nm UV light. USB-C rechargeable.</p>{priceFor('1972612611') && <strong>{priceFor('1972612611')}</strong>}<span className="mx-mkt-vertical-button">Shop now <Icon.ArrowRight size={14}/></span></div>
+            <div className="mx-mkt-vertical-product"><CutoutPhoto file="k-206" original="/images/mixenza/products/k-206/01.png" alt="K-206 Rechargeable UV Money Detector and retail packaging" sizes="(max-width: 700px) 48vw, 19vw"/></div>
           </Link>
           <Link href="/product/1966895078" className="mx-mkt-vertical mx-mkt-vertical-dark">
             <div className="mx-mkt-vertical-copy"><span className="mx-mkt-vertical-kicker">Everyday tech</span><h2>5-Speed<br />Digital Hand Fan</h2><p>Stay cool anywhere.</p>{priceFor('1966895078') && <strong>{priceFor('1966895078')}</strong>}<span className="mx-mkt-vertical-button">Shop now <Icon.ArrowRight size={14}/></span></div>
