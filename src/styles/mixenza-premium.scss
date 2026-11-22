@@ -455,3 +455,22 @@
   .mx-newsletter-form form input[name="email"]{padding:0 117px 0 14px;font-size:12px!important}
   .mx-newsletter-form form button{min-width:106px;top:5px;bottom:5px;right:5px;padding:0 10px;font-size:11px!important}
 }
+
+
+/* Keep newsletter as its own rounded card, with the explicit white spacer
+   below it supplying the distance from the footer. */
+.mixenza-premium-home .mx-newsletter-container{
+  margin-bottom:0!important;
+}
+.mixenza-premium-home .mx-newsletter-box{
+  border-radius:24px!important;
+  overflow:visible;
+}
+.mixenza-premium-home .mx-newsletter-footer-gap{
+  display:block;
+  width:100%;
+  background:#fff;
+}
+@media(max-width:767px){
+  .mixenza-premium-home .mx-newsletter-box{border-radius:20px!important}
+}
