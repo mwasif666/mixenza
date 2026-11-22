@@ -65,7 +65,7 @@ function FeaturedGridCard({ product }: { product: SourceProduct }) {
         </Link>
       </div>
       <div className="mx-v2-card-detail">
-        {hasReviews && <div className="mx-v2-review"><Icon.Star size={12} weight="fill" aria-hidden="true" /> {Number(product.rate).toFixed(1)} <span>({reviewCount})</span></div>}
+        <div className="mx-v2-review-slot">{hasReviews && <div className="mx-v2-review"><Icon.Star size={12} weight="fill" aria-hidden="true" /> {Number(product.rate).toFixed(1)} <span>({reviewCount})</span></div>}</div>
         <Link href={productPath(product)} className="mx-v2-product-title">{product.name}</Link>
         <div className="mx-v2-prices">
           <strong className={discounted ? 'mx-v2-sale-price' : ''}>{formatMoney(currentPrice)}</strong>
